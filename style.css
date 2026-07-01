@@ -98,7 +98,7 @@ p { color: var(--muted); }
   background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.045));
   box-shadow: var(--shadow);
 }
-.portrait-card img { border-radius: 1.45rem; aspect-ratio: 1 / 1; object-fit: cover; }
+.portrait-card img { width: 100%; max-width: 340px; margin-inline: auto; display: block; border-radius: 1.45rem; aspect-ratio: 1 / 1; object-fit: cover; }
 .portrait-card figcaption { padding: 1rem 0.35rem 0.35rem; display: grid; gap: 0.2rem; }
 .portrait-card span { color: var(--muted); font-size: 0.95rem; }
 
@@ -125,7 +125,7 @@ li + li { margin-top: 0.4rem; }
 .book-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1rem; }
 .book-card { padding: 1rem; display: grid; grid-template-columns: 180px 1fr; gap: 1rem; align-items: start; }
 .featured-book { grid-template-columns: 220px 1fr; }
-.book-card img { border-radius: 1rem; border: 1px solid var(--border); box-shadow: 0 18px 40px rgba(0,0,0,0.35); }
+.book-card img { width: 100%; max-width: 220px; justify-self: center; border-radius: 1rem; border: 1px solid var(--border); box-shadow: 0 18px 40px rgba(0,0,0,0.35); }
 .publication-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem; }
 .publication-list article { padding: 1rem; border: 1px solid var(--border); border-radius: 1.1rem; background: rgba(255,255,255,0.04); }
 .publication-list span { color: var(--soft); font-size: 0.9rem; }
@@ -136,14 +136,17 @@ li + li { margin-top: 0.4rem; }
 .showcase-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 .showcase-card { overflow: hidden; }
 .showcase-card.large { grid-column: span 1; }
-.showcase-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-bottom: 1px solid var(--border); background: #111827; }
+.showcase-card img { width: 100%; height: 260px; object-fit: cover; object-position: top center; border-bottom: 1px solid var(--border); background: #111827; }
+.showcase-card.large img { height: 300px; }
+.showcase-card img[src*="noumena"], .showcase-card img[src*="mission-control-inspector"] { object-fit: contain; padding: 0.75rem; }
+.showcase-card img[src*="logos-learning-academy"] { object-position: top left; }
 .showcase-card div { padding: 1.2rem; }
 .showcase-card p { margin-bottom: 0; }
 
 .logos-feature { align-items: center; }
 .tag-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.25rem; }
 .tag-list span { border: 1px solid var(--border); border-radius: 999px; padding: 0.55rem 0.75rem; color: var(--muted); background: rgba(255,255,255,0.055); }
-.device-stack img { border-radius: 1.5rem; border: 1px solid var(--border); box-shadow: var(--shadow); }
+.device-stack img { width: 100%; max-height: 520px; object-fit: cover; object-position: top left; border-radius: 1.5rem; border: 1px solid var(--border); box-shadow: var(--shadow); }
 
 .contact { padding-bottom: 6rem; }
 .site-footer { border-top: 1px solid var(--border); color: var(--muted); padding: 2rem 1rem; text-align: center; display: grid; gap: 0.35rem; }
@@ -152,113 +155,6 @@ li + li { margin-top: 0.4rem; }
 
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-
-
-/* --- V2 image sizing patch: keeps portfolio visuals polished and prevents full-size images --- */
-.portrait-card {
-  width: min(100%, 320px);
-  justify-self: center;
-}
-
-.portrait-card img {
-  width: 100%;
-  height: auto;
-  max-height: 320px;
-}
-
-.book-card img {
-  width: 100%;
-  max-width: 190px;
-  height: auto;
-  justify-self: center;
-  object-fit: contain;
-}
-
-.featured-book img {
-  max-width: 210px;
-}
-
-.showcase-card img {
-  width: 100%;
-  height: clamp(180px, 24vw, 280px);
-  object-fit: contain;
-  padding: 0.75rem;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(147, 197, 253, 0.10), transparent 20rem),
-    #0f172a;
-}
-
-.device-stack {
-  display: flex;
-  justify-content: center;
-}
-
-.device-stack img {
-  width: min(100%, 440px);
-  max-height: 560px;
-  object-fit: contain;
-  padding: 0.75rem;
-  background: rgba(255,255,255,0.035);
-}
-
-/* Make image-heavy sections breathe a little more on desktop */
-.showcase-card {
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
-
-@media (min-width: 901px) {
-  .hero {
-    grid-template-columns: minmax(0, 1.4fr) minmax(240px, 320px);
-  }
-
-  .showcase-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .showcase-card.large {
-    grid-column: span 1;
-  }
-}
-
-@media (max-width: 900px) {
-  .portrait-card {
-    max-width: 260px;
-    margin-inline: auto;
-  }
-
-  .book-card img,
-  .featured-book img {
-    max-width: 160px;
-  }
-
-  .showcase-card img {
-    height: clamp(170px, 45vw, 260px);
-  }
-
-  .device-stack img {
-    max-height: 420px;
-  }
-}
-
-@media (max-width: 560px) {
-  .portrait-card {
-    max-width: 220px;
-  }
-
-  .book-card img,
-  .featured-book img {
-    max-width: 150px;
-  }
-
-  .showcase-card img {
-    height: 210px;
-  }
-
-  .device-stack img {
-    max-height: 360px;
-  }
-}
 
 @supports not (backdrop-filter: blur(18px)) { .site-header { background: rgba(11, 17, 32, 0.96); } }
 
@@ -278,6 +174,7 @@ li + li { margin-top: 0.4rem; }
   .site-header { padding-inline: 1rem; }
   .book-card, .featured-book { grid-template-columns: 1fr; }
   .book-card img { max-width: 180px; }
+  .showcase-card img, .showcase-card.large img { height: 220px; }
   .hero-actions, .contact-links { flex-direction: column; align-items: stretch; }
   .button, .contact-links a, .obfuscated-email { width: 100%; justify-content: center; }
 }
