@@ -48,6 +48,9 @@ GitHub: https://github.com/Noumena000
 
 LinkedIn: https://www.linkedin.com/in/benjaminmoss000
 
-Email: bamoss360 [at] gmail [dot] com
 
 © 2026 Benjamin A. Moss. All rights reserved.
+
+## Portfolio Notice
+
+Several software projects are under active development. Selected interface previews, workflows, and implementation details are intentionally withheld until public release.
