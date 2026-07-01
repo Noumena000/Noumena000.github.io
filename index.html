@@ -4,122 +4,257 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Benjamin A. Moss | Philosophy, AI & Education</title>
-  <meta name="description" content="Personal website of Benjamin A. Moss: philosophy, teaching, AI, educational technology, and software projects." />
+  <meta name="description" content="Personal website of Benjamin A. Moss: philosophy, critical thinking, AI ethics, teaching, educational technology, books, and software projects." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="index.html">Benjamin A. Moss</a>
-    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
-    <nav class="nav">
+    <a class="brand" href="#top">Benjamin A. Moss</a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="nav" aria-label="Main navigation">
       <a href="#about">About</a>
+      <a href="#books">Books</a>
       <a href="#research">Research</a>
       <a href="#teaching">Teaching</a>
       <a href="#projects">Projects</a>
+      <a href="#logos">Logos</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <p class="eyebrow">Philosophy • Artificial Intelligence • Education</p>
-      <h1>Associate Professor of Philosophy building human-centered AI and educational technology.</h1>
+  <main id="top">
+    <section class="hero reveal">
+      <p class="eyebrow">Philosophy • AI Ethics • Critical Thinking • Educational Technology</p>
+      <h1>Philosophy, artificial intelligence, and education for clearer thinking.</h1>
       <p class="hero-copy">
-        I work at the intersection of philosophy, ethics, pedagogy, artificial intelligence, and software design.
-        My projects explore how technology can support reasoning, learning, reflection, and human agency.
+        I am Benjamin A. Moss, an Associate Professor of Philosophy whose work bridges applied ethics, critical thinking,
+        AI literacy, educational technology, and human-centered software design.
       </p>
       <div class="hero-actions">
         <a class="button primary" href="#projects">View Projects</a>
-        <a class="button" href="#research">Research & Publications</a>
+        <a class="button" href="#books">Books & Publications</a>
+        <a class="button ghost" href="#teaching">Teaching Resources</a>
       </div>
     </section>
 
-    <section id="about" class="section">
-      <h2>About</h2>
-      <p>
-        I am an Associate Professor of Philosophy with interests in ethics, critical thinking, applied philosophy,
-        artificial intelligence, educational design, and the future of learning. This site collects my academic work,
-        teaching materials, and software projects.
-      </p>
+    <section class="stats reveal" aria-label="Professional focus areas">
+      <article>
+        <strong>Philosophy</strong>
+        <span>Ethics, reasoning, epistemology, and the examined life.</span>
+      </article>
+      <article>
+        <strong>AI & Technology</strong>
+        <span>Human-centered tools that augment judgment rather than replace it.</span>
+      </article>
+      <article>
+        <strong>Education</strong>
+        <span>Teaching resources, learning apps, and Socratic inquiry.</span>
+      </article>
     </section>
 
-    <section id="research" class="section split">
+    <section id="about" class="section split reveal">
       <div>
-        <h2>Research & Publications</h2>
+        <p class="eyebrow">About</p>
+        <h2>Scholar, educator, and builder.</h2>
         <p>
-          My research interests include applied ethics, Socratic pedagogy, moral reasoning, social epistemology,
-          philosophy of technology, and the role of AI in education and public life.
+          My work explores how philosophy can help people reason more carefully about ethics, technology, inquiry,
+          healthcare, civic life, and human flourishing. I am especially interested in how artificial intelligence can support
+          learning without displacing human judgment, responsibility, or original thought.
+        </p>
+        <p>
+          This site serves as a central hub for my writing, publications, teaching materials, AI learning tools,
+          and independent software projects.
         </p>
       </div>
-      <div class="card">
-        <h3>Research areas</h3>
+      <div class="card accent-card">
+        <h3>Core themes</h3>
         <ul>
-          <li>Ethics and applied philosophy</li>
-          <li>AI, agency, and human judgment</li>
-          <li>Socratic method and critical thinking</li>
-          <li>Educational technology and learning design</li>
+          <li>Critical thinking and intellectual responsibility</li>
+          <li>AI literacy and responsible technology use</li>
+          <li>Applied ethics and human flourishing</li>
+          <li>Socratic pedagogy and philosophy education</li>
+          <li>Human-centered software and learning design</li>
         </ul>
       </div>
     </section>
 
-    <section id="teaching" class="section">
-      <h2>Teaching</h2>
-      <p>
-        My teaching focuses on making philosophy accessible, practical, and intellectually rigorous. I emphasize
-        ethical reasoning, argument analysis, reflective judgment, and student-centered learning.
+    <section id="books" class="section reveal">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Books & Publications</p>
+          <h2>Writing on critical thinking, AI, and philosophy education.</h2>
+        </div>
+        <a class="text-link" href="#contact">Request information →</a>
+      </div>
+
+      <div class="book-grid">
+        <article class="book-card featured">
+          <span class="badge">New 2026</span>
+          <h3>Critical Thinking in the Age of AI</h3>
+          <p>
+            A book on reasoning, questioning, and flourishing in a world of intelligent machines, with attention to cognitive bias,
+            algorithmic influence, misinformation, and the outsourcing of judgment.
+          </p>
+          <small>Kindle Direct Publishing</small>
+        </article>
+        <article class="book-card">
+          <h3>Critical Thinking: Unleashing the Power of Reason</h3>
+          <p>
+            A framework for intellectual virtues, logical reasoning, cognitive bias, the Socratic Method, and reflective thought.
+          </p>
+          <small>Published September 5, 2023</small>
+        </article>
+        <article class="book-card">
+          <h3>Critical Thinking in the Digital Age</h3>
+          <p>
+            A practical guide for lifelong learners, blending theory, Socratic dialogue, real-world cases, and intellectual virtues.
+          </p>
+          <small>Published May 20, 2025</small>
+        </article>
+        <article class="book-card">
+          <h3>Beyond the Ban</h3>
+          <p>
+            An argument for ethical generative AI integration in education, emphasizing accessibility, learning, and critical thinking.
+          </p>
+          <small>Published February 7, 2025</small>
+        </article>
+      </div>
+    </section>
+
+    <section id="research" class="section split reveal">
+      <div>
+        <p class="eyebrow">Research</p>
+        <h2>Reasoning, judgment, and technology.</h2>
+        <p>
+          My research interests include applied ethics, AI ethics, philosophy of technology, social epistemology,
+          moral reasoning, philosophy of education, and Socratic pedagogy.
+        </p>
+      </div>
+      <div class="card list-card">
+        <h3>Selected article themes</h3>
+        <ul>
+          <li>The Socratic Method and critical thinking</li>
+          <li>Critical thinking, curiosity, and emotional intelligence in the age of AI</li>
+          <li>Philosophy in high school curricula</li>
+          <li>The evolutionary roots of cognitive biases</li>
+          <li>Virtue ethics, children, and moral cultivation</li>
+          <li>Critical thinking and the good life</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="teaching" class="section reveal">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Teaching</p>
+          <h2>Resources for applied ethics and clear reasoning.</h2>
+        </div>
+      </div>
+      <div class="resource-grid">
+        <article class="resource-card">
+          <h3>HUM301 Visual Study Guide Handbook</h3>
+          <p>A visual companion for applied ethics, moral reasoning, healthcare ethics, and key course concepts.</p>
+        </article>
+        <article class="resource-card">
+          <h3>Applied Ethics Materials</h3>
+          <p>Lecture companions on Plato, relativism, utilitarianism, Kantian ethics, virtue ethics, justice, and bioethics.</p>
+        </article>
+        <article class="resource-card">
+          <h3>Critical Thinking Resources</h3>
+          <p>Short guides on argument analysis, Socratic questioning, fallacies, bias, truth, language, and meaning.</p>
+        </article>
+        <article class="resource-card">
+          <h3>Philosophical Primers</h3>
+          <p>Accessible introductions to major philosophical ideas, from Socrates to conceptual analysis.</p>
+        </article>
+      </div>
+      <p class="note">
+        Teaching materials are provided for educational and portfolio purposes. Reproduction, redistribution, or publication without permission is prohibited.
       </p>
     </section>
 
-    <section id="projects" class="section">
+    <section id="projects" class="section reveal">
       <div class="section-heading">
-        <h2>Selected Projects</h2>
-        <p>Software projects connecting AI, education, philosophy, and everyday reasoning.</p>
+        <div>
+          <p class="eyebrow">Projects</p>
+          <h2>Software projects connecting AI, education, philosophy, and everyday reasoning.</h2>
+        </div>
       </div>
 
       <div class="project-grid">
-        <article class="project-card featured">
+        <article class="project-card featured" data-category="AI Assistant">
           <h3>Noumena Chat</h3>
-          <p>A privacy-conscious AI assistant concept with connectors, files, health-style visualizations, and model selection.</p>
+          <p>A privacy-conscious AI assistant concept with connectors, files, visualizations, and model selection.</p>
           <span>AI assistant • SwiftUI • Productivity</span>
         </article>
-
-        <article class="project-card featured">
+        <article class="project-card featured" data-category="Learning">
           <h3>Learning Coach</h3>
-          <p>An AI-supported learning platform designed to help students reflect, practice, and develop stronger reasoning skills.</p>
+          <p>An AI-supported learning platform designed to help students reflect, practice, and reason more carefully.</p>
           <span>Education • AI tutoring • Learning design</span>
         </article>
-
-        <article class="project-card">
+        <article class="project-card featured" data-category="Education">
           <h3>Logos Learning Academy</h3>
-          <p>A mobile learning experience centered on philosophy, ethics, critical thinking, and guided educational pathways.</p>
+          <p>An educational platform for inquiry, judgment, critical thinking, philosophy, and lifelong learning.</p>
           <span>iOS • Education • Philosophy</span>
         </article>
-
-        <article class="project-card">
-          <h3>Socratic Assessment</h3>
-          <p>A tool for helping students engage with questions, arguments, and structured philosophical reflection.</p>
-          <span>Socratic method • Assessment</span>
-        </article>
-
-        <article class="project-card">
+        <article class="project-card" data-category="Reasoning">
           <h3>Epistemic</h3>
-          <p>A reasoning and analysis app for organizing claims, evidence, arguments, and conceptual relationships.</p>
+          <p>A reasoning workspace for organizing claims, evidence, arguments, and conceptual relationships.</p>
           <span>Reasoning • Epistemology • AI</span>
         </article>
-
-        <article class="project-card">
+        <article class="project-card" data-category="Assessment">
+          <h3>Assessment Insight</h3>
+          <p>AI-assisted rubric review and feedback drafting while preserving instructor judgment.</p>
+          <span>Assessment • Feedback • Teaching</span>
+        </article>
+        <article class="project-card" data-category="Ethics">
+          <h3>Philosophy & Ethics Learning Tools</h3>
+          <p>Socratic questioning, utilitarian reasoning, Kantian evaluation, virtue ethics, and bioethics navigation.</p>
+          <span>Ethics • AI tools • Philosophy</span>
+        </article>
+        <article class="project-card" data-category="Career">
+          <h3>ApplyWise</h3>
+          <p>AI-assisted job-fit analysis, opportunity organization, and application support.</p>
+          <span>Career tools • AI workflow</span>
+        </article>
+        <article class="project-card" data-category="Finance">
+          <h3>SafeSpendCoach</h3>
+          <p>A personal finance education and decision-support concept using a guided coaching interface.</p>
+          <span>Finance education • Coaching</span>
+        </article>
+        <article class="project-card" data-category="Creative Learning">
           <h3>Horizon Expedition</h3>
-          <p>An educational exploration game concept built around discovery, observation, documentation, and wonder.</p>
+          <p>A game-based learning project built around exploration, observation, documentation, and discovery.</p>
           <span>Creative learning • Game design</span>
         </article>
       </div>
     </section>
 
-    <section id="contact" class="section contact">
-      <h2>Contact</h2>
+    <section id="logos" class="section logo-feature reveal">
+      <div>
+        <p class="eyebrow">Featured Initiative</p>
+        <h2>Logos Learning Academy</h2>
+        <p>
+          Logos Learning Academy is an educational platform designed to help learners think clearly, reason carefully,
+          and live wisely. Rather than rewarding passive completion, Logos encourages learners to ask better questions,
+          evaluate evidence, examine assumptions, and reflect on their own thinking.
+        </p>
+        <div class="pill-row">
+          <span>Critical Thinking Foundations</span>
+          <span>Philosophy Foundations</span>
+          <span>Reading & Argument Analysis</span>
+          <span>Writing & Communication</span>
+          <span>Science & Inquiry</span>
+          <span>Learning Portfolios</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact reveal">
+      <p class="eyebrow">Contact</p>
+      <h2>Connect</h2>
       <p>
-        For professional inquiries, teaching, research, or project collaboration, please connect with me through
-        GitHub, LinkedIn, or email.
+        For professional inquiries, teaching, research, software projects, or collaboration, please connect through GitHub or email.
       </p>
       <div class="contact-links">
         <a href="https://github.com/Noumena000">GitHub</a>
@@ -129,6 +264,10 @@
   </main>
 
   <footer>
+    <div>
+      <strong>Benjamin A. Moss</strong>
+      <span>Associate Professor of Philosophy • AI & Educational Technology</span>
+    </div>
     <p>© <span id="year"></span> Benjamin A. Moss. Built with GitHub Pages.</p>
   </footer>
 

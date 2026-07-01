@@ -1,14 +1,36 @@
 # Assets
 
-This directory contains all media and visual resources used throughout the website.
+This directory contains media and visual resources used throughout the website.
 
-## Folder Contents
+## Recommended Organization
+
+```text
+assets/
+├── profile/
+│   ├── headshot.jpg
+│   └── portrait.jpg
+├── projects/
+│   ├── noumena/
+│   ├── learning-coach/
+│   ├── logos-learning-academy/
+│   ├── epistemic/
+│   └── horizon-expedition/
+├── icons/
+├── logos/
+├── backgrounds/
+└── documents/
+    ├── cv.pdf
+    ├── teaching-philosophy.pdf
+    └── research-statement.pdf
+```
+
+## Suggested Contents
 
 ### Profile
 
 - Professional headshots
-- Portrait photographs
 - Faculty profile images
+- Portrait photographs
 
 ### Project Screenshots
 
@@ -16,10 +38,11 @@ This directory contains all media and visual resources used throughout the websi
 - Learning Coach
 - Logos Learning Academy
 - Epistemic
+- Assessment Insight
 - Socratic Assessment
 - Horizon Expedition
 - ApplyWise
-- Other software projects
+- SafeSpendCoach
 
 ### Graphics
 
@@ -31,21 +54,19 @@ This directory contains all media and visual resources used throughout the websi
 
 ### Documents
 
-- Curriculum Vitae (PDF)
+- Curriculum Vitae
 - Résumé
 - Teaching philosophy
 - Research statement
+- Selected teaching resources
 
 ## Image Guidelines
 
-- Use high-resolution PNG, JPG, or WebP images.
-- Optimize images for fast loading.
-- Use descriptive filenames (e.g., `noumena-dashboard.png` instead of `IMG_1234.png`).
-- Prefer landscape images for project screenshots and square images for profile photos.
-
-## Future Assets
-
-This folder will continue to grow as new software projects, publications, presentations, and educational resources are added to the website.
+- Use descriptive filenames, such as `noumena-dashboard.png` instead of `IMG_1234.png`.
+- Prefer PNG or WebP for interface screenshots.
+- Prefer JPG or WebP for photographs.
+- Optimize images for fast loading before committing them.
+- Use landscape images for project screenshots and square or portrait images for profile photos.
 
 ---
 
