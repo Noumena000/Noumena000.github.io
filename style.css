@@ -153,6 +153,113 @@ li + li { margin-top: 0.4rem; }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+
+/* --- V2 image sizing patch: keeps portfolio visuals polished and prevents full-size images --- */
+.portrait-card {
+  width: min(100%, 320px);
+  justify-self: center;
+}
+
+.portrait-card img {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+}
+
+.book-card img {
+  width: 100%;
+  max-width: 190px;
+  height: auto;
+  justify-self: center;
+  object-fit: contain;
+}
+
+.featured-book img {
+  max-width: 210px;
+}
+
+.showcase-card img {
+  width: 100%;
+  height: clamp(180px, 24vw, 280px);
+  object-fit: contain;
+  padding: 0.75rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(147, 197, 253, 0.10), transparent 20rem),
+    #0f172a;
+}
+
+.device-stack {
+  display: flex;
+  justify-content: center;
+}
+
+.device-stack img {
+  width: min(100%, 440px);
+  max-height: 560px;
+  object-fit: contain;
+  padding: 0.75rem;
+  background: rgba(255,255,255,0.035);
+}
+
+/* Make image-heavy sections breathe a little more on desktop */
+.showcase-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+@media (min-width: 901px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.4fr) minmax(240px, 320px);
+  }
+
+  .showcase-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .showcase-card.large {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .portrait-card {
+    max-width: 260px;
+    margin-inline: auto;
+  }
+
+  .book-card img,
+  .featured-book img {
+    max-width: 160px;
+  }
+
+  .showcase-card img {
+    height: clamp(170px, 45vw, 260px);
+  }
+
+  .device-stack img {
+    max-height: 420px;
+  }
+}
+
+@media (max-width: 560px) {
+  .portrait-card {
+    max-width: 220px;
+  }
+
+  .book-card img,
+  .featured-book img {
+    max-width: 150px;
+  }
+
+  .showcase-card img {
+    height: 210px;
+  }
+
+  .device-stack img {
+    max-height: 360px;
+  }
+}
+
 @supports not (backdrop-filter: blur(18px)) { .site-header { background: rgba(11, 17, 32, 0.96); } }
 
 @media (max-width: 900px) {
