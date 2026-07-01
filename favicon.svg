@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Benjamin A. Moss monogram">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18233d" />
+      <stop offset="100%" stop-color="#0c1324" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e6c98d" />
+      <stop offset="100%" stop-color="#caa96b" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)" />
+  <path d="M16 18h13.2c8.3 0 13.3 4.1 13.3 11 0 4.2-2.2 7.5-6.1 9.1L44 46h-8.9l-6.2-6.6H24V46h-8V18Zm8 6.5V33h5c3.6 0 5.6-1.5 5.6-4.3 0-2.8-2-4.2-5.6-4.2H24Z" fill="#f8f6f1" />
+  <path d="M47 18h3l6 28h-7.6l-1-5.8h-5.8l-1 5.8H33l6-28h3.1l2.4 14.7h.3L47 18Zm-.6 16.6-1.8-10.6h-.3l-1.8 10.6h3.9Z" fill="url(#accent)" />
+</svg>
