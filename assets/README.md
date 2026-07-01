@@ -1,16 +1,13 @@
 # Assets
 
-This folder contains media used throughout the website.
+This folder contains the visual assets used by the website.
 
 ## Structure
 
-- profile/ — Professional headshots
-- books/ — Book cover artwork
-- projects/
-  - noumena/
-  - learning-coach/
-  - logos-learning-academy/
-  - critical-listening-assistant/
-  - mission-control-inspector/
+- `profile/` — professional headshot and portrait images
+- `books/` — book covers and publication artwork
+- `projects/` — screenshots for software projects
 
-These assets are referenced by the HTML pages and can be expanded as new projects are added.
+## Guidelines
+
+Use descriptive filenames, remove unnecessary metadata when possible, and avoid including private or sensitive images. Project screenshots should not contain private data, API keys, student information, health information, or personal records.

@@ -1,48 +1,31 @@
-# Benjamin Moss
+# Benjamin A. Moss
 
-Welcome to the source repository for my personal website.
+Source repository for my personal website and professional portfolio.
 
-I am an Associate Professor of Philosophy whose work bridges philosophy, ethics, artificial intelligence, educational technology, and software development. This website serves as a central hub for my academic work, teaching, research, publications, and open-source software projects.
+I am an Associate Professor of Philosophy whose work bridges philosophy, ethics, artificial intelligence, educational technology, and software development. This website serves as a central hub for my academic work, teaching resources, publications, and software projects.
 
-## Mission
+## Live Site
 
-This website brings together my work as an educator, philosopher, author, and software developer. It documents my academic research, teaching resources, AI learning tools, and ongoing exploration of how artificial intelligence can support learning, reasoning, and human flourishing.
+https://noumena000.github.io
 
-## Areas of Interest
+## Site Focus
 
 - Philosophy and Applied Ethics
-- Artificial Intelligence and AI Ethics
-- Human-Centered AI
-- Educational Technology
+- AI Ethics and AI Literacy
 - Critical Thinking
 - Socratic Pedagogy
-- Philosophy of Technology
-- Software Development
-- Swift & SwiftUI
+- Educational Technology
+- Human-Centered AI
+- Swift and SwiftUI Development
 
-## Featured Projects
+## Featured Work
 
-- **Noumena Chat** – A privacy-focused AI assistant for reasoning, productivity, and knowledge management.
-- **Learning Coach** – An AI-powered learning platform supporting student engagement and critical thinking.
-- **Logos Learning Academy** – Educational software exploring philosophy, ethics, inquiry, and AI-assisted learning.
-- **Epistemic** – A reasoning workspace for organizing claims, evidence, arguments, and conceptual analysis.
-- **Assessment Insight** – AI-assisted rubric review and feedback support for educators.
-- **Horizon Expedition** – An educational exploration game designed to foster curiosity, observation, and discovery.
-
-## Website Roadmap
-
-Planned sections include:
-
-- About
-- Curriculum Vitae
-- Books & Publications
-- Research
-- Teaching Resources
-- AI & Educational Technology Projects
-- Open Source Software
-- Presentations
-- Blog & Essays
-- Contact
+- **Critical Thinking in the Age of AI** — Book on reasoning, questioning, and human judgment in a world of intelligent machines.
+- **Critical Thinking: Unleashing the Power of Reason** — Book on intellectual virtues, logic, Socratic inquiry, and reflective thought.
+- **Noumena Chat** — Privacy-conscious AI assistant concept for reasoning, productivity, and knowledge management.
+- **Logos Learning Academy** — Educational platform for inquiry, judgment, critical thinking, and lifelong learning.
+- **Learning Coach** — AI-supported learning platform for practice, reflection, and guided explanation.
+- **Critical Listening Assistant** — Real-time reasoning support for meetings, media, lectures, and debates.
 
 ## Technologies
 
@@ -51,32 +34,10 @@ Planned sections include:
 - JavaScript
 - GitHub Pages
 
-Future versions may incorporate:
-
-- Project screenshots and image galleries
-- Downloadable CV and teaching materials
-- Interactive demos
-- Embedded media
-- Project case studies
-- Development journal entries
-
-## Website
-
-The live website is available at:
-
-**https://noumena000.github.io**
-
-*A custom domain may be added in the future.*
-
-## Repository Status
-
-This repository is under active development. Content, design, and functionality will continue to evolve as new research, publications, teaching resources, and software projects are added.
-
 ## Contact
 
-- GitHub: https://github.com/Noumena000
-- Email: bamoss360 (at) gmail (dot) com
+GitHub: https://github.com/Noumena000
 
----
+Email: bamoss360 [at] gmail [dot] com
 
-© 2026 Benjamin A. Moss
+© 2026 Benjamin A. Moss. All rights reserved.

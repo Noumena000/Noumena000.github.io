@@ -2,19 +2,17 @@ const navToggle = document.querySelector(".nav-toggle");
 const nav = document.querySelector(".nav");
 
 navToggle?.addEventListener("click", () => {
-  const isOpen = nav.classList.toggle("open");
-  navToggle.setAttribute("aria-expanded", String(isOpen));
+  nav.classList.toggle("open");
 });
 
 document.querySelectorAll(".nav a").forEach((link) => {
-  link.addEventListener("click", () => {
-    nav.classList.remove("open");
-    navToggle?.setAttribute("aria-expanded", "false");
-  });
+  link.addEventListener("click", () => nav.classList.remove("open"));
 });
 
 const year = document.getElementById("year");
-if (year) year.textContent = new Date().getFullYear();
+if (year) {
+  year.textContent = new Date().getFullYear();
+}
 
 const revealItems = document.querySelectorAll(".reveal");
 
