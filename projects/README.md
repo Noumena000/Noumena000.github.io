@@ -12,4 +12,4 @@ Planned pages may include:
 - Horizon Expedition
 - Mission Control Inspector
 
-Each project page can eventually include an overview, screenshots, motivation, technical notes, current status, and links to public repositories or demos.
+Each project page can include an overview, screenshots, motivation, and high-level context while intentionally omitting sensitive implementation details and proprietary workflows.
