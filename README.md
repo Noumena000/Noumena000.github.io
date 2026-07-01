@@ -1,4 +1,4 @@
-# Benjamin A. Moss
+# Benjamin Moss
 
 Welcome to the source repository for my personal website.
 
