@@ -75,7 +75,7 @@ This repository is under active development. Content, design, and functionality 
 ## Contact
 
 - GitHub: https://github.com/Noumena000
-- Email: bamoss360@icloud.com
+- Email: bamoss360 (at) gmail (dot) com
 
 ---
 
