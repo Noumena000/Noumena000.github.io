@@ -27,6 +27,14 @@ https://noumena000.github.io
 - **Learning Coach** — AI-supported learning platform for practice, reflection, and guided explanation.
 - **Critical Listening Assistant** — Real-time reasoning support for meetings, media, lectures, and debates.
 
+## Professional Highlights
+
+- Associate Professor of Philosophy
+- Independent AI & Educational Technology Developer
+- Author of books and essays on critical thinking, AI, and philosophy education
+- Developer of SwiftUI-based learning and reasoning tools
+- Professional development in responsible AI, generative AI, and learning design
+
 ## Technologies
 
 - HTML5
@@ -37,6 +45,8 @@ https://noumena000.github.io
 ## Contact
 
 GitHub: https://github.com/Noumena000
+
+LinkedIn: https://www.linkedin.com/in/benjaminmoss000
 
 Email: bamoss360 [at] gmail [dot] com
 

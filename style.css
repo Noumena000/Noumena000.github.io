@@ -130,7 +130,7 @@ li + li { margin-top: 0.4rem; }
 .publication-list article { padding: 1rem; border: 1px solid var(--border); border-radius: 1.1rem; background: rgba(255,255,255,0.04); }
 .publication-list span { color: var(--soft); font-size: 0.9rem; }
 
-.resource-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.resource-grid, .credential-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
 .notice { margin-top: 1.25rem; color: var(--soft); font-size: 0.95rem; }
 
 .showcase-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -162,7 +162,7 @@ li + li { margin-top: 0.4rem; }
   .nav-toggle { display: block; }
   .nav { display: none; position: absolute; top: 4.25rem; right: 1rem; left: 1rem; flex-direction: column; background: var(--panel-strong); border: 1px solid var(--border); border-radius: 1rem; padding: 1rem; }
   .nav.open { display: flex; }
-  .hero, .split, .book-grid, .publication-list, .showcase-grid, .resource-grid, .pillar-grid { grid-template-columns: 1fr; }
+  .hero, .split, .book-grid, .publication-list, .showcase-grid, .resource-grid, .credential-grid, .pillar-grid { grid-template-columns: 1fr; }
   h1 { letter-spacing: -0.045em; }
   .section-heading { display: block; }
   .hero { min-height: auto; padding-top: 3.5rem; }
