@@ -846,3 +846,65 @@ li + li { margin-top: 0.4rem; }
   .lightbox-dialog { width: min(100vw - 1rem, 960px); padding: 0.85rem; }
   .lightbox-image { max-height: calc(100vh - 9.5rem); }
 }
+
+
+/* === Portfolio 2.0 project taxonomy === */
+.project-category-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1.2rem 0 2rem;
+}
+.project-category-nav a,
+.project-card-category {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.45rem 0.7rem;
+  text-decoration: none;
+  color: var(--muted);
+  background: rgba(255,255,255,0.045);
+  font-size: 0.86rem;
+}
+.project-category { margin-top: 2.5rem; }
+.project-category:first-of-type { margin-top: 1.5rem; }
+.project-category-heading { margin-bottom: 0.85rem; }
+.project-grid-expanded { align-items: stretch; }
+.project-grid-expanded .showcase-card p strong {
+  display: block;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.project-card-category {
+  display: inline-flex;
+  margin-top: 0.95rem;
+  color: var(--soft);
+}
+.project-icon-preview {
+  min-height: 170px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(230, 201, 141, 0.2), transparent 12rem),
+    radial-gradient(circle at 75% 65%, rgba(96, 165, 250, 0.14), transparent 12rem),
+    #0f172a;
+  border-bottom: 1px solid var(--border);
+}
+.project-icon-preview span {
+  width: 4.6rem;
+  height: 4.6rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(230, 201, 141, 0.38);
+  border-radius: 1.35rem;
+  color: var(--accent-strong);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  font-size: 1.45rem;
+  background: rgba(255,255,255,0.055);
+  box-shadow: var(--shadow-soft);
+}
+.project-status-note {
+  color: var(--soft);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
