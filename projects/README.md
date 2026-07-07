@@ -8,6 +8,7 @@ The pages are intentionally written at a high level. Several projects are still 
 
 - Logos AI
 - Logos Learning Academy
+- Socratic Assessment Platform
 - Learning Coach
 - Critical Listening Assistant
 - Philosophy & Ethics Learning Tools
