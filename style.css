@@ -908,3 +908,61 @@ li + li { margin-top: 0.4rem; }
   font-size: 0.95rem;
   margin-top: 0.5rem;
 }
+
+
+/* === Research vision and ecosystem patch === */
+.research-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.6rem;
+}
+.research-theme-card p { margin-bottom: 0; }
+.research-timeline,
+.project-ecosystem-map {
+  margin-top: 1.6rem;
+  padding: 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(202,169,107,0.12), rgba(255,255,255,0.035));
+  box-shadow: var(--shadow);
+}
+.timeline-row,
+.ecosystem-lanes {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+.timeline-item,
+.ecosystem-lane {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: rgba(255,255,255,0.045);
+}
+.timeline-item span,
+.ecosystem-lane span {
+  display: inline-flex;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.timeline-item h3,
+.ecosystem-lane h3 { font-size: 1.05rem; }
+.timeline-item p,
+.ecosystem-lane p { margin-bottom: 0; font-size: 0.93rem; color: var(--soft); }
+.ecosystem-lanes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.footer-vision {
+  max-width: 780px;
+  margin: 0.5rem auto 0;
+  color: var(--soft);
+}
+@media (max-width: 900px) {
+  .research-theme-grid,
+  .timeline-row,
+  .ecosystem-lanes { grid-template-columns: 1fr; }
+}
