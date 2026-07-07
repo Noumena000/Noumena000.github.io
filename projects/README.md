@@ -6,7 +6,7 @@ The pages are intentionally written at a high level. Several projects are still 
 
 ## Current pages
 
-- Noumena Chat
+- Logos AI
 - Logos Learning Academy
 - Learning Coach
 - Critical Listening Assistant

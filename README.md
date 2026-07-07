@@ -22,7 +22,7 @@ https://noumena000.github.io
 
 - **Critical Thinking in the Age of AI** — Book on reasoning, questioning, and human judgment in a world of intelligent machines.
 - **Critical Thinking: Unleashing the Power of Reason** — Book on intellectual virtues, logic, Socratic inquiry, and reflective thought.
-- **Noumena Chat** — Privacy-conscious AI assistant concept for reasoning, productivity, and knowledge management.
+- **Logos AI** — Privacy-conscious AI chatbot and workspace for reasoning, productivity, and knowledge management.
 - **Logos Learning Academy** — Educational platform for inquiry, judgment, critical thinking, and lifelong learning.
 - **Learning Coach** — AI-supported learning platform for practice, reflection, and guided explanation.
 - **Critical Listening Assistant** — Real-time reasoning support for meetings, media, lectures, and debates.
