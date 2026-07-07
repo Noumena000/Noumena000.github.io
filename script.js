@@ -62,3 +62,55 @@ if ("IntersectionObserver" in window) {
 
 setActiveNavLink();
 window.addEventListener("scroll", setActiveNavLink, { passive: true });
+
+const lightbox = document.getElementById("projectLightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const lightboxCaption = document.getElementById("lightboxCaption");
+const lightboxTriggers = document.querySelectorAll("[data-lightbox-image]");
+
+if (lightbox && lightboxImage && lightboxCaption && lightboxTriggers.length) {
+  let activeTrigger = null;
+
+  const closeLightbox = () => {
+    lightbox.hidden = true;
+    document.body.classList.remove("lightbox-open");
+    if (activeTrigger) {
+      activeTrigger.setAttribute("aria-expanded", "false");
+      activeTrigger.focus();
+      activeTrigger = null;
+    }
+  };
+
+  const openLightbox = (trigger) => {
+    const imageSrc = trigger.getAttribute("data-lightbox-image");
+    const caption = trigger.getAttribute("data-lightbox-caption") || "";
+
+    if (!imageSrc) return;
+
+    activeTrigger = trigger;
+    lightboxImage.src = imageSrc;
+    lightboxImage.alt = caption;
+    lightboxCaption.textContent = caption;
+    lightbox.hidden = false;
+    document.body.classList.add("lightbox-open");
+    trigger.setAttribute("aria-expanded", "true");
+    lightbox.querySelector(".lightbox-close")?.focus();
+  };
+
+  lightboxTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => openLightbox(trigger));
+  });
+
+  lightbox.addEventListener("click", (event) => {
+    const closeTarget = event.target.closest("[data-lightbox-close='true']");
+    if (closeTarget) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !lightbox.hidden) {
+      closeLightbox();
+    }
+  });
+}
