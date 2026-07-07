@@ -60,18 +60,90 @@
   object-position: center;
 }
 
+.assessment-product-hero {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.78fr) minmax(420px, 1.22fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  border-radius: 34px;
+  background: linear-gradient(135deg, rgba(12, 19, 36, 0.96), rgba(27, 38, 67, 0.94));
+  color: #f8fafc;
+  padding: clamp(2rem, 5vw, 4rem);
+  box-shadow: 0 28px 90px rgba(12, 19, 36, 0.24);
+}
+
+.assessment-product-copy {
+  min-width: 0;
+}
+
+.assessment-product-copy .eyebrow,
+.assessment-product-copy p {
+  color: rgba(248, 250, 252, 0.78);
+}
+
+.assessment-product-copy h2 {
+  color: #ffffff;
+  font-size: clamp(2.2rem, 4.8vw, 4.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  margin-bottom: 1rem;
+}
+
+.assessment-product-copy strong {
+  color: #ffffff;
+}
+
+.assessment-product-actions {
+  margin-top: 1.35rem;
+}
+
+.assessment-product-visual {
+  margin: 0;
+  border-radius: 26px;
+  overflow: hidden;
+  background: #07131a;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+  aspect-ratio: 16 / 9;
+}
+
+.assessment-product-visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
 @media (max-width: 980px) {
   .logos-product-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .assessment-product-hero {
     grid-template-columns: 1fr;
   }
 
   .logos-product-visual {
     aspect-ratio: 16 / 10;
   }
+
+  .assessment-product-visual {
+    aspect-ratio: 16 / 10;
+  }
 }
 
 @media (max-width: 640px) {
   .logos-product-visual {
+    border-radius: 20px;
+    aspect-ratio: 4 / 3;
+  }
+ 
+  .assessment-product-hero {
+    border-radius: 24px;
+    padding: 1.25rem;
+  }
+
+  .assessment-product-visual {
     border-radius: 20px;
     aspect-ratio: 4 / 3;
   }
@@ -86,6 +158,7 @@
 <nav aria-label="Main navigation" class="nav">
 <a href="#about">About</a>
 <a href="#logos">Logos</a>
+<a href="#assessment">Assessment</a>
 <a href="#projects">Projects</a>
 <a href="#research">Research Vision</a>
 <a href="#books">Books</a>
@@ -148,6 +221,29 @@
 </div>
 <figure class="logos-product-visual">
 <img alt="Logos Learning Academy marketing hero showing the app interface on a tablet with a learning-focused product message" src="assets/projects/logos-learning-academy/hero-marketing.png"/>
+ </figure>
+</section>
+<section class="section assessment-product-hero reveal" id="assessment">
+<div class="assessment-product-copy">
+<p class="eyebrow">Research Prototype</p>
+<h2>Socratic Assessment Platform</h2>
+<p>
+          <strong>Make understanding demonstrable through dialogue.</strong> This public research prototype explores whether learners can demonstrate conceptual understanding by defining ideas, explaining reasons, applying concepts to new cases, answering objections, and revising their claims under questioning.
+        </p>
+<div class="tag-list">
+<span>Formative Assessment</span>
+<span>Socratic Dialogue</span>
+<span>Faculty Review</span>
+<span>Reasoning Evidence</span>
+<span>AI-Assisted Learning</span>
+</div>
+<div class="hero-actions assessment-product-actions">
+<a class="button primary" href="projects/socratic-assessment-platform.html">View Research Case Study</a>
+<a class="button" href="https://noumena000.github.io/Socratic-Assessment-Platform/" rel="noopener noreferrer" target="_blank">Open Public Prototype</a>
+</div>
+</div>
+<figure class="assessment-product-visual">
+<img alt="Socratic Assessment Platform marketing hero showing a reasoning assessment interface and dialogue-centered learning workflow" src="assets/projects/socratic-assessment-platform/hero-marketing.png"/>
 </figure>
 </section>
 <section aria-label="Core areas" class="pillar-grid reveal">
