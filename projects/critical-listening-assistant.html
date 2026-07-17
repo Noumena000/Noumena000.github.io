@@ -4,17 +4,16 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Critical Listening Assistant | Benjamin A. Moss</title>
-<meta content="Critical Listening Assistant is an AI-assisted learning project under private development focused on careful listening, reflection, and intellectual engagement." name="description"/>
+<meta content="Explore an interactive demonstration of a privacy-conscious critical listening tool for identifying claims, reasons, evidence, assumptions, objections, and questions in spoken discussions." name="description"/>
 <meta content="#0c1324" name="theme-color"/>
 <meta content="Critical Listening Assistant | Benjamin A. Moss" property="og:title"/>
-<meta content="An AI-assisted learning project focused on careful listening, reflection, media literacy, and human-centered educational technology." property="og:description"/>
+<meta content="An interactive research demonstration focused on careful listening, argument analysis, and human-centered AI." property="og:description"/>
 <meta content="article" property="og:type"/>
 <meta content="https://noumena000.github.io/projects/critical-listening-assistant.html" property="og:url"/>
 <meta content="summary" name="twitter:card"/>
-<meta content="Critical Listening Assistant | Benjamin A. Moss" name="twitter:title"/>
-<meta content="An AI-assisted learning project focused on careful listening, reflection, media literacy, and human-centered educational technology." name="twitter:description"/>
 <link href="../favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="../style.css" rel="stylesheet"/>
+<link href="../assets/projects/critical-listening-assistant/demo.css" rel="stylesheet"/>
 </head>
 <body>
 <header class="site-header">
@@ -29,57 +28,119 @@
 </header>
 
 <main class="page-shell project-main" id="top">
-<section class="project-hero reveal">
+<section class="project-hero reveal cla-hero">
 <div class="project-hero-copy">
 <a class="back-link" href="../index.html#projects">← Back to Projects</a>
-<p class="eyebrow">AI learning tool • Critical listening • Reflection</p>
+<p class="eyebrow">Interactive research demonstration • Critical listening • Argument analysis</p>
 <h1>Critical Listening Assistant</h1>
-<p class="project-intro">Critical Listening Assistant is an AI-assisted learning project currently under private development. It explores how technology can support careful listening, thoughtful reflection, and intellectual engagement across lectures, meetings, discussions, and media without replacing the listener's own judgment.</p>
-
+<p class="project-intro">Critical Listening Assistant explores how technology might help people listen more carefully without replacing their judgment. This browser demonstration uses a fictional faculty discussion to reveal claims, reasons, evidence, assumptions, objections, and questions.</p>
 <div class="project-meta-grid">
 <article class="project-meta-card">
 <h3>Status</h3>
-<p><strong>Active Development</strong><br/>Interface previews and demonstrations will be released as development progresses.</p>
+<p><strong>Interactive Demonstration</strong><br/>A public, fictional simulation of the reasoning workflow.</p>
 </article>
-
 <article class="project-meta-card">
 <h3>Purpose</h3>
-<p>To support more attentive listening, clearer reflection, and stronger engagement with complex spoken material.</p>
+<p>To support attentive interpretation of lectures, meetings, interviews, debates, and media.</p>
 </article>
 </div>
+<div class="hero-actions">
+<a class="button primary" href="#demo">Open the demonstration</a>
+<a class="button" href="#method">How it works</a>
+</div>
+</div>
+<div class="project-hero-visual cla-preview" aria-label="Preview of the critical listening interface">
+<div class="cla-preview-header"><span></span><span></span><span></span><strong>Listening Map</strong></div>
+<div class="cla-preview-body">
+<div class="cla-preview-transcript"><small>FICTIONAL DISCUSSION</small><p><b>Dr. Rivera:</b> We should adopt the AI tutoring platform because students need faster feedback.</p><p><b>Professor Chen:</b> Faster feedback may help, but that does not establish better understanding.</p></div>
+<div class="cla-preview-insight"><span>ASSUMPTION</span><strong>Faster feedback improves learning.</strong><small>What evidence would establish that connection?</small></div>
+</div>
+</div>
+</section>
+
+<section class="section reveal" id="demo">
+<div class="section-heading cla-section-heading">
+<div>
+<p class="eyebrow">Interactive demonstration</p>
+<h2>Listen beyond the surface.</h2>
+</div>
+<p class="cla-demo-note">Fictional content • No microphone • No external AI service</p>
 </div>
 
-<div class="project-hero-visual">
-<div class="project-placeholder">
-<strong>Preview Coming Soon</strong>
-<span>This project is currently under active development. Selected interface previews and demonstrations will be published as the project approaches public release.</span>
+<div class="cla-demo-shell">
+<div class="cla-toolbar" role="toolbar" aria-label="Reasoning filters">
+<button class="cla-filter active" type="button" data-filter="all">All</button>
+<button class="cla-filter" type="button" data-filter="claim">Claims</button>
+<button class="cla-filter" type="button" data-filter="reason">Reasons</button>
+<button class="cla-filter" type="button" data-filter="evidence">Evidence</button>
+<button class="cla-filter" type="button" data-filter="assumption">Assumptions</button>
+<button class="cla-filter" type="button" data-filter="objection">Objections</button>
+<button class="cla-filter" type="button" data-filter="question">Questions</button>
 </div>
+
+<div class="cla-workspace">
+<section class="cla-panel cla-transcript-panel" aria-labelledby="transcript-title">
+<div class="cla-panel-heading"><div><span class="cla-kicker">Conversation</span><h3 id="transcript-title">Should the college adopt an AI tutoring platform?</h3></div><span class="cla-status">Fictional scenario</span></div>
+<div class="cla-transcript" id="cla-transcript">
+<article class="cla-turn">
+<div class="cla-speaker"><span>DR</span><div><strong>Dr. Rivera</strong><small>Academic Innovation</small></div></div>
+<p><mark data-category="claim">We should adopt the new AI tutoring platform next semester.</mark> <mark data-category="reason">Students need feedback more quickly than faculty can always provide it.</mark> <mark data-category="evidence">Several peer institutions have already introduced similar systems.</mark></p>
+</article>
+<article class="cla-turn">
+<div class="cla-speaker"><span>PC</span><div><strong>Professor Chen</strong><small>Faculty Representative</small></div></div>
+<p><mark data-category="objection">Faster feedback may be useful, but speed alone does not establish that students understand the material better.</mark> <mark data-category="question">What evidence do we have about learning outcomes, accuracy, and student trust?</mark></p>
+</article>
+<article class="cla-turn">
+<div class="cla-speaker"><span>DR</span><div><strong>Dr. Rivera</strong><small>Academic Innovation</small></div></div>
+<p><mark data-category="assumption">If other colleges are using these tools, delaying adoption could leave our students at a disadvantage.</mark> I agree that we should begin with a limited pilot and define what success would mean before expanding it.</p>
+</article>
+</div>
+<button class="button primary cla-analyze" id="cla-analyze" type="button">Analyze the discussion</button>
+</section>
+
+<aside class="cla-panel cla-analysis-panel" aria-labelledby="analysis-title">
+<div class="cla-panel-heading"><div><span class="cla-kicker">Reasoning analysis</span><h3 id="analysis-title">What a careful listener might notice</h3></div></div>
+<div class="cla-empty" id="cla-empty"><div class="cla-empty-icon">◇</div><h4>Analysis is ready</h4><p>Select “Analyze the discussion” to reveal the reasoning structure.</p></div>
+<div class="cla-analysis" id="cla-analysis" hidden aria-live="polite">
+<article class="cla-insight" data-category="claim"><span>Claim</span><h4>Adopt the platform next semester.</h4><p>This is the primary proposal under discussion.</p></article>
+<article class="cla-insight" data-category="reason"><span>Reason</span><h4>Students need faster feedback.</h4><p>The proposal is justified by a perceived delay in faculty feedback.</p></article>
+<article class="cla-insight" data-category="evidence"><span>Evidence</span><h4>Peer institutions use similar systems.</h4><p>This establishes adoption elsewhere, but not whether the systems improve learning.</p></article>
+<article class="cla-insight" data-category="assumption"><span>Assumption</span><h4>Faster feedback produces better learning.</h4><p>The discussion has not yet demonstrated this connection.</p></article>
+<article class="cla-insight" data-category="objection"><span>Objection</span><h4>Speed is not the same as understanding.</h4><p>The response challenges the standard being used to evaluate the proposal.</p></article>
+<article class="cla-insight" data-category="question"><span>Question</span><h4>What outcomes would count as success?</h4><p>A careful pilot would need measures for learning, accuracy, trust, and faculty oversight.</p></article>
+</div>
+</aside>
+</div>
+</div>
+</section>
+
+<section class="section reveal" id="method">
+<div class="section-heading"><div><p class="eyebrow">Listening map</p><h2>From proposal to responsible inquiry.</h2></div></div>
+<div class="cla-map" aria-label="Reasoning map showing the structure of the fictional discussion">
+<article><span>01</span><small>Proposal</small><strong>Adopt an AI tutoring platform</strong></article>
+<div class="cla-map-arrow">→</div>
+<article><span>02</span><small>Reason</small><strong>Students need faster feedback</strong></article>
+<div class="cla-map-arrow">→</div>
+<article><span>03</span><small>Assumption</small><strong>Speed improves understanding</strong></article>
+<div class="cla-map-arrow">→</div>
+<article><span>04</span><small>Challenge</small><strong>Evidence has not established that link</strong></article>
+<div class="cla-map-arrow">→</div>
+<article><span>05</span><small>Revision</small><strong>Run a measured, limited pilot</strong></article>
 </div>
 </section>
 
 <section class="section project-layout reveal">
 <article class="card project-section-card">
-<p class="eyebrow">Overview</p>
-<h2>Listening as an active intellectual skill.</h2>
-<p>Critical Listening Assistant is designed around the idea that listening is an active intellectual practice rather than a passive activity. The project explores how AI can help learners organize ideas, reflect on discussions, and engage more carefully with complex material while preserving independent judgment and critical thinking.</p>
-<div class="project-callout">This project reflects my broader interest in critical thinking, AI literacy, philosophy of education, and human-centered educational technology.</div>
+<p class="eyebrow">Design principle</p>
+<h2>Listening as an active intellectual practice.</h2>
+<p>The project treats listening as more than transcription. It asks what is being claimed, what supports the claim, what remains assumed, what objections matter, and what questions would move the conversation forward.</p>
+<div class="project-callout">The goal is not to automate judgment. It is to make the structure of a discussion easier to examine.</div>
 </article>
-
 <aside class="card project-section-card accent-card">
-<p class="eyebrow">Focus areas</p>
-<h3>What it emphasizes</h3>
-<ul class="project-list">
-<li>Critical listening</li><li>Reflection and note organization</li><li>Media literacy</li><li>Human-centered AI</li>
-</ul>
+<p class="eyebrow">Reasoning categories</p>
+<h3>What the assistant surfaces</h3>
+<ul class="project-list"><li>Claims and proposals</li><li>Reasons and evidence</li><li>Unstated assumptions</li><li>Objections and counterexamples</li><li>Clarifying and evaluative questions</li><li>Revisions and unresolved issues</li></ul>
 </aside>
-</section>
-
-<section class="section reveal">
-<article class="card project-section-card">
-<p class="eyebrow">Portfolio Notice</p>
-<h2>Development details intentionally limited.</h2>
-<p>This project is presented for professional portfolio purposes. Selected interface previews, workflows, and implementation details are intentionally omitted while development continues.</p>
-</article>
 </section>
 </main>
 
@@ -89,5 +150,6 @@
 <p>© <span id="year"></span> Benjamin A. Moss. All rights reserved.</p>
 </footer>
 <script src="../script.js"></script>
+<script src="../assets/projects/critical-listening-assistant/demo.js"></script>
 </body>
 </html>
