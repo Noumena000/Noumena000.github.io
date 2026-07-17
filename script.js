@@ -21,6 +21,15 @@ if (year) {
   year.textContent = new Date().getFullYear();
 }
 
+const criticalListeningCard = document.querySelector('a[href="projects/critical-listening-assistant.html"]');
+if (criticalListeningCard) {
+  const status = criticalListeningCard.querySelector(".status");
+  const linkText = criticalListeningCard.querySelector(".card-link-text");
+  if (status) status.textContent = "Interactive Demo";
+  if (linkText) linkText.textContent = "Explore interactive demo";
+  criticalListeningCard.setAttribute("aria-label", "Explore the Critical Listening Assistant interactive demo");
+}
+
 const revealItems = document.querySelectorAll(".reveal");
 const sections = Array.from(document.querySelectorAll("main section[id]"));
 

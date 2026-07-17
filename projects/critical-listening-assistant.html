@@ -16,6 +16,7 @@
 <link href="../assets/projects/critical-listening-assistant/demo.css" rel="stylesheet"/>
 </head>
 <body>
+<a class="cla-skip-link" href="#demo">Skip to interactive demonstration</a>
 <header class="site-header">
 <a class="brand" href="../index.html">Benjamin A. Moss</a>
 <button aria-expanded="false" aria-label="Toggle navigation" class="nav-toggle">☰</button>
@@ -58,7 +59,7 @@
 </div>
 </section>
 
-<section class="section reveal" id="demo">
+<section class="section reveal" id="demo" tabindex="-1">
 <div class="section-heading cla-section-heading">
 <div>
 <p class="eyebrow">Interactive demonstration</p>
@@ -68,7 +69,7 @@
 </div>
 
 <div class="cla-demo-shell">
-<div class="cla-toolbar" role="toolbar" aria-label="Reasoning filters">
+<div class="cla-toolbar" role="toolbar" aria-label="Filter the transcript and analysis by reasoning category">
 <button class="cla-filter active" type="button" data-filter="all">All</button>
 <button class="cla-filter" type="button" data-filter="claim">Claims</button>
 <button class="cla-filter" type="button" data-filter="reason">Reasons</button>
@@ -83,25 +84,26 @@
 <div class="cla-panel-heading"><div><span class="cla-kicker">Conversation</span><h3 id="transcript-title">Should the college adopt an AI tutoring platform?</h3></div><span class="cla-status">Fictional scenario</span></div>
 <div class="cla-transcript" id="cla-transcript">
 <article class="cla-turn">
-<div class="cla-speaker"><span>DR</span><div><strong>Dr. Rivera</strong><small>Academic Innovation</small></div></div>
+<div class="cla-speaker"><span aria-hidden="true">DR</span><div><strong>Dr. Rivera</strong><small>Academic Innovation</small></div></div>
 <p><mark data-category="claim">We should adopt the new AI tutoring platform next semester.</mark> <mark data-category="reason">Students need feedback more quickly than faculty can always provide it.</mark> <mark data-category="evidence">Several peer institutions have already introduced similar systems.</mark></p>
 </article>
 <article class="cla-turn">
-<div class="cla-speaker"><span>PC</span><div><strong>Professor Chen</strong><small>Faculty Representative</small></div></div>
+<div class="cla-speaker"><span aria-hidden="true">PC</span><div><strong>Professor Chen</strong><small>Faculty Representative</small></div></div>
 <p><mark data-category="objection">Faster feedback may be useful, but speed alone does not establish that students understand the material better.</mark> <mark data-category="question">What evidence do we have about learning outcomes, accuracy, and student trust?</mark></p>
 </article>
 <article class="cla-turn">
-<div class="cla-speaker"><span>DR</span><div><strong>Dr. Rivera</strong><small>Academic Innovation</small></div></div>
+<div class="cla-speaker"><span aria-hidden="true">DR</span><div><strong>Dr. Rivera</strong><small>Academic Innovation</small></div></div>
 <p><mark data-category="assumption">If other colleges are using these tools, delaying adoption could leave our students at a disadvantage.</mark> I agree that we should begin with a limited pilot and define what success would mean before expanding it.</p>
 </article>
 </div>
+<noscript><p class="cla-noscript">JavaScript is disabled. The complete fictional transcript and listening map remain available, but interactive filtering is unavailable.</p></noscript>
 <button class="button primary cla-analyze" id="cla-analyze" type="button">Analyze the discussion</button>
 </section>
 
 <aside class="cla-panel cla-analysis-panel" aria-labelledby="analysis-title">
 <div class="cla-panel-heading"><div><span class="cla-kicker">Reasoning analysis</span><h3 id="analysis-title">What a careful listener might notice</h3></div></div>
-<div class="cla-empty" id="cla-empty"><div class="cla-empty-icon">◇</div><h4>Analysis is ready</h4><p>Select “Analyze the discussion” to reveal the reasoning structure.</p></div>
-<div class="cla-analysis" id="cla-analysis" hidden aria-live="polite">
+<div class="cla-empty" id="cla-empty"><div class="cla-empty-icon" aria-hidden="true">◇</div><h4>Analysis is ready</h4><p>Select “Analyze the discussion” to reveal the reasoning structure.</p></div>
+<div class="cla-analysis" id="cla-analysis" hidden aria-live="polite" tabindex="-1">
 <article class="cla-insight" data-category="claim"><span>Claim</span><h4>Adopt the platform next semester.</h4><p>This is the primary proposal under discussion.</p></article>
 <article class="cla-insight" data-category="reason"><span>Reason</span><h4>Students need faster feedback.</h4><p>The proposal is justified by a perceived delay in faculty feedback.</p></article>
 <article class="cla-insight" data-category="evidence"><span>Evidence</span><h4>Peer institutions use similar systems.</h4><p>This establishes adoption elsewhere, but not whether the systems improve learning.</p></article>
@@ -118,13 +120,13 @@
 <div class="section-heading"><div><p class="eyebrow">Listening map</p><h2>From proposal to responsible inquiry.</h2></div></div>
 <div class="cla-map" aria-label="Reasoning map showing the structure of the fictional discussion">
 <article><span>01</span><small>Proposal</small><strong>Adopt an AI tutoring platform</strong></article>
-<div class="cla-map-arrow">→</div>
+<div class="cla-map-arrow" aria-hidden="true">→</div>
 <article><span>02</span><small>Reason</small><strong>Students need faster feedback</strong></article>
-<div class="cla-map-arrow">→</div>
+<div class="cla-map-arrow" aria-hidden="true">→</div>
 <article><span>03</span><small>Assumption</small><strong>Speed improves understanding</strong></article>
-<div class="cla-map-arrow">→</div>
+<div class="cla-map-arrow" aria-hidden="true">→</div>
 <article><span>04</span><small>Challenge</small><strong>Evidence has not established that link</strong></article>
-<div class="cla-map-arrow">→</div>
+<div class="cla-map-arrow" aria-hidden="true">→</div>
 <article><span>05</span><small>Revision</small><strong>Run a measured, limited pilot</strong></article>
 </div>
 </section>
@@ -141,6 +143,20 @@
 <h3>What the assistant surfaces</h3>
 <ul class="project-list"><li>Claims and proposals</li><li>Reasons and evidence</li><li>Unstated assumptions</li><li>Objections and counterexamples</li><li>Clarifying and evaluative questions</li><li>Revisions and unresolved issues</li></ul>
 </aside>
+</section>
+
+<section class="section reveal cla-ethics" id="ethics">
+<div class="section-heading"><div><p class="eyebrow">Privacy and ethical use</p><h2>Designed to support judgment—not surveillance.</h2></div></div>
+<div class="cla-principles">
+<article><span>01</span><h3>Consent before capture</h3><p>Any native implementation should make recording visible and require appropriate participant consent.</p></article>
+<article><span>02</span><h3>Local-first processing</h3><p>The development direction prioritizes on-device analysis and user control over storage, deletion, and sharing.</p></article>
+<article><span>03</span><h3>Interpretation, not authority</h3><p>Categories and questions are prompts for reflection. They are not definitive judgments about speakers or intentions.</p></article>
+<article><span>04</span><h3>No covert participation</h3><p>The project is not intended for hidden monitoring, employee surveillance, or undisclosed analysis of private conversations.</p></article>
+</div>
+<div class="cla-disclosure">
+<div><strong>About this browser demonstration</strong><p>It uses only fictional text stored in the webpage. It does not request microphone permission, record audio, send content to an AI provider, or save visitor data.</p></div>
+<div><strong>About the native prototype</strong><p>The separate macOS prototype explores transcription and local reasoning support. Its implementation remains private while consent, privacy, and reliability safeguards are developed.</p></div>
+</div>
 </section>
 </main>
 
