@@ -10,6 +10,17 @@
 
   let hasAnalyzed = false;
 
+  function revealAnalysis({ moveFocus = false } = {}) {
+    if (hasAnalyzed) return;
+    hasAnalyzed = true;
+    emptyState.hidden = true;
+    analysis.hidden = false;
+    analyzeButton.textContent = 'Analysis revealed';
+    analyzeButton.disabled = true;
+    analyzeButton.setAttribute('aria-disabled', 'true');
+    if (moveFocus) analysis.focus();
+  }
+
   function applyFilter(category) {
     filters.forEach((button) => {
       const active = button.dataset.filter === category;
@@ -26,29 +37,22 @@
     insights.forEach((card) => {
       const matches = category === 'all' || card.dataset.category === category;
       card.classList.toggle('is-muted', !matches);
+      card.setAttribute('aria-hidden', String(!matches && category !== 'all'));
     });
+
+    const selectedLabel = category === 'all' ? 'all reasoning categories' : `${category} items`;
+    analysis.setAttribute('aria-label', `Showing ${selectedLabel}`);
   }
 
   analyzeButton.addEventListener('click', () => {
-    hasAnalyzed = true;
-    emptyState.hidden = true;
-    analysis.hidden = false;
-    analyzeButton.textContent = 'Analysis revealed';
-    analyzeButton.disabled = true;
+    revealAnalysis({ moveFocus: true });
     applyFilter('all');
-    analysis.focus?.();
   });
 
   filters.forEach((button) => {
     button.setAttribute('aria-pressed', String(button.classList.contains('active')));
     button.addEventListener('click', () => {
-      if (!hasAnalyzed) {
-        emptyState.hidden = true;
-        analysis.hidden = false;
-        analyzeButton.textContent = 'Analysis revealed';
-        analyzeButton.disabled = true;
-        hasAnalyzed = true;
-      }
+      revealAnalysis();
       applyFilter(button.dataset.filter || 'all');
     });
   });
