@@ -10,4 +10,4 @@ This folder contains the visual assets used by the website.
 
 ## Guidelines
 
-Use descriptive filenames, remove unnecessary metadata when possible, and avoid including private or sensitive images. Project screenshots should not contain private data, API keys, student information, health information, or personal records.
+Use descriptive filenames, remove unnecessary metadata when possible, and avoid including private or sensitive images. Project screenshots should not contain private data, API keys, student information, health information, or personal records. Unreleased product screenshots belong in a private repository, not in the public Pages branch.

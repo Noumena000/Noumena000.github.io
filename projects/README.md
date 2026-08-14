@@ -4,15 +4,12 @@ This directory contains individual portfolio pages for selected software, resear
 
 The pages are intentionally written at a high level. Several projects are still under active development, so selected interface previews, workflows, internal architecture, prompts, scoring methods, data structures, and implementation details are omitted until public release.
 
-## Current pages
+## Current public pages
 
-- Logos AI
 - Logos Learning Academy
 - Socratic Assessment Platform
-- Learning Coach
 - Critical Listening Assistant
-- Philosophy & Ethics Learning Tools
-- Mission Control Inspector
+- SpeedGrader
 
 ## Portfolio approach
 
