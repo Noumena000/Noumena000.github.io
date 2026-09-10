@@ -228,6 +228,16 @@ li + li { margin-top: 0.4rem; }
   color: var(--soft);
 }
 
+.current-work-note {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0 0 1.5rem;
+}
+.current-work-note .card { padding: 1.15rem; }
+.current-work-note h3 { margin: 0.45rem 0 0.35rem; font-size: 1.15rem; }
+.current-work-note p { margin: 0; font-size: 0.94rem; }
+
 .book-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1rem; }
 .book-card { padding: 1rem; display: grid; grid-template-columns: 180px 1fr; gap: 1rem; align-items: start; }
 .featured-book { grid-template-columns: 220px 1fr; }
@@ -1106,7 +1116,8 @@ li + li { margin-top: 0.4rem; }
   .flagship-grid,
   .product-grid,
   .ecosystem-strip,
-  .research-theme-grid {
+  .research-theme-grid,
+  .current-work-note {
     grid-template-columns: 1fr;
   }
 
