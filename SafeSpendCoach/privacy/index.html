@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SafeSpendCoach privacy policy: local financial processing, user-controlled imports, and FinanceKit access with consent.">
+  <meta name="theme-color" content="#176b52">
+  <link rel="canonical" href="https://noumena000.github.io/SafeSpendCoach/privacy/">
+  <link rel="stylesheet" href="../styles.css">
+  <title>Privacy Policy — SafeSpendCoach</title>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="../">SafeSpendCoach</a>
+      <div class="nav-links">
+        <a href="./" aria-current="page">Privacy</a>
+        <a href="https://noumena000.github.io/">Developer</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="policy">
+    <section class="hero" aria-labelledby="policy-title">
+      <p class="eyebrow">Your money stays yours</p>
+      <h1 id="policy-title">Privacy Policy</h1>
+      <p class="lede">SafeSpendCoach is designed to help you understand your finances while keeping your financial records under your control.</p>
+      <p class="metadata"><strong>Effective date:</strong> September 13, 2026</p>
+    </section>
+
+    <aside class="notice" aria-label="Current availability">
+      <p><strong>FinanceKit availability:</strong> SafeSpendCoach is preparing to support eligible Apple Wallet accounts. FinanceKit access is not active until Apple grants the entitlement and the user authorizes access through Apple’s system interface.</p>
+    </aside>
+
+    <section class="policy-section" aria-labelledby="overview">
+      <h2 id="overview">Overview</h2>
+      <p>SafeSpendCoach is a local-first personal finance application. The current app does not require an account with SafeSpendCoach, does not contain advertising or analytics SDKs, and does not operate a remote financial database. Core financial calculations are performed on the user’s device.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="data-used">
+      <h2 id="data-used">Information the app uses</h2>
+      <p>Depending on the features you choose, SafeSpendCoach may process:</p>
+      <ul>
+        <li>account names, institutions, account types, balances, and optional account references such as the last four digits;</li>
+        <li>transactions, including dates, merchants, amounts, categories, pending status, and transfer status;</li>
+        <li>bills, income sources, reserves, forecasts, and financial preferences;</li>
+        <li>financial statements, screenshots, or text that you deliberately select or paste for import; and</li>
+        <li>eligible Apple Wallet account, balance, and transaction information that you explicitly authorize through FinanceKit when that integration becomes available.</li>
+      </ul>
+      <p>SafeSpendCoach uses this information to maintain your local financial records and calculate Safe to Spend, spending summaries, forecasts, data freshness, and deterministic insights.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="storage">
+      <h2 id="storage">Local storage and imports</h2>
+      <p>Financial records are stored in the app’s private Application Support directory. The application encrypts its financial-data file using AES-GCM with a locally generated key stored in Apple Keychain. On supported iOS devices, the file also uses Apple data-protection attributes.</p>
+      <p>Statement files are read locally for parsing and are not uploaded or copied into SafeSpendCoach’s persistent storage. When screenshot import is available, images selected for local text recognition will not be copied into the app’s financial-data store. The original file or image remains wherever you chose it from.</p>
+      <p>Backup export occurs only when you initiate it. SafeSpendCoach encrypts exported backups with the password you provide, and you choose where the resulting file is saved or shared.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="financekit">
+      <h2 id="financekit">FinanceKit and Apple Wallet</h2>
+      <p>If FinanceKit is enabled in a future signed release, Apple’s authorization interface will let you choose which eligible Wallet accounts and transaction history to share. SafeSpendCoach will request access only for financial-management features such as importing balances and transactions, reconciling activity, and calculating your financial plan.</p>
+      <p>FinanceKit information will be normalized into the same local records used for manual and statement imports. SafeSpendCoach will not use FinanceKit information for advertising, user profiling, credit decisions, lending, or the sale of personal information.</p>
+      <p>You can decline the request and continue using manual entry and local statement import. You can later change FinanceKit permission using Apple’s system privacy controls. Revoking access stops future retrieval; information already imported into SafeSpendCoach remains in local app storage until you delete the corresponding records or remove the app’s data.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="sharing">
+      <h2 id="sharing">Sharing and network use</h2>
+      <p>The current release does not transmit financial records to SafeSpendCoach’s developer, financial aggregators, analytics services, advertising services, or AI providers. It does not use Plaid and does not ask for or store online-banking credentials.</p>
+      <p>The source code contains preferences for possible AI providers, but cloud AI is disabled in the current financial workflow. Safe Spend calculations and other financial results are deterministic and local. This policy will be updated before any future feature materially changes how financial information is transmitted or shared.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="website">
+      <h2 id="website">Privacy-policy website</h2>
+      <p>This public policy page is hosted by GitHub Pages. When you visit it, GitHub may process technical information such as your IP address for security and service operation under the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>. The page contains no SafeSpendCoach analytics, advertising, tracking pixels, contact forms, or third-party scripts.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="controls">
+      <h2 id="controls">Your controls</h2>
+      <p>You choose what information to enter or import and review imported information before committing it. You can edit or delete accounts and transactions within the app. Deleting an account also removes its associated local transactions and balance snapshots, while linked bills and income entries are preserved without that account link.</p>
+      <p>SafeSpendCoach may offer app locking with Local Authentication. Authentication is handled by Apple’s operating system; SafeSpendCoach does not receive or store your face, fingerprint, or device passcode.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="retention">
+      <h2 id="retention">Retention</h2>
+      <p>SafeSpendCoach retains local financial records until you edit or delete them, restore a different backup, or remove the app’s data from your device. Source statement files and screenshots are not retained by SafeSpendCoach after local processing. User-created backup files remain in the location you selected until you remove them.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="security">
+      <h2 id="security">Security</h2>
+      <p>SafeSpendCoach uses platform security controls, encrypted local persistence, integrity-checked backups, review-before-commit imports, and minimal source metadata. No software can eliminate every security risk. Protect access to your device and store exported backups carefully.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="changes">
+      <h2 id="changes">Changes to this policy</h2>
+      <p>This policy may change as SafeSpendCoach develops. The effective date above will be updated when material changes are published. Any feature that introduces new data collection or external processing will be described before it becomes active.</p>
+    </section>
+
+    <section class="policy-section" aria-labelledby="contact">
+      <h2 id="contact">Contact</h2>
+      <p>For privacy or support questions, use the contact information on the <a href="https://noumena000.github.io/">developer’s public website</a> or the support contact listed with SafeSpendCoach in the App Store. Do not include account numbers, statements, transaction details, or other sensitive financial information in an initial support message.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 SafeSpendCoach.</span>
+  </footer>
+</body>
+</html>
