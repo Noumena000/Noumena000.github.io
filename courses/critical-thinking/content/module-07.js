@@ -50,38 +50,54 @@ Note where he claims that vague and inflated language helps conceal weak thinkin
 
   practice: [
     {
-      prompt: 'Decide whether each dispute is verbal, substantive, or both: (a) “Is a tomato a fruit?” (b) “Is this policy good for workers?” (c) “Did the tree make a sound if no one heard it?”',
-      model: `(a) Mostly verbal. In botany a tomato is a fruit; in cooking it is treated as a vegetable. Once you say which sense you mean, little is left to dispute.
-
-(b) Usually both. There is a verbal part (“good for workers” by what measure: wages, jobs, safety?) and a substantive part (what the policy actually does).
-
-(c) Verbal. If “sound” means vibrations in the air, yes; if it means an experience of hearing, no. The physics is not in dispute.`
+      q: '“Did the tree make a sound if no one heard it?” What kind of disagreement is this, mostly?',
+      options: [
+        'Substantive: it depends on physics that nobody has ever been able to measure properly.',
+        'Verbal: it depends on whether “sound” means air vibrations or an experience of hearing.',
+        'Both equally: the physics of the tree and the meaning of “sound” are both in dispute.',
+        'Neither: it is simply a question that no one could ever hope to answer for certain.'
+      ],
+      a: 1,
+      why: 'Everyone can agree about what the tree does physically. Once you say which sense of “sound” you mean, little is left to dispute. Compare “Is this policy good for workers?”, which usually has a verbal part (good by what measure?) and a substantive part (what the policy actually does).'
     },
     {
-      prompt: 'Write a definition of “friend” or “success.” Test it with at least two counterexamples and revise it twice.',
-      model: `Start with something like “A friend is someone you enjoy spending time with.” Counterexample: you may enjoy time with a charming coworker whom you would never call on in trouble, so it is too broad. Revise: “...and who would help you in trouble.” Counterexample: a relative who would help you but whom you dislike is not a friend, so it still needs refining.
-
-The aim is not a perfect definition but seeing what you are actually committed to. Notice which cases you refuse to give up.`
+      q: 'A friend defines “friend” as “someone whose company you enjoy.” Which case shows the definition is too broad?',
+      options: [
+        'Someone you love and trust, but have not enjoyed spending time with lately.',
+        'A stranger you have never met and know nothing at all about.',
+        'A charming coworker you enjoy, but would never call in a crisis.',
+        'A relative who would drop everything to help you, but whose company you find tiring.'
+      ],
+      a: 2,
+      why: 'Too broad means the definition lets in something that should not count. The coworker fits the words but is not a friend. Cases that should count but do not fit the definition show it is too narrow. Refining it, perhaps by adding “and who would help you in trouble,” is how you find out what you are committed to.'
     },
     {
-      prompt: 'Find a political or advertising phrase that is loaded. Rewrite it in neutral terms.',
-      model: `For example, “job-killing regulation” and “common-sense safeguard” can describe the same rule. A neutral version names the rule and its stated purpose and lets the reader judge: “A rule requiring X, intended to reduce Y.”
-
-If your neutral version still reads as slanted, you have probably left in a word that carries an attitude. Read it as someone on the other side would.`
+      q: 'A rule requires factories to cut sulfur emissions by 30 percent. Opponents call it a “job-killing regulation,” supporters a “common-sense safeguard.” Which rewrite is most neutral?',
+      options: [
+        '“A rule requiring factories to cut sulfur emissions by 30 percent, meant to reduce smog.”',
+        '“A heavy-handed rule requiring factories to cut sulfur emissions by 30 percent.”',
+        '“A sensible rule asking factories to cut sulfur emissions by 30 percent for cleaner air.”',
+        '“A rule on factory emissions that business groups and environmental groups disagree about.”'
+      ],
+      a: 0,
+      why: 'A neutral version says what the rule requires and what it is meant to do, and lets the reader judge. “Heavy-handed” and “sensible” carry attitudes. The last option sounds balanced but never says what the rule requires, so you could not judge it.'
     },
     {
-      prompt: 'Take the vague claim “social media harms teenagers” and make it testable: say what would count as harm, who would be measured, and over what period.',
-      model: `A testable version: “Teenagers aged 13 to 17 who spend more than three hours a day on social media report higher rates of persistent low mood, measured by a standard questionnaire, than comparable teenagers who spend less than one hour, over a twelve-month period.”
-
-Notice the choices: what counts as harm, which group, what comparison, and what time frame. Each choice changes the claim, and a different choice could change the answer.`
+      q: '“Meditation reduces stress.” Which version could actually be tested?',
+      options: [
+        '“Meditation noticeably lowers stress in most people who try it regularly, compared with how they felt before they started.”',
+        '“Regular meditation helps people feel calmer and more focused in their daily lives, at work and at home.”',
+        '“Scientists generally agree that meditation is good for mental health, stress included, and for well-being.”',
+        '“Adults who meditate daily for eight weeks score lower on a stress questionnaire than similar adults who do not.”'
+      ],
+      a: 3,
+      why: 'Testing requires saying what counts as stress, who is measured, compared with whom, and over what period. Each choice changes the claim, and a different choice could change the answer. The other versions use words (“noticeably,” “calmer,” “generally”) that no measurement could clearly confirm or reject.'
     }
   ],
 
   pushback: `Write the best case that fights over definitions are usually a waste of time.
 
 Then write the best case that they are usually where the real issue lies.`,
-
-  notebook: `Which word do you use often that you could not define if someone asked?`,
 
   selfcheck: [
     {

@@ -32,19 +32,18 @@ You need no background in philosophy, logic, or mathematics. Every technical ter
 - Disagree productively: represent opposing views fairly, concede good points, and change your mind for good reasons.
 - Reason carefully about values, using thought experiments and moral arguments.`,
 
-  howItWorks: `Every module has the same seven parts, so you always know where you are. Self-paced study fails when nobody pushes back, so the course builds the push into every module.
+  howItWorks: `Every module has the same six parts, so you always know where you are. Self-paced study fails when nobody pushes back, so the course builds the push into every module.
 
 | Part | What you do | Time |
 | --- | --- | --- |
 | The question | Think about a puzzle or case that motivates the topic | 10 min |
 | Lesson | Read the core ideas and a worked example | 30 min |
 | Reading | Work through one short primary or open-access text | 30–45 min |
-| Practice | Write answers, then compare them with a model approach | 40 min |
+| Practice | Answer four questions, one at a time, and read the explanation after each | 20 min |
 | Push back | Write the strongest objection to your own view | 15 min |
-| Notebook | Reflect briefly on what changed in your thinking | 10 min |
 | Self-check | Answer five questions and read the explanations | 10 min |
 
-Write your answers instead of only thinking them. Written reasoning exposes gaps that private thought hides.`,
+Choose your answer before you read the explanation, and read the explanation even when you were right. Then write your push-back reply in full sentences: written reasoning exposes gaps that private thought hides.`,
 
   pace: `**Pace.** Twelve weeks at two to three hours a week is a suggestion. Spend two weeks on a module that gives you trouble. If you finish early, try the optional extension at the end of each module.
 
@@ -82,7 +81,7 @@ Write the question, and a few sentences on why it matters to you.`
       },
       {
         id: 's5', title: 'Reflect', target: 200, rows: 8,
-        body: `Return to your notebook entries, and to the two lines you wrote before module 1. Which beliefs changed over the course? Which habits are you still working on? What do you want to practice next?`
+        body: `Return to your push-back replies, and to the two lines you wrote before module 1. Which beliefs changed over the course? Which habits are you still working on? What do you want to practice next?`
       }
     ],
     rubricIntro: `Rate yourself on each criterion, or ask a friend or teacher to rate you. Choose the description that fits your work best. Be honest: the point is to find out what to practice next.`,
@@ -182,12 +181,12 @@ Findings in psychology and nutrition research are revised often. When you cite a
     lead: 'The course works as a solo study path, a study group, or the backbone of a classroom course.',
     body: `### Using it with a class
 
-- Run one module per week. Use the lesson and reading as preparation, and spend class time on the practice items and the push-back prompt.
+- Run one module per week. Use the lesson and reading as preparation, and spend class time on the practice questions and the push-back prompt.
 - Make the push-back discussion the center of the session. Have students swap their written objections and answer each other’s.
 - Rotate roles: one student states the argument, one raises the strongest objection, one restates the exchange fairly.
 - For graded settings, grade the process (reconstructions, objections, revisions) more than the conclusions. Students should never lose marks for holding an unpopular but well-argued view.
 - Use the capstone scoring guide as a rubric, and share it at the start so students know what is being asked.
-- Students can download their notebook as a Markdown file from the Your work page and submit it.
+- Students can download their push-back replies and capstone as a Markdown file from the Your work page and submit it.
 
 ### Studying in a group
 
@@ -197,6 +196,6 @@ A study group makes the push-back prompts far more effective. Take turns present
 
 - Module 12 will date fastest. Revisit it every six months, update the examples, and retire any claims about particular tools.
 - Check every reading’s availability on a schedule.
-- Model answers show one good approach, not the only one. Students whose answers differ should be asked to defend them, not to match the model.`
+- A practice question can sometimes be read more than one way. Invite students who choose differently to defend their choice, then go through the explanation together.`
   }
 };

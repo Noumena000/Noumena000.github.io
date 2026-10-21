@@ -65,36 +65,54 @@ Because this area changes fast, look for something published recently, and note 
 
   practice: [
     {
-      prompt: 'Ask an AI assistant a factual question in an area you know well. Mark every claim as correct, incorrect, or unverifiable. Report the proportion.',
-      model: `Choose a question where you can judge the answer, such as a topic from your work or a long-standing hobby. Break the answer into separate claims and score each one.
-
-The most useful finding is usually the pattern: where the tool is reliable, where it is vague, and where it states something wrong with full confidence. Record the pattern, because it tells you where to check in areas you know less well.`
+      q: 'You ask a chatbot about a field you know well, and sort its twelve claims: nine correct, one wrong but stated with full confidence, and two you cannot verify. What is the most useful takeaway?',
+      options: [
+        'It is 75 percent reliable, so you can trust it to that degree on every other topic too.',
+        'Note where it was solid, vague, or confidently wrong, so you know where to check elsewhere.',
+        'One confident error means the tool is useless, and you should stop using it for anything.',
+        'Only the one wrong claim really matters, so you can ignore the rest of that answer.'
+      ],
+      a: 1,
+      why: 'The pattern is the finding. A single percentage hides where the tool can be trusted and where it states something false with full confidence. Use what you learn about its failure points to decide what to check when you cannot judge the answer yourself.'
     },
     {
-      prompt: 'Ask the same assistant for an opinion on a debatable question, then ask again from the opposite side. Compare the answers and describe what changed.',
-      model: `For example, ask “Is a four-day work week a good idea?” and then “I think a four-day work week is a bad idea. Am I right?” Compare the two answers.
-
-If the substance shifted toward whatever you seemed to want, you have seen agreeableness at work. A better habit is to ask for the best case on each side and decide for yourself.`
+      q: 'You ask a chatbot whether a four-day work week is a good idea and get a favorable answer. You then write, “I think it is a bad idea. Am I right?” and it now agrees with you. What does this suggest, and what is the better habit?',
+      options: [
+        'The tool weighed new evidence and honestly changed its view, so you should trust the second answer.',
+        'The tool answers at random, so ask a third time and keep whichever answer appears most often.',
+        'Both answers are correct, because the question was ambiguous and had two reasonable readings.',
+        'It may be tracking what you seem to want; ask for the best case on each side instead.'
+      ],
+      a: 3,
+      why: 'If the substance shifted toward whatever you seemed to want, you have seen agreeableness at work. You had given the tool no new evidence, only a new preference. A better habit is to ask for the best case on each side and make the call yourself.'
     },
     {
-      prompt: 'Write your own argument on a topic first. Then ask the assistant for the three best objections. Respond to each in writing.',
-      model: `The order matters. By writing first, you commit to your own reasoning before the tool can shape it. Then judge each objection: is it a real weakness, a misunderstanding, or already answered?
-
-If all three objections are weak, ask for stronger ones, and consider asking a human who disagrees with you. A tool’s objections can be too gentle.`
+      q: 'You have drafted your own argument on a debatable topic. What is the best way to use an assistant?',
+      options: [
+        'Ask it to rewrite your argument so that it reads more strongly, then use its version instead.',
+        'Ask whether the argument is good, and simply keep it as it stands if the answer is yes.',
+        'Ask for the three best objections, then judge each one yourself and ask for stronger ones.',
+        'Ask it to write its own argument first, then edit yours so that the two roughly match.'
+      ],
+      a: 2,
+      why: 'The order matters. Writing first commits you to your own reasoning before the tool can shape it. Using the tool to attack your argument keeps you in charge, while asking it to approve or replace your argument hands the judgment away. A tool’s objections can be too gentle, so consider a human who disagrees with you as well.'
     },
     {
-      prompt: 'Choose one task you currently hand to a tool. Decide whether it is something you want to keep able to do yourself, and write why.',
-      model: `A useful test: would you be comfortable if the tool were unavailable for a month? Some tasks are fine to delegate (formatting, quick lookups). Others build skills you value (writing your own arguments, summarizing what you read).
-
-There is no single right answer. The point is to decide on purpose instead of drifting into dependence.`
+      q: 'Suppose you want to keep your own reasoning skills sharp. Which task is most worth continuing to do yourself?',
+      options: [
+        'Summarizing what you read in your own words, to work out what you think.',
+        'Reformatting a long bibliography into a different citation style for a new journal.',
+        'Looking up a unit conversion that you only need once for a recipe.',
+        'Checking the spelling and punctuation in a short email before you send it.'
+      ],
+      a: 0,
+      why: 'A useful test: would you be comfortable if the tool were unavailable for a month? Some tasks are fine to delegate, such as formatting and quick lookups. Others build skills you value, such as writing your own arguments and summarizing what you read. There is no single right answer. The point is to decide on purpose instead of drifting into dependence.'
     }
   ],
 
   pushback: `Write the best case that relying heavily on AI tools does not erode human thinking.
 
 Then write the best case that it does.`,
-
-  notebook: `Where have you accepted a tool’s answer without checking? What would have happened if it had been wrong?`,
 
   selfcheck: [
     {

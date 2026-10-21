@@ -65,36 +65,54 @@ State the central argument of your chosen reading in standard form (module 2).`,
 
   practice: [
     {
-      prompt: 'Consider the trolley and footbridge cases. Write what distinguishes them for you, then test whether that difference holds in a third variation of your own design.',
-      model: `Common candidates for the difference: in the footbridge case you use the person as a means, you cause the harm directly with your hands, or you must act on someone who is not already in danger.
-
-Then test it: design a variation that keeps the proposed difference but changes your intuition, or removes the difference but keeps your intuition. If either happens, your explanation is incomplete. That is not a failure. It is how the method makes progress.`
+      q: 'In the footbridge case, one proposed difference is that you use the stranger as a means to stop the trolley. Which new variation best tests whether that explains your reaction?',
+      options: [
+        'Make the stranger lighter, so he is easier to push off the bridge without a struggle.',
+        'Use a loop where one person’s body stops the trolley, with a switch instead of a push.',
+        'Raise the number on the main track from five to fifty, so that the stakes are far higher.',
+        'Make the trolley much faster, so that there is almost no time to think about the choice.'
+      ],
+      a: 1,
+      why: 'The loop keeps the proposed difference (the person is used as a means) but removes the pushing. If your intuition changes, “using as a means” was not the whole explanation. If it stays, the explanation gains support. The other variations change features unrelated to the proposal. Finding a gap is not a failure: it is how the method makes progress.'
     },
     {
-      prompt: 'Pick a moral principle you hold. Write two cases where it gives an uncomfortable answer. Decide whether to revise the principle or accept the verdict.',
-      model: `For example, “Never lie.” Uncomfortable cases: lying to a violent person about where their intended victim is hiding; telling a gentle white lie about a gift. You may revise the principle (“Never lie, except to prevent serious harm”) or accept the verdict.
-
-Notice what each revision commits you to. A rule with exceptions needs an account of when the exceptions apply, or it becomes a license for convenience.`
+      q: 'Your principle is “Never lie.” A violent man asks where your friend is hiding. What is the best way to handle this case?',
+      options: [
+        'Keep the principle and tell him where your friend is hiding, since a good principle can never give a wrong answer.',
+        'Drop the principle altogether, since a single hard case like this one proves it to be worthless.',
+        'Notice the clash, then decide whether to revise the principle, and say what the revision commits you to.',
+        'Set the case aside as unrealistic, since real life hardly ever works in such extreme ways.'
+      ],
+      a: 2,
+      why: 'This is reflective equilibrium: adjust the principle, or doubt the judgment, until they fit together. Notice what each revision commits you to. A rule with exceptions needs an account of when the exceptions apply, or it becomes a license for convenience.'
     },
     {
-      prompt: 'Take a contested public issue. Separate the factual disagreements from the value disagreements, and say what evidence could bear on each.',
-      model: `Many public debates mix the two. Factual disagreements (what a policy actually does, how large an effect is) can in principle be settled by evidence. Value disagreements (how to weigh liberty against safety, present against future people) cannot be settled that way, though they can be clarified.
-
-If you find that most of the disagreement is factual, the best next step is investigation. If it is mostly about values, the best next step is understanding the other side’s weights.`
+      q: 'In the debate over raising the minimum wage, which of these is a disagreement about values rather than facts?',
+      options: [
+        'Whether a raise of this size would reduce total employment by about 2 percent.',
+        'Whether higher wages push up prices at local restaurants and other small businesses.',
+        'Whether most minimum-wage workers are adults supporting families rather than teenagers.',
+        'Whether protecting workers’ incomes matters more than some risk to jobs.'
+      ],
+      a: 3,
+      why: 'The first three can in principle be settled by evidence. The last is about how to weigh competing goods, which evidence can clarify but not settle. If a dispute turns out to be mostly factual, investigate. If it is mostly about values, the best next step is to understand the other side’s weights.'
     },
     {
-      prompt: 'Write a one-page argument for a moral conclusion you hold, in standard form. Mark the moral premises.',
-      model: `Number your premises and put the conclusion last. Mark which premises are factual and which are moral. At least one must be moral.
-
-Then look at the moral premises: those are the ones a thoughtful opponent will challenge. Ask whether you could defend each, and what you would say to someone who rejects it.`
+      q: 'Here is a moral argument: (1) Cheap seeds would let 1,000 families feed themselves. (2) We should prevent serious suffering when we can at small cost. (3) So we should fund the seeds. Which premise is the moral one, the one a thoughtful opponent is most likely to challenge?',
+      options: [
+        'Premise 2, because it says what we should do, not what is the case.',
+        'Premise 1, because it makes a claim about 1,000 families that an opponent would doubt.',
+        'Premise 3, because it contains the word “should.”',
+        'None of them: moral arguments cannot be put in standard form.'
+      ],
+      a: 0,
+      why: 'Premise 1 is factual and can be checked. Premise 3 is the conclusion, not a premise. Premise 2 is the moral premise, and every moral argument needs at least one. Marking which premises are moral shows you where an opponent will push, and where you need a defense.'
     }
   ],
 
   pushback: `Write the strongest case that moral questions have no objective answers.
 
 Then write the strongest reply.`,
-
-  notebook: `Which of your moral convictions did you simply inherit? Do you endorse it on reflection?`,
 
   selfcheck: [
     {

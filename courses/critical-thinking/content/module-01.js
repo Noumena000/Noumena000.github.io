@@ -44,36 +44,54 @@ Read the section where Socrates questions the politician, and the section on the
 
   practice: [
     {
-      prompt: 'Write down five things you believe strongly about politics, health, money, or people. For each, write one sentence saying why you believe it.',
-      model: `Aim for reasons, not restatements. “I believe exercise improves mood because I feel better after running” is a reason (a weak one, based on one person’s experience). “I believe exercise improves mood because exercise is good” only repeats the belief.
-
-If several of your reasons turn out to be “everyone knows” or “I’ve always thought so,” that is useful to see. It shows which beliefs you hold on trust or habit.`
+      q: 'Someone writes down the belief “Cold weather gives you a cold.” Which of these gives a *reason* for the belief, rather than restating it or leaning on habit?',
+      options: [
+        '“Everyone knows winter is when people get sick, and it is what I have always believed.”',
+        '“It is plainly true. I cannot see why anyone would question something so obvious.”',
+        '“I mostly catch colds just after the weather turns cold, so I think cold is one cause.”',
+        '“Cold weather and colds clearly go together, so I do not see how the two could be unrelated.”'
+      ],
+      a: 2,
+      why: 'Only the third points to something that could support the belief, even if it is only one person’s experience, which makes it a weak reason. The others restate the belief, appeal to what everyone knows, or lean on habit. If many of your own reasons look like those, you hold those beliefs on trust.'
     },
     {
-      prompt: 'For two of those beliefs, list at least two assumptions your reason depends on.',
-      model: `Take “exercise improves mood because I feel better after running.” Assumptions: that the improvement comes from the running and not from fresh air or time alone; that your experience generalizes to other people; that “feeling better” right afterward means a lasting effect on mood.
-
-A good test for an assumption: if it were false, would your reason still support the belief? If not, you have found something the belief rests on.`
+      q: 'Take the belief “Exercise improves my mood,” with the reason “I feel better after I go running.” Which of these is an assumption the reason depends on?',
+      options: [
+        'That running is the most effective form of exercise for improving mood and energy.',
+        'That the lift comes from running itself, not from fresh air or time alone.',
+        'That most other people also enjoy running once they have got past the first few weeks.',
+        'That mood can be rated precisely on a numbered scale, the way height can be measured.'
+      ],
+      a: 1,
+      why: 'A good test for an assumption: if it were false, would the reason still support the belief? If the lift came from fresh air instead, running would no longer explain it. The other three might be interesting, but the reason works without them.'
     },
     {
-      prompt: 'For one belief, write what evidence would change your mind. If you cannot think of any, record that.',
-      model: `A strong answer is specific: “Large, well-run studies that compare similar people who do and do not exercise and find no difference in mood after several months.”
-
-“Nothing would change my mind” is also a useful answer. It does not mean the belief is false. It means the belief is held more like a commitment than a conclusion, and it is worth knowing which of your beliefs are like that.`
+      q: 'You believe exercise improves mood. Which answer to “What evidence would change my mind?” is specific enough that someone could go and check whether it has happened?',
+      options: [
+        '“Very strong arguments from the many experts who disagree with me about exercise and health.”',
+        '“Hearing from a good number of people I know who say that exercise does nothing for their mood.”',
+        '“Nothing would change it. I have felt the effect myself, so I know for certain that it is real.”',
+        '“Large, well-run studies of similar people that find no mood difference after months of exercise.”'
+      ],
+      a: 3,
+      why: 'The last answer names the kind of evidence, the comparison, and the time frame. “Nothing” is an honest answer and a useful one to notice: it means the belief is held more like a commitment than a conclusion. The first two are too vague to check.'
     },
     {
-      prompt: 'Find a short opinion piece (an editorial or column). In two sentences, state its main claim. In two more, state the main reason it gives.',
-      model: `A good summary separates the claim from the reason: “The author argues that [claim]. She gives one main reason: [reason].”
-
-Common mistakes are to state the topic instead of the claim (“The article is about school phones”) or to merge the claim and the reason into one sentence. If you cannot find a clear reason, that is a finding too: some opinion pieces assert more than they argue.`
+      q: 'An opinion column says: “Schools should ban phones in class. Phones wreck students’ attention, and attention is what learning runs on.” Which summary correctly separates the main claim from the main reason?',
+      options: [
+        'Claim: schools should ban phones in class. Reason: phones damage attention, which learning needs.',
+        'Claim: the column is about phones in classrooms. Reason: teachers and parents are worried about them.',
+        'Claim: phones wreck students’ attention. Reason: schools should therefore ban them in class.',
+        'Claim and reason: schools should ban phones in class because phones wreck attention and learning depends on it.'
+      ],
+      a: 0,
+      why: 'A good summary gives the claim and the reason as two separate statements, in the right direction. Naming the topic is not stating the claim, the third answer reverses the argument, and the last merges claim and reason into one sentence. If you cannot find a clear reason in a piece, that is a finding too: some opinion pieces assert more than they argue.'
     }
   ],
 
   pushback: `Write the best objection to this sentence: “Examining every belief carefully is the right way to live.”
 
 Consider the cost of time, the risks of paralysis, and the role of trust.`,
-
-  notebook: `Which belief on your list surprised you by how little you could say in its defense?`,
 
   selfcheck: [
     {
