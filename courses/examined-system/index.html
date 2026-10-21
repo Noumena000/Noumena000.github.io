@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Examined System: philosophical ethics for people who build AI</title>
+<meta name="description" content="Eight interactive modules exploring the ethics of building AI through philosophical readings, Socratic dialogue, reasoning practice, and a final release hearing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -235,11 +236,11 @@ MODS.push({
 id:"fair", n:2, title:"Fairness", gist:"What do we owe each person a system sorts?", glyph:"fair",
 reads:[
 {t:"The question", h:"<p>Fairness is not one idea. We use it for equal treatment (the same rule for everyone), equal outcomes (equal shares), equal opportunity, desert, and need. A model that classifies people distributes something: loans, jobs, scrutiny, bail. The question is what justice requires when a system does the sorting.</p><p>Practitioners often start by picking a metric. The prior question is what the metric is meant to protect, and for whom.</p>"},
-{t:"The positions", h:"<p>Statistical definitions of fairness work as compressed moral positions.</p><p><b>Parity</b> asks that selection rates be equal across groups. It attends to outcomes and to the lasting effects of past disadvantage.</p><p><b>Equal error rates</b> (including “equal opportunity”) ask that, among people who truly merit the outcome, the same share receive it in each group. It protects the qualified from being overlooked because of group.</p><p><b>Calibration</b> asks that a score mean the same thing for everyone: like cases are treated alike.</p><p>Researchers (Kleinberg and colleagues; Chouldechova) showed that when groups have different base rates, a classifier generally cannot satisfy calibration and equal error rates together, outside trivial cases. So the choice among them is a moral decision, not a technical one.</p><p>John Rawls offered a tool for such choices: ask which rules you would accept behind a “veil of ignorance,” not knowing which position in society you will hold.</p>"},
-{t:"In the machine", h:"<p>Before choosing a metric, ask what is being distributed, who is hurt by each kind of error (a wrongful rejection is not the same harm as a wrongful approval), and whether the base rates differ because of past injustice. Report results by subgroup, including intersections, with honest uncertainty.</p><p>A metric does not remove the judgment. It records it. Say what your choice gives up.</p>"}
+{t:"The positions", h:"<p>Statistical definitions of fairness work as compressed moral positions.</p><p><b>Parity</b> asks that selection rates be equal across groups. It attends to outcomes and to the lasting effects of past disadvantage.</p><p><b>Equal opportunity</b> asks that qualified people have the same chance of a positive decision across groups (equal true-positive rates). It protects the qualified from being overlooked because of group membership.</p><p><b>Equalized odds</b> requires both equal true-positive rates and equal false-positive rates across groups. It asks that each kind of classification error fall at the same rate on each group.</p><p><b>Calibration</b> asks that a given risk score correspond to the same observed outcome frequency in each group. A score of 0.7, for instance, should mean roughly a 70% outcome rate among people receiving that score in either group.</p><p>Researchers (Kleinberg and colleagues; Chouldechova) showed that when groups have different base rates, a classifier generally cannot satisfy calibration and equalized odds together, except in special cases such as perfect prediction. So the choice among them is a moral decision, not a technical one.</p><p>John Rawls offered a tool for such choices: ask which rules you would accept behind a “veil of ignorance,” not knowing which position in society you will hold.</p>"},
+{t:"In the machine", h:"<p>Before choosing a metric, ask what is being distributed, who is hurt by each kind of error (a wrongful rejection is not the same harm as a wrongful approval), and whether the base rates differ because of past injustice. Report results by subgroup, including intersections, with honest uncertainty.</p><p>A metric does not remove the judgment. It records it. Say what your choice gives up.</p><p><b>Further reading:</b> <a href='https://papers.neurips.cc/paper_files/paper/2016/hash/6a9659feb1216f14f7384ba499518b38-Abstract.html'>Hardt, Price &amp; Srebro (2016)</a> on equality of opportunity; <a href='https://arxiv.org/abs/1609.05807'>Kleinberg, Mullainathan &amp; Raghavan (2016)</a> on fairness trade-offs; and <a href='https://arxiv.org/abs/1703.00056'>Chouldechova (2017)</a> on calibration and disparate impact.</p>"}
 ],
 dlg:{
-setup:"A lender’s model scores applicants. Repayment rates differ between two groups, partly because of past discrimination in jobs and housing. Whatever threshold is set, the lender must decide which kind of fairness to protect: equal approval rates, equal error rates among those who would repay, or scores that mean the same thing for everyone.",
+setup:"A lender’s model scores applicants. Repayment rates differ between two groups, partly because of past discrimination in jobs and housing. Whatever threshold is set, the lender must decide which kind of fairness to protect: equal approval rates, equal opportunity among those who would repay, or scores that mean the same thing for everyone.",
 claim:"Which standard should the lender hold the model to?",
 pos:[
 {id:"a", fam:"fair-parity", text:"Equal approval rates across the two groups.",
@@ -249,10 +250,10 @@ pos:[
  refine:{text:"Aim at equal approval rates over time, paired with support such as counselling and smaller first loans.",
   reply:"That shifts the question from what the model should do to what the lender should do for applicants. Fair enough, but until the gap closes the model still approves some people over others. What do you say to a declined applicant from Y today, and what fixes how fast the gap should close?",
   tag:{id:"fair-parity-2", label:"Aim at equal approval rates over time, paired with support."}}},
-{id:"b", fam:"fair-errors", text:"Equal error rates: among people who would repay, the same share is approved in each group.",
- obj:"With different repayment rates, equalising error rates generally means using different thresholds by group, or reading the same score differently depending on group. Two applicants with identical scores and records may get opposite decisions because of group membership. Is that equal treatment?",
- bite:"Then you accept group-dependent thresholds: explicit use of group membership in decisions, which may be unlawful in some settings. You are saying the chance of being wrongly turned down matters more than being judged by one common rule. Can you defend that to the person who loses under the group-specific rule?",
- tag:{id:"fair-errors-1", label:"Equal error rates are the standard, even at the cost of a common threshold."},
+{id:"b", fam:"fair-errors", text:"Equal opportunity: among people who would repay, the same share is approved in each group.",
+ obj:"Depending on how scores are distributed, achieving equal opportunity may require different decision thresholds by group. Two applicants with identical scores may then receive different decisions because of group membership. When, if ever, would that be justified?",
+ bite:"Suppose meeting your standard requires group-dependent thresholds, which may be legally restricted in some settings. Would you accept different thresholds to reduce wrongful rejection, or would you revise your standard? What would you tell someone who loses under your chosen rule?",
+ tag:{id:"fair-errors-1", label:"Equal opportunity is the standard, even at the cost of a common threshold."},
  refine:{text:"Equalise the error that costs most, wrongful rejection of creditworthy people, while keeping one common score for everyone.",
   reply:"Choosing which error to equalise is a claim about which error is worse. Why is wrongly rejecting a creditworthy person worse than wrongly approving someone who then defaults, a harm that falls on the borrower too? Who decided how bad each error is, and who was asked?",
   tag:{id:"fair-errors-2", label:"Equalise wrongful rejection of the creditworthy, with one common score."}}},
@@ -561,7 +562,7 @@ const HEARQ={
 "resp-shared":"You held that responsibility is shared in proportion. If the failure occurs, who explains it to the harmed user, and how is each share decided before launch, not after?",
 "resp-user":"You held that whoever chooses to use a system bears primary responsibility. What do users of the agent know about its failure modes, and who told them?",
 "fair-parity":"You held that outcomes should be equal across groups. The safety filter fails more often in some languages. What gap are you prepared to tolerate at launch, and who bears it?",
-"fair-errors":"You held that error rates should be equal across groups. What is the filter’s error rate in each language, and would you ship if they differ?",
+"fair-errors":"You held that qualified people should have equal chances of selection across groups. What is the filter’s error rate in each language, and would you ship if they differ?",
 "fair-calibration":"You held that a score should mean the same for everyone. Does the filter’s confidence mean the same thing in every language, and how do you know?",
 "priv-consent":"You held that using personal information requires consent. Have the people who email the user, whose messages the agent reads, consented to that access?",
 "priv-context":"You held that flows must fit the norms of their context. An email was written for one reader. Does an agent that summarises or forwards it keep to that norm?",
@@ -650,7 +651,8 @@ async function pushRemote(retry){
     else if(e&&(e.code==="revoked"||e.code==="invalid_argument"||e.code==="not_granted")){docRef=null;setSync("local")}}
 }
 function setSync(s){sync=s;const el=document.getElementById("sync");if(el)el.textContent=syncText()}
-const syncText=()=>sync==="account"?"Your record is saved to your account, and also in this browser.":"Your record is saved in this browser. Export it below to keep a portable copy.";
+const syncText=()=>sync==="account"?"Your record is saved to your account, and also in this browser.":"Your record is saved in this browser, not on a course server. Clearing site data or switching devices may erase access; download a copy below.";
+const hasClaudeHost=()=>!!(window.claude&&typeof window.claude.use==="function");
 async function connect(){
   if(!window.claude||typeof window.claude.use!=="function")return;
   try{
@@ -691,6 +693,7 @@ function tensionCard(t){
   const line=c=>`<li>Module ${c.mod.n}, ${esc(c.mod.title)}: ${esc(c.info.label)}</li>`;
   return `<div class="tension${r&&r.note?" settled":""}" data-t="${t.id}">
     <h3>${esc(t.title)}</h3>
+    <p class="small muted">A question for examination, not an established contradiction.</p>
     <p class="small muted" style="margin-bottom:4px">Your principles:</p>
     <ul>${ca.map(line).join("")}${cb.map(line).join("")}</ul>
     <p>${esc(t.text)}</p>
@@ -752,7 +755,7 @@ function renderHome(){
     <h2>How this works</h2>
     <p>In each dialogue you take a position on a case. The course then raises the strongest objection it can to <i>that</i> position. You can hold your ground and accept the cost, refine your view, or withdraw and start again. At the end you state your principle in your own words and name the objection you cannot fully answer.</p>
     <p>Your principles go into a ledger. When two of them pull against each other across modules, the course shows you where, and asks which gives way. Reasoning practice is different: those questions have right and wrong answers, and they test whether you can find the hidden premise or the flaw.</p>
-    <p>After each dialogue you can also be examined by Claude, which asks follow-up questions about your reasoning and never tells you the answer. It is optional, and nothing in the course depends on it.</p>
+    <p>An optional Claude examiner can ask follow-up questions about your reasoning when this course is opened in a compatible Claude environment. It is not available on the ordinary public GitHub Pages site, and nothing in the course depends on it.</p>
   </section>
 
   ${cs.length?`<section class="sec" id="ledger">
@@ -760,7 +763,7 @@ function renderHome(){
     <p class="muted">Your final principle from each completed dialogue.</p>
     ${cs.map(c=>`<div class="commit"><h3>Module ${c.mod.n}, ${esc(c.mod.title)}</h3><div class="lab">${esc(c.info.label)}</div><p style="margin:6px 0 0">“${esc(c.principle)}”</p><button class="btn quiet" data-open="${c.mod.id}">Revisit</button></div>`).join("")}
     <h2 style="margin-top:34px">${ts.length?"Where your principles pull apart":"Tensions"}</h2>
-    ${ts.length?`<p class="muted">These conflicts follow from what you committed to. You do not have to abandon either principle, but you do have to say what you will do.</p>${ts.map(tensionCard).join("")}`:`<p class="muted">The course has found no conflict between your principles yet. That may change as you complete more modules.</p>`}
+    ${ts.length?`<p class="muted">These are potential tensions suggested by the positions you selected, not proven contradictions in your written principles. Decide whether each tension is real, whether the cases differ, or whether a principle needs revision.</p>${ts.map(tensionCard).join("")}`:`<p class="muted">The course has not flagged any potential tension yet. That does not establish that your principles are fully consistent.</p>`}
     <div id="ledgercoach"></div>
   </section>`:""}
 
@@ -784,7 +787,7 @@ function renderHome(){
   app.querySelectorAll("[data-hearing]").forEach(b=>b.onclick=()=>{if(hearingOpen())go({name:"hearing"})});
   bindTensions(app);
   const lc=document.getElementById("ledgercoach");
-  if(lc)mountCoach(lc,"ledger",ledgerContext,"Examine my principles as a set");
+  if(lc&&hasClaudeHost())mountCoach(lc,"ledger",ledgerContext,"Examine my principles as a set");
   document.getElementById("exportmd").onclick=()=>saveFile("examined-system-record.md",recordMarkdown());
   document.getElementById("export").onclick=()=>saveFile("examined-system-progress.json",JSON.stringify(state,null,2));
   document.getElementById("showjson").onclick=()=>{const box=document.getElementById("jsonbox");box.hidden=!box.hidden;if(!box.hidden){const t=document.getElementById("json");t.value=JSON.stringify(state,null,2);t.select()}};
@@ -796,8 +799,17 @@ function renderHome(){
 
 async function saveFile(filename,data){
   let dl=null;
-  try{dl=window.claude&&typeof window.claude.use==="function"?await window.claude.use("downloads"):null}catch(e){}
+  try{dl=hasClaudeHost()?await window.claude.use("downloads"):null}catch(e){}
   if(dl){try{await dl.save({filename,data});return}catch(e){if(e&&e.code==="declined")return}}
+  try{
+    const mime=filename.endsWith(".json")?"application/json;charset=utf-8":"text/markdown;charset=utf-8";
+    const url=URL.createObjectURL(new Blob([data],{type:mime}));
+    const link=document.createElement("a");
+    link.href=url;link.download=filename;link.hidden=true;document.body.appendChild(link);
+    link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    return;
+  }catch(e){}
   let box=document.getElementById("jsonbox");
   if(box){box.hidden=false;const t=document.getElementById("json");t.value=data;t.select();const mg=document.getElementById("jsonmsg");if(mg)mg.textContent="Saving a file is not available here. Copy this text instead.";box.scrollIntoView({block:"center"})}
 }
@@ -876,7 +888,7 @@ function renderDialogue(id){
   }else if(d.stage==="done"){
     const info=TAG[d.tag]||{label:""}, mine=activeTensions().filter(t=>{const f=info.fam;return t.a.includes(f)||t.b.includes(f)});
     h+=`<div class="ex"><b>You committed to:</b> ${esc(info.label)}<br><b>Your principle:</b> “${esc(d.principle)}”<br><b>The objection you could not fully answer:</b> “${esc(d.objection)}”</div>`;
-    if(mine.length)h+=`<h3 style="margin:22px 0 4px;font-size:22px">This conflicts with something you said earlier</h3>${mine.map(tensionCard).join("")}`;
+    if(mine.length)h+=`<h3 style="margin:22px 0 4px;font-size:22px">This may be in tension with something you said earlier</h3>${mine.map(tensionCard).join("")}`;
     h+=`<div class="row"><button class="btn ghost" id="again">Begin this dialogue again</button></div>`;
   }
   box.innerHTML=h;
@@ -913,7 +925,7 @@ function renderDialogue(id){
   if(d.stage==="done")showCoach(id);else hideCoach();
 }
 function showCoach(id){
-  const sec=document.getElementById("coachsec");if(!sec)return;
+  const sec=document.getElementById("coachsec");if(!sec||!hasClaudeHost())return;
   const first=sec.hidden;sec.hidden=false;
   if(first||!document.getElementById("coachbox").children.length)mountCoach(document.getElementById("coachbox"),"mod-"+id,()=>dialogueContext(id),"Examine my reasoning");
 }
@@ -978,8 +990,8 @@ function renderHearing(){
     <div class="row"><button class="btn ghost" id="savememo">Download my reasoning record</button></div>
   </section>
 
-  <section class="coachsec"><h2>Be examined</h2>
-    <p class="muted small">Optional. Claude will cross-examine your decision using the principles in your ledger.</p>
+  <section class="coachsec" ${hasClaudeHost()?"":"hidden"}><h2>Be examined</h2>
+    <p class="muted small">Optional in a compatible Claude environment. Claude will cross-examine your decision using the principles in your ledger.</p>
     <div id="hcoach"></div>
   </section>`;
   document.getElementById("back").onclick=()=>go({name:"home"});
@@ -990,7 +1002,7 @@ function renderHearing(){
   app.querySelectorAll("[data-fam]").forEach(t=>t.oninput=()=>{h.answers[t.dataset.fam]=t.value;later()});
   app.querySelectorAll("[data-memo]").forEach(t=>t.oninput=()=>{h.memo[t.dataset.memo]=t.value;later()});
   document.getElementById("savememo").onclick=()=>saveFile("examined-system-record.md",recordMarkdown());
-  mountCoach(document.getElementById("hcoach"),"hearing",hearingContext,"Cross-examine my decision");
+  if(hasClaudeHost())mountCoach(document.getElementById("hcoach"),"hearing",hearingContext,"Cross-examine my decision");
 }
 
 /* ---------- Export: a portable, human-readable record ---------- */
@@ -1063,7 +1075,7 @@ function dialogueContext(id){
   return `Module ${m.n}, ${m.title}.\nCase: ${clip(m.dlg.setup,900)}\nQuestion: ${m.dlg.claim}\nThe learner's position: ${info.label}\nTheir principle, in their words: ${clip(d.principle,600)}\nThe objection they said they cannot fully answer: ${clip(d.objection,600)}\nTheir commitments from other modules:\n${ledgerLines(id)}`;
 }
 function ledgerContext(){
-  return `The learner asks to be examined on how their commitments fit together.\nTheir commitments:\n${ledgerLines()}\nConflicts found by the course:\n${tensionLines()}\nStart with the conflict that looks most serious, or with the most doubtful commitment if there are none.`;
+  return `The learner asks to be examined on how their commitments fit together.\nTheir commitments:\n${ledgerLines()}\nPotential tensions flagged by position categories (not necessarily logical contradictions):\n${tensionLines()}\nStart by testing whether the most serious-looking tension is genuine, or examine a doubtful commitment if there are none.`;
 }
 function hearingContext(){
   const h=state.hearing;
