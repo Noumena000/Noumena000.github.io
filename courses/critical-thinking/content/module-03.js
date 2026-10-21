@@ -55,38 +55,54 @@ Read only the opening material on validity and soundness. You do not need the sy
 
   practice: [
     {
-      prompt: 'Decide whether each argument is valid and whether it is sound: (a) All mammals are warm-blooded. Whales are mammals. So whales are warm-blooded. (b) Some doctors are kind. Some kind people are rich. So some doctors are rich. (c) If you study, you pass. You passed. So you studied.',
-      model: `(a) Valid and sound: the form guarantees the conclusion, and the premises are true.
-
-(b) Invalid. The kind people who are rich need not be doctors. Picture a world where every kind doctor is poor and every rich kind person is a lawyer: both premises true, conclusion false. So it cannot be sound.
-
-(c) Invalid: it affirms the consequent. Someone could pass without studying (for example, by already knowing the material).`
+      q: '“If you study, you pass. You passed. So you studied.” Why is this argument invalid?',
+      options: [
+        'Because the premises are false, so the conclusion cannot follow from them at all.',
+        'Because someone could pass without studying, even if both premises are true.',
+        'Because conditional statements cannot appear in any valid argument at all.',
+        'Because the conclusion, that you studied, happens to be false in this case.'
+      ],
+      a: 1,
+      why: 'Validity asks whether the premises, if true, would guarantee the conclusion. Here they would not: a person who already knew the material could pass without studying. This form is called affirming the consequent. Invalid does not mean the conclusion is false.'
     },
     {
-      prompt: 'Write one valid argument with a false premise, and one invalid argument with all true premises and a true conclusion.',
-      model: `Valid with a false premise: “All fish can fly. A salmon is a fish. So a salmon can fly.” The form is flawless, but the first premise is false, so the argument is unsound.
-
-Invalid with true premises and a true conclusion: “Paris is in France. France is in Europe. So grass is green.” The conclusion is true, but it does not follow from the premises. This shows that a true conclusion does not make an argument valid.`
+      q: 'Which of these arguments is valid but not sound?',
+      options: [
+        'All fish can fly. A salmon is a fish. So a salmon can fly.',
+        'Paris is in France. France is in Europe. So grass is green.',
+        'Some doctors are kind. Some kind people are rich. So some doctors are rich.',
+        'All mammals are warm-blooded. Whales are mammals. So whales are warm-blooded.'
+      ],
+      a: 0,
+      why: 'The first has a flawless form, but its first premise is false, so it is unsound. The second has a true conclusion that does not follow from its premises. The third is invalid, since the rich, kind people need not be doctors. The last is both valid and sound.'
     },
     {
-      prompt: 'For the form in (c) above, write a counterexample that shows the form is invalid.',
-      model: `You need an argument of the same form with true premises and a false conclusion. For example: “If it is a dog, it is a mammal. It is a mammal. So it is a dog.”
-
-Both premises are true of a cat, and the conclusion is false of a cat. Because a single argument of this form can go from true premises to a false conclusion, the form itself is invalid.`
+      q: 'The form “If P then Q. Q. Therefore P” is invalid. Which argument is a counterexample that shows it?',
+      options: [
+        'If it is a dog, it is a mammal. It is a dog. So it is a mammal.',
+        'If it rained, the street is wet. The street is dry. So it did not rain.',
+        'If it is a dog, it is a mammal. It is a mammal. So it is a dog.',
+        'If it is a dog, it is a mammal. It is not a dog. So it is not a mammal.'
+      ],
+      a: 2,
+      why: 'The third has the same form as the target, and a cat makes both premises true and the conclusion false. One counterexample is enough to show the form cannot be trusted. The first two are valid forms (modus ponens and modus tollens), and the last is a different invalid form (denying the antecedent).'
     },
     {
-      prompt: 'Find an everyday statement of the form “if P then Q” in the news. Write what follows from it and what does not.',
-      model: `Take “If interest rates rise, house prices will fall.” From it, together with “rates rose,” you may conclude that prices will fall (modus ponens). Together with “prices did not fall,” you may conclude that rates did not rise (modus tollens).
-
-You may not conclude, from “prices fell,” that rates rose (affirming the consequent), nor from “rates did not rise,” that prices will not fall (denying the antecedent). Many other things can move prices.`
+      q: 'Suppose it is true that “If interest rates rise, house prices will fall.” Prices did not fall. What follows?',
+      options: [
+        'Nothing follows, because many things affect house prices.',
+        'Interest rates must have fallen.',
+        'The original statement must have been false.',
+        'Interest rates did not rise.'
+      ],
+      a: 3,
+      why: 'This is modus tollens: if P then Q, not Q, therefore not P. In real life you may doubt the conditional itself, since other things do move prices, but that challenges a premise, not the form. And “did not rise” does not mean “fell.” From “prices fell” you could not conclude that rates rose.'
     }
   ],
 
   pushback: `Valid arguments cannot tell you anything the premises did not already contain.
 
 Write the best response to the objection that deduction is therefore useless for learning new things.`,
-
-  notebook: `Where in your own reasoning do you move from “if P then Q” to “Q, so P”?`,
 
   selfcheck: [
     {

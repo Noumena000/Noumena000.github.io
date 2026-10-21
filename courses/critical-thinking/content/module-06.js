@@ -46,36 +46,54 @@ Read for the experiments, not only the labels.`,
 
   practice: [
     {
-      prompt: 'Run the 2-4-6 task on a friend. Tell them the sequence 2, 4, 6 follows a rule and ask them to guess it by proposing other sequences. Record how many of their tests could have shown their guess was wrong.',
-      model: `The hidden rule in Wason’s task is simply “any increasing sequence.” Most people guess “add two” and then test only sequences that fit it (8, 10, 12), which can never show the guess is wrong.
-
-Count how many of your friend’s tests were attempts to break their own guess (for example 1, 2, 3 or 10, 5, 1). Few people try. That gap is confirmation bias, in a small and measurable form.`
+      q: 'You are told the sequence 2, 4, 6 follows a hidden rule, and you guess it is “add two each time.” Which test could best show your guess is wrong?',
+      options: [
+        '8, 10, 12',
+        '20, 22, 24',
+        '1, 2, 3',
+        '100, 102, 104'
+      ],
+      a: 2,
+      why: 'The first, second, and last all fit your guess, so each can only get a “yes” and cannot show you are wrong. 1, 2, 3 is something your guess says should be rejected. If it is accepted, your guess is wrong (the hidden rule is just “any increasing sequence”). Most people test only what fits their guess, which is confirmation bias in miniature.'
     },
     {
-      prompt: 'Make five predictions about the coming week, each with a confidence percentage. Check them next week and compare confidence with outcomes.',
-      model: `Examples: “It will rain on Saturday, 60 percent.” “My package arrives by Wednesday, 80 percent.” Be specific enough that each prediction clearly comes true or does not.
-
-Next week, look at the pattern. If the things you called 80 percent likely happened about four times in five, you are well calibrated. Most people find that their high-confidence predictions fail more often than they expected.`
+      q: 'Over a month you call ten predictions “90 percent likely.” Five of them come true. What does this show?',
+      options: [
+        'You are well calibrated, because getting half of your predictions right is a good record.',
+        'You were overconfident: 90 percent predictions should come true about nine times in ten.',
+        'The predictions were too easy, so your confidence was fair and no adjustment is needed.',
+        'Nothing at all, because no number of predictions could ever reveal anything about calibration.'
+      ],
+      a: 1,
+      why: 'Calibration means your confidence matches how often you are right. Ten is a small sample, so you would want more before drawing firm conclusions, but five against an expected nine is a clear gap. Most people find that their high-confidence predictions fail more often than they expected.'
     },
     {
-      prompt: 'Describe one decision you are considering. List the evidence for and against, then write what you would advise a friend to do.',
-      model: `The friend version is a debiasing trick. People are often more balanced when advising someone else, because their own wishes weigh less.
-
-If your advice to a friend differs from what you plan to do, ask why. Sometimes you have private information. Sometimes you are favoring what you want.`
+      q: 'You would tell a friend in your position to turn down a job, but you plan to accept it yourself. What is the most useful next step?',
+      options: [
+        'Ask what explains the gap: private information, or favoring what you want?',
+        'Follow the advice you would give your friend, since advice for others is always more accurate.',
+        'Ignore the gap, since advice for others and choices for yourself are separate matters.',
+        'Go with whichever choice feels more certain to you right now, since certainty is a good guide.'
+      ],
+      a: 0,
+      why: 'Imagining what you would advise a friend is a debiasing trick, because your own wishes weigh less. A gap between the two is a prompt to ask why, not a verdict. Sometimes you do have private information. Sometimes you are favoring what you want. The feeling of certainty is not reliable evidence either way.'
     },
     {
-      prompt: 'Pick a belief tied to your identity (political, religious, or professional). Write the best case for the opposite side as its defenders would put it.',
-      model: `A strong answer would satisfy a thoughtful holder of the opposing view. Use the best arguments and evidence they would cite, not the weakest examples from their side. Avoid sarcastic or reluctant phrasing.
-
-If you could not do this, or found it unpleasant, that tells you about the role the belief plays in your sense of who you are. You do not have to change your view, but you should know what you are protecting.`
+      q: 'You are asked to write the best case for a view opposite to your own. Which draft would a thoughtful holder of that view be most likely to accept?',
+      options: [
+        'One built from the most extreme examples on their side, so that the contrast is clear.',
+        'One that states their view fairly and adds “of course, this ignores…” to stay honest.',
+        'One that summarizes their position in a sentence and moves quickly on to the rebuttal.',
+        'One using their strongest arguments and evidence, in the terms they would use.'
+      ],
+      a: 3,
+      why: 'The test is whether a believer would say, “Yes, that is what I think.” Extreme examples, hints that it is wrong, or a quick summary all slant the result. If writing it was unpleasant, that tells you something about the role the belief plays in your sense of who you are.'
     }
   ],
 
   pushback: `If biases are built into human cognition, is it realistic to expect anyone to overcome them?
 
 What can reasonably be expected?`,
-
-  notebook: `Which bias do you most recognize in yourself, and what small habit could counter it?`,
 
   selfcheck: [
     {

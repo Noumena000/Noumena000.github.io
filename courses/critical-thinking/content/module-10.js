@@ -65,36 +65,54 @@ Read the opening half, then summarize his central argument in 200 words.`,
 
   practice: [
     {
-      prompt: 'Choose a view you disagree with. Write a steelman of it in a single page. Then, if you can, show it to someone who holds the view and ask what you missed.',
-      model: `A steelman uses the best reasons and evidence defenders of the view would cite, in their strongest form, and frames the view the way they would. It should not contain any hints of “but of course this is wrong.”
-
-The test is whether a believer would say, “Yes, that is what I think, and you stated it well.” If they point out something you missed, the exercise worked, even if you still disagree.`
+      q: 'A colleague argues for a four-day work week and you doubt it. Which restatement follows Rapoport’s first rule?',
+      options: [
+        '“So you think people should just work less and be paid the same, which sounds lazy to me, but go on.”',
+        '“You think fewer hours can raise focus and cut turnover, which offsets the cost. Have I got that right?”',
+        '“Your view, basically, is that a shorter work week would simply make employees happier and more loyal.”',
+        '“I understand your position well enough. Here is why it is not going to work in practice.”'
+      ],
+      a: 1,
+      why: 'The first rule is to restate the other position so well that the person would say, “I wish I had put it that way.” The first option slants it, the third shrinks it, and the fourth skips straight to rebuttal.'
     },
     {
-      prompt: 'Rewrite an angry message you sent or received, in the order of Rapoport’s rules.',
-      model: `Start by restating the other person’s point so well they would agree with it. Then name what you agree with. Then say what you learned, even if it is small. Only then give your criticism, and make it about the claim, not the person.
-
-Compare the result with the original. The new version is usually longer and less satisfying to write, and much more likely to be heard.`
+      q: 'You wrote an angry message: “You clearly didn’t read the report. Your numbers are wrong.” Which rewrite follows the order of Rapoport’s rules?',
+      options: [
+        '“Your numbers are wrong, though I agree that the report is very long. Here is exactly why they are wrong.”',
+        '“Let me start with the errors in the report, and then I will summarize what I took from your argument.”',
+        '“You argue X. I agree about Y and learned Z from your data. One thing I question is the figure in table 2.”',
+        '“Sorry for my tone earlier. The numbers are still wrong, though, and I can show you where.”'
+      ],
+      a: 2,
+      why: 'The order is: restate their position, name what you agree with, say what you learned, and only then criticize, aiming at the claim, not the person. The new version is usually longer and less satisfying to write, and much more likely to be heard.'
     },
     {
-      prompt: 'Name a belief you have changed in the past five years. What changed your mind, and how long did it take?',
-      model: `A useful answer names the cause: a book, a person, an experience, a piece of evidence. Notice how long it took. Most changes of mind are slow, built from many small updates rather than one conversion.
-
-Also notice what it felt like at the time. If it felt like losing, that is worth knowing: it is part of why people resist.`
+      q: 'A friend says she changed her mind about a major issue over several years. Which pattern is most typical of how such changes happen?',
+      options: [
+        'Many small updates over time, rather than one sudden conversion.',
+        'One decisive argument that she could not answer.',
+        'Losing a public debate and feeling she had to concede.',
+        'A slow loss of interest in the topic, with no new reasons involved.'
+      ],
+      a: 0,
+      why: 'Changes of mind are usually slow, built from many small updates. They can also feel like losing, which is part of why people resist them. Noticing what caused your own changes, and how long they took, helps you be fairer to others who are changing theirs.'
     },
     {
-      prompt: 'For the belief you are most certain about, write what you would need to see or hear to give it up.',
-      model: `Be specific: name the kind of evidence, who would have to produce it, and how strong it would have to be. “Nothing” is an answer, but a revealing one: it suggests the belief functions as an identity commitment.
-
-A belief you hold with good reason can usually tell you what would count against it.`
+      q: 'Which answer to “What would make you give up this belief?” suggests the belief is held for good reasons?',
+      options: [
+        '“Nothing could change it. It is obviously true, and I have never needed proof.”',
+        '“If everyone whose opinion I respect changed their minds, then I would change mine too.”',
+        '“If someone gave me one clever argument I could not answer on the spot.”',
+        '“Several well-run studies by independent teams that find the opposite result.”'
+      ],
+      a: 3,
+      why: 'A belief held for good reasons can usually say what would count against it: the kind of evidence, who would have to produce it, and how strong it would need to be. “Nothing” suggests an identity commitment. Social pressure and a clever argument you cannot answer on the spot are not evidence.'
     }
   ],
 
   pushback: `Write the best objection to “always steelman the other side.”
 
 Are there views that do not deserve it?`,
-
-  notebook: `When did you last say “I was wrong” and mean it? What made that possible?`,
 
   selfcheck: [
     {

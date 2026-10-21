@@ -61,34 +61,52 @@ Pair the reading with an actual attempt at lateral reading on a source you see o
 
   practice: [
     {
-      prompt: 'Pick a claim you saw this week. Trace it back to its original source and write down what was lost or changed in the telling.',
-      model: `Typical losses: hedges (“may be linked” became “causes”), sample size and population (“mice” became “people”), absolute numbers, and the limitations the authors stated.
-
-Write the claim as it first appeared and as it reached you, and compare the two. The chain is often three or four steps long, and each step tends to drop caution and add drama.`
+      q: 'A viral post says “Scientists prove food additive causes cancer.” The paper behind it reports that compounds in the additive were linked to tumors in mice, at doses far above anything people eat. What did the post lose?',
+      options: [
+        'The authors’ names, the journal it appeared in, and the date of publication.',
+        'The hedge (“linked to”), the species (mice, not people), and the dose.',
+        'The paper’s length, its technical vocabulary, and its overall tone of voice.',
+        'Nothing important; the post simply shortened the finding to make it fit.'
+      ],
+      a: 1,
+      why: 'Typical losses are hedges, the sample and population, the numbers, and the limitations the authors stated. Each retelling tends to drop caution and add drama. Compare the claim as it first appeared with the claim as it reached you.'
     },
     {
-      prompt: 'Evaluate one expert you often rely on, using the questions above. What would make you trust them less?',
-      model: `Check relevant training, track record, agreement with other experts, conflicts of interest, and whether they speak within their field.
-
-A thoughtful answer also names what would reduce your trust: a pattern of confident predictions that fail, undisclosed financial ties, or speaking far outside their expertise. If you cannot name anything, you may be trusting out of loyalty rather than judgment.`
+      q: 'A Nobel Prize-winning physicist says in an interview which diet is best for protecting memory. How should you weigh that?',
+      options: [
+        'As strong evidence, since a physicist is a very careful and rigorous thinker.',
+        'As strong evidence, since Nobel winners are rarely wrong about anything they say.',
+        'As worthless, since famous people simply cannot be trusted about anything at all.',
+        'As weak evidence on nutrition, since expertise is specific to a field.'
+      ],
+      a: 3,
+      why: 'A great physicist is not automatically an authority on nutrition. Ask about training and a track record in this specific area, and whether experts in that field agree. “Worthless” goes too far: the point is to look to the people with the relevant expertise.'
     },
     {
-      prompt: 'Choose a news event covered by two or three outlets. Compare the facts each reports and the framing each adds.',
-      model: `List the facts all outlets share first. That is the most reliable core. Then list what differs: which facts were included or left out, which words described the same event, who was quoted first and who last.
-
-The point is not to find the one unbiased outlet. It is to learn to read through framing to the facts, and to notice which omissions change the picture.`
+      q: 'Two outlets report the same protest. One says “thousands marched peacefully”; the other says “mobs clashed with police.” What is the best way to read them?',
+      options: [
+        'Trust the outlet whose tone you like more, and set the other aside entirely.',
+        'Assume that the truth lies exactly halfway between the two accounts of events.',
+        'List the facts both report, then note what each adds or leaves out.',
+        'Prefer the more dramatic report, since vivid detail suggests it saw more.'
+      ],
+      a: 2,
+      why: 'The facts both outlets share are the most reliable core. The differences show framing: which facts were included or left out, and which words were used for the same event. The goal is not to find the one unbiased outlet but to read through the framing to the facts.'
     },
     {
-      prompt: 'List three sources you trust most. For each, say why, and what would make you stop trusting it.',
-      model: `A good answer gives specific reasons: correction practices, transparency about methods, a record of being right when it was inconvenient. Avoid “it agrees with me.”
-
-The second part is the real test. If nothing would make you stop trusting a source, your trust may be unconditional, which is exactly what we want to avoid.`
+      q: 'Which reason for trusting a news source is best grounded?',
+      options: [
+        'It corrects its errors, explains its methods, and reports inconvenient facts.',
+        'It usually agrees with what I already think, which makes it feel trustworthy to me.',
+        'Many people share its articles every day, so it must be doing something right.',
+        'It sounds completely certain and never hedges, which suggests it knows its subject.'
+      ],
+      a: 0,
+      why: 'Good reasons are specific and checkable: correction practices, transparency about methods, a record of being right when it was inconvenient. Agreement, popularity, and confident tone are not evidence of reliability. The follow-up question matters just as much: what would make you stop trusting it?'
     }
   ],
 
   pushback: `Write the best argument that deferring to experts is a failure of intellectual independence, and the best reply.`,
-
-  notebook: `How often do you share something before checking it, and what is the pattern?`,
 
   selfcheck: [
     {

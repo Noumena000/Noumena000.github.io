@@ -65,36 +65,54 @@ Whichever you pick, write a one-paragraph summary in your own words.`,
 
   practice: [
     {
-      prompt: 'Work the disease-test example with a different base rate (1 in 100) and compare. Present both with counts of people.',
-      model: `Take 10,000 people. At 1 in 100, 100 have the condition and the test catches 95 of them. Of the 9,900 healthy people, 5 percent, or 495, test positive falsely. So about 95 true positives and 495 false positives: only about 16 percent of positives are real.
-
-At 1 in 1,000 (10,000 people), 10 have it and 9 or 10 are caught, while about 500 healthy people test positive falsely: about 2 percent of positives are real. Same test, very different meaning, because the base rate changed.`
+      q: 'A test catches 95 percent of people who have a condition and falsely flags 5 percent of healthy people. The condition affects 1 in 100 people. Someone tests positive. Roughly how likely are they to have it?',
+      options: [
+        'About 95 percent',
+        'About 50 percent',
+        'About 16 percent',
+        'About 5 percent'
+      ],
+      a: 2,
+      why: 'Picture 10,000 people. 100 have the condition and the test catches 95 of them. Of the 9,900 healthy people, 5 percent, or 495, are falsely flagged. So about 95 of the 590 positives are real. At 1 in 1,000 the figure falls to about 2 percent. Same test, different meaning, because the base rate changed.'
     },
     {
-      prompt: 'Convert each to absolute terms and say whether it changes your reaction: (a) “This drug cuts risk by 50 percent.” (b) “This habit raises risk by 30 percent.” State clearly which baseline numbers you used.',
-      model: `Choose a baseline and say so. If the baseline risk is 2 in 100, a 50 percent cut brings it to 1 in 100: one fewer person in 100 is affected. If the baseline is 2 in 100,000, the same cut helps one person in 100,000, which is a very different public-health story.
-
-For (b), a baseline of 10 in 1,000 rises to 13 in 1,000: three extra cases per 1,000. Whether that matters depends on the stakes and the cost of avoiding the habit.`
+      q: 'A headline says a drug “cuts your risk by 50 percent.” Without the drug, the risk is 2 in 100,000. What does the drug change in absolute terms?',
+      options: [
+        'It spares about one person in every 100,000.',
+        'It spares about one person in every 100.',
+        'It spares half of everyone who takes it.',
+        'It spares about two people in every 100,000.'
+      ],
+      a: 0,
+      why: 'Half of 2 in 100,000 is 1 in 100,000, so the drug helps one person in 100,000. If the baseline were 2 in 100, the same 50 percent would mean one in 100, a very different public-health story. Always ask for the baseline as well as the relative change.'
     },
     {
-      prompt: 'Give three explanations for why shoe size and reading ability are correlated among children.',
-      model: `The best answer is a third factor: age. Older children have bigger feet and also read better. Other explanations: a coincidence in a small sample, or a measurement artifact (a study that includes very young and older children together).
-
-Large feet do not cause good reading, and good reading does not cause large feet. A comparison within a single age group would likely make the correlation vanish.`
+      q: 'Among school children, shoe size and reading ability are strongly correlated. What is the most likely explanation?',
+      options: [
+        'Larger feet improve balance and concentration, which helps reading.',
+        'Reading a lot over the years makes children’s feet grow faster.',
+        'The correlation is a coincidence in a small sample and means nothing.',
+        'Older children have bigger feet and read better; age explains both.'
+      ],
+      a: 3,
+      why: 'Age is a third factor that causes both. Comparing children of the same age would likely make the correlation vanish. Not every correlation has this shape: sometimes A causes B, B causes A, or it is chance. But when a plausible common cause exists, check it first.'
     },
     {
-      prompt: 'Find a news story reporting a study. List what it tells you and what you would need to know before believing the causal claim.',
-      model: `Typical gaps: the number of participants; whether the study was an experiment or an observation; how outcomes were measured; whether other factors were controlled; whether the result has been replicated; who funded the work; the size of the effect in absolute terms.
-
-If the story does not say, that is itself informative. Look for the original paper, or for a careful secondary source, before drawing a conclusion.`
+      q: 'A news story says: “Study: people who eat breakfast earn more.” Which is the most important thing to find out before believing that breakfast raises pay?',
+      options: [
+        'How many people read the story, and how widely it was shared once it first appeared.',
+        'Whether breakfast eaters differ in other ways (age, job, health), and if it was an experiment.',
+        'Whether the researcher who ran the study eats a healthy breakfast every single day herself.',
+        'Whether the headline says “linked to” or “leads to,” since the wording shows the finding.'
+      ],
+      a: 1,
+      why: 'Only a controlled comparison can separate breakfast from everything else that differs between the groups. The headline’s wording can hint at how careful a story is, but it does not tell you what the study did. Other useful questions: how many people, how outcomes were measured, whether it has been replicated, and how big the effect is in absolute terms.'
     }
   ],
 
   pushback: `“Statistics can prove anything.”
 
 Write the best case for this claim, then say where it goes wrong.`,
-
-  notebook: `What is one belief of yours that rests on a statistic you have never actually checked?`,
 
   selfcheck: [
     {

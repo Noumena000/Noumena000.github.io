@@ -56,36 +56,54 @@ Then read one letter to the editor or opinion column and reconstruct its argumen
 
   practice: [
     {
-      prompt: 'Label each as a claim, a question, a command, or an explanation: (a) “The meeting moved to Friday.” (b) “Why did the meeting move?” (c) “The meeting moved because the director was away.” (d) “Please attend.”',
-      model: `(a) is a claim: it is true or false. (b) is a question. (c) is an explanation: it accounts for something already accepted, namely that the meeting moved. (d) is a command.
-
-If you hesitated over (c), notice the test: is the speaker trying to convince you that the meeting moved, or to account for why it did? Only the second is going on.`
+      q: 'Everyone already knows the meeting moved to Friday. Someone adds: “The meeting moved because the director was away.” What is this?',
+      options: [
+        'An argument, because “because” always introduces a reason for believing something.',
+        'An explanation, because it accounts for something already accepted.',
+        'A command, because it implies the meeting should have been rescheduled.',
+        'A question, because it invites a reply about why the director was away.'
+      ],
+      a: 1,
+      why: 'The speaker is not trying to convince you that the meeting moved. That is already agreed. They are accounting for it. “Because” can introduce either a premise or an explanation, so ask what the speaker is trying to do.'
     },
     {
-      prompt: 'Reconstruct three short arguments from the news or social media in standard form. Mark implicit premises with a different label.',
-      model: `A reconstruction has numbered premises and a final “Therefore” line. For each argument, ask “What would have to be true for these reasons to support this conclusion?” The answer is usually an implicit premise.
-
-For example, “This restaurant has a long line, so the food must be good” has the implicit premise “Long lines mostly form for good food.” Writing it out makes it easy to question (long lines can also come from slow service or novelty).`
+      q: '“This restaurant has a long line, so the food must be good.” Which unstated premise does this argument need?',
+      options: [
+        'Restaurants with good food are usually crowded at dinner time.',
+        'People only wait in line when they are hungry.',
+        'Long lines mostly form for good food.',
+        'The speaker has eaten here before and liked it.'
+      ],
+      a: 2,
+      why: 'The argument moves from the line to the food, so it needs “long lines mostly form for good food.” The first option runs the other way (good food leads to crowds), which would not support the conclusion. Writing the premise out makes it easy to question: lines also form for cheap food, slow service, or novelty.'
     },
     {
-      prompt: 'For each of those arguments, write the one premise you think is weakest and why.',
-      model: `The weakest premise is usually an implicit one, or a general claim that sounds obvious. Say why in a sentence, and say what would strengthen it: “The premise that long lines mean good food is weak, because lines also form for cheap food and slow service. It would be stronger if the argument cited reviews.”
-
-Avoid choosing the premise merely because you dislike the conclusion. Pick the one that fails to support it.`
+      q: 'A friend argues: “The city should build a new stadium. Stadiums bring in tourists, and tourists spend money.” Which premise carries the argument but is never defended?',
+      options: [
+        'Stadiums bring in tourists from outside the city who would not otherwise visit.',
+        'Tourists spend money on hotels, meals, and tickets while they are in town.',
+        'The city has enough empty land for a large new building near the center.',
+        'Tourist spending will outweigh what the stadium costs to build and run.'
+      ],
+      a: 3,
+      why: 'The stated premises are plausible, and they only support the conclusion if an unstated one holds: that the benefit outweighs the cost. Look for the premise that fails to support the conclusion, not the one that merely makes you uneasy about it.'
     },
     {
-      prompt: 'Take an argument you disagree with. Rewrite it in the strongest form you can, then explain what is still wrong with it, if anything.',
-      model: `This is the principle of charity at work. Fix the unclear wording, supply the best version of the implicit premises, and add support the author could have given. Then evaluate.
-
-Often one of three things happens: the strengthened argument is much better than you thought, and you must take it more seriously; it still fails, and now you can say precisely where; or it turns out to depend on a value you reject, which clarifies the disagreement.`
+      q: 'Someone says: “Free school lunches are pointless. Kids who need food will just eat at home.” Which response best follows the principle of charity?',
+      options: [
+        'Restate it at its strongest, as a claim about food at home, and test that.',
+        'Answer the exact words, pointing out that some kids do not have enough at home.',
+        'Assume the speaker does not care about children, and answer that attitude.',
+        'Set the argument aside and argue for your own position on school lunches.'
+      ],
+      a: 0,
+      why: 'Charity means reconstructing the argument as strongly as is reasonable before you evaluate it. Here that shows what the argument really depends on: a factual premise about food at home. Answering only the careless wording teaches you little, and the last two do not engage with the argument at all.'
     }
   ],
 
   pushback: `Write the best objection to the principle of charity.
 
 When might being generous to an argument mislead you about what someone actually meant?`,
-
-  notebook: `Which of your own opinions turned out, once written in standard form, to rest on an unstated premise?`,
 
   selfcheck: [
     {
