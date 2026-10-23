@@ -509,7 +509,7 @@ kase:{
   {t:"I can’t. Agreement means I am right.", r:"It feels that way. But agreement is only evidence if it could have been disagreement. If she agrees with everything, her agreement carries almost no information."}
  ]},
 reads:[
- {t:"The idea", h:"<p>Two checks. First: <b>would this source have said the same if I had believed the opposite?</b> If yes, its agreement tells you little. Second: <b>am I collecting only the evidence that suits me?</b></p><p>The second is <b>confirmation bias</b>, a part of <b>motivated reasoning</b>: we tend to notice and remember evidence for what we already believe, treat it kindly, and pick apart evidence against it.</p><p>It happens to everyone, including careful people. Willpower alone does not fix it. Habits do: decide in advance what result would change your mind, deliberately look for the best case against your view, and gather evidence before you decide what it means.</p>"},
+ {t:"The idea", h:"<p>Two checks. First: <b>would this source still agree with me if I held the opposite view?</b> If yes, its agreement tells you little: it follows my preference rather than giving an independent judgment. A source that keeps its assessment steady regardless of my expressed view is more informative, though it can still be mistaken. Second: <b>am I collecting only the evidence that suits me?</b></p><p>The second is <b>confirmation bias</b>, a part of <b>motivated reasoning</b>: we tend to notice and remember evidence for what we already believe, treat it kindly, and pick apart evidence against it.</p><p>It happens to everyone, including careful people. Willpower alone does not fix it. Habits do: decide in advance what result would change your mind, deliberately look for the best case against your view, and gather evidence before you decide what it means.</p>"},
  {t:"A worked example", h:"<div class=\"ex\"><p>You want to believe your new diet works. You count the days it went well and quietly forget the bad days. You search for “why this diet works”. You ask two friends who like you.</p></div><p>Nothing here is dishonest, but every step leans one way. The search gathers one side. The friends are inclined to please. The forgotten days remove the counter-examples.</p><p>A fairer version: before starting, write down what result after four weeks would convince you it is not working. Track every day, not just the good ones. Search for both the case for and the case against.</p>"},
  {t:"The AI twist", h:"<p>Many assistants are trained in part on what people rate highly, and people often like being agreed with. That can push a model toward telling people what they seem to want to hear. This tendency is called <b>sycophancy</b>.</p><p>It does not happen on every question, and it varies between assistants, but it is real enough to test. A simple test: ask the same question twice, in separate fresh chats, once leaning one way and once leaning the other. Compare the <i>substance</i> of the answers, not the tone.</p><p>It applies to flattery of your work too. “This is great, right?” invites a yes.</p>"}
 ],
@@ -695,8 +695,8 @@ B:[
 
 /* ---------- Capstone ---------- */
 const CAPSTONE={
- intro:"The capstone brings every module together. You will audit a conversation with an AI, step by step, and keep a one-page record of what you found. You can use a conversation from your own life or the case provided.",
- privacy:"If you use your own conversation, leave out names and private details of anyone else, and anything you would not want to keep. Describe the situation in general terms.",
+ intro:"The capstone brings every module together. You will audit a conversation with an AI, step by step, and keep a one-page record of what you found. Complete all eight steps to finish. You can use a conversation from your own life or the case provided.",
+ privacy:"If you use your own conversation, leave out names and private details of anyone else, and anything you would not want to keep. Describe the situation in general terms. Never enter real patient information or protected health information.",
  sample:{
   title:"The café sales case (invented)",
   h:"<p>A café owner asks an AI assistant: “My sales are down 20% since March. I think it is because of the road works outside. What should I do?”</p><p>The assistant replies confidently: “The road works are the most likely cause. A 2022 Retail Insights study found that road works cut customer visits by 35%. Rising coffee prices and changing habits may also contribute. The best response is to cut your opening hours to save costs.”</p><p>The owner asks: “So I should cut my hours, right?” The assistant answers: “Yes, that is the right decision.”</p>"
@@ -750,29 +750,85 @@ const themeLabel=()=>"Colours: "+(theme==="auto"?"match my device":theme);
 /* ---------- State and persistence ---------- */
 const KEY="thinking-well-v1";
 const newMod=()=>({kase:null,read:{},lab:{done:false,d:{}},items:{recent:[],attempts:0,correct:0,order:[],ptr:0},dlg:{step:0,picks:[],done:false},reflect:""});
-const blank=()=>({v:1,mods:{},check:{A:null,B:null},cap:{choice:"case",own:"",steps:{},rubric:[false,false,false]},coach:{},updated:0});
-const valid=o=>!!(o&&typeof o==="object"&&o.v===1&&o.mods&&typeof o.mods==="object"&&o.check&&typeof o.check==="object"&&o.cap&&typeof o.cap==="object");
+const blank=()=>({v:1,mods:{},check:{A:null,B:null,baselineA:null},cap:{choice:"case",own:"",steps:{},rubric:[false,false,false]},coach:{},updated:0});
+const isRecord=v=>v!==null&&typeof v==="object"&&!Array.isArray(v);
+const isInt=(v,min,max)=>Number.isSafeInteger(v)&&v>=min&&v<=max;
+const checkResult=v=>v==null||(isRecord(v)&&Array.isArray(v.r)&&v.r.length===10&&v.r.every(n=>n===0||n===1)&&Number.isFinite(v.date)&&v.date>=0);
+const valid=o=>!!(isRecord(o)&&o.v===1&&isRecord(o.mods)&&isRecord(o.check)&&isRecord(o.cap)&&
+  checkResult(o.check.A)&&checkResult(o.check.B)&&checkResult(o.check.baselineA)&&
+  Object.keys(o.mods).every(id=>!!MOD[id]));
+// Imported JSON and remote progress are untrusted: reconstruct only known,
+// validated fields rather than copying arbitrary input into HTML templates.
 function normalise(o){
-  const b=blank();
-  o.coach=o.coach&&typeof o.coach==="object"?o.coach:{};
-  o.check={A:o.check.A||null,B:o.check.B||null};
-  o.cap={...b.cap,...o.cap};
-  o.cap.steps=o.cap.steps&&typeof o.cap.steps==="object"?o.cap.steps:{};
-  o.cap.rubric=[0,1,2].map(i=>Array.isArray(o.cap.rubric)?!!o.cap.rubric[i]:false);
-  if(typeof o.cap.own!=="string")o.cap.own="";
-  for(const id of Object.keys(o.mods)){
-    if(!MOD[id]){delete o.mods[id];continue}
-    const m=o.mods[id],n=newMod();
-    m.read=m.read&&typeof m.read==="object"?m.read:{};
-    m.lab={...n.lab,...(m.lab||{})}; if(!m.lab.d||typeof m.lab.d!=="object")m.lab.d={};
-    m.items={...n.items,...(m.items||{})};
-    if(!Array.isArray(m.items.recent))m.items.recent=[];
-    if(!Array.isArray(m.items.order))m.items.order=[];
-    m.dlg={...n.dlg,...(m.dlg||{})}; if(!Array.isArray(m.dlg.picks))m.dlg.picks=[];
-    if(typeof m.reflect!=="string")m.reflect="";
-    if(m.kase===undefined)m.kase=null;
+  const out=blank();
+  out.updated=Number.isFinite(o.updated)&&o.updated>=0?o.updated:0;
+  const copyCheck=v=>v?{r:v.r.slice(),date:v.date}:null;
+  out.check.A=copyCheck(o.check.A);
+  out.check.B=copyCheck(o.check.B);
+  out.check.baselineA=copyCheck(o.check.baselineA||o.check.A);
+  const cap=isRecord(o.cap)?o.cap:{};
+  out.cap.choice=cap.choice==="own"?"own":"case";
+  out.cap.own=typeof cap.own==="string"?cap.own.slice(0,1200):"";
+  const steps=isRecord(cap.steps)?cap.steps:{};
+  CAPSTONE.steps.forEach(step=>{if(typeof steps[step.k]==="string")out.cap.steps[step.k]=steps[step.k].slice(0,1500)});
+  out.cap.rubric=[0,1,2].map(i=>Array.isArray(cap.rubric)&&cap.rubric[i]===true);
+  for(const m of MODS){
+    const previous=o.mods[m.id];
+    if(!isRecord(previous))continue;
+    const n=newMod();
+    if(isInt(previous.kase,0,m.kase.opts.length-1))n.kase=previous.kase;
+    const read=isRecord(previous.read)?previous.read:{};
+    m.reads.forEach((_,i)=>{if(read[i]===1||read[i]===true)n.read[i]=1});
+    const lab=isRecord(previous.lab)?previous.lab:{};
+    const data=isRecord(lab.d)?lab.d:{};
+    n.lab.done=lab.done===true;
+    if(m.lab.type==="classify"){
+      const ans=isRecord(data.ans)?data.ans:{};
+      const clean={};
+      m.lab.groups.forEach((group,gi)=>group.items.forEach((_,ii)=>{
+        const key=gi+"."+ii;
+        if(isInt(ans[key],0,m.lab.cats.length-1))clean[key]=ans[key];
+      }));
+      n.lab.d.ans=clean;
+    }else if(m.lab.type==="pick"){
+      n.lab.d.sel=Array.isArray(data.sel)?[...new Set(data.sel.filter(i=>isInt(i,0,m.lab.opts.length-1)))]:[];
+      n.lab.d.sub=data.sub===true;
+    }else if(m.lab.type==="asktwice"){
+      n.lab.d.tried=Array.isArray(data.tried)?[...new Set(data.tried.filter(v=>v==="strong"||v==="weak"))]:[];
+    }
+    const items=isRecord(previous.items)?previous.items:{};
+    n.items.recent=Array.isArray(items.recent)?items.recent.filter(v=>v===0||v===1).slice(-12):[];
+    n.items.attempts=isInt(items.attempts,0,1000000)?items.attempts:0;
+    n.items.correct=isInt(items.correct,0,n.items.attempts)?items.correct:0;
+    const order=items.order, len=m.items.length;
+    if(Array.isArray(order)&&order.length===len&&order.every(i=>isInt(i,0,len-1))&&new Set(order).size===len){
+      n.items.order=order.slice();
+      n.items.ptr=isInt(items.ptr,0,len)?items.ptr:0;
+    }
+    const dlg=isRecord(previous.dlg)?previous.dlg:{};
+    const picks=Array.isArray(dlg.picks)?dlg.picks:[];
+    for(let i=0;i<Math.min(picks.length,m.dlg.steps.length);i++){
+      if(!isInt(picks[i],0,m.dlg.steps[i].opts.length-1))break;
+      n.dlg.picks.push(picks[i]);
+    }
+    n.dlg.step=isInt(dlg.step,0,m.dlg.steps.length)?Math.min(dlg.step,n.dlg.picks.length):0;
+    n.dlg.picks=n.dlg.picks.slice(0,n.dlg.step);
+    n.dlg.done=n.dlg.step===m.dlg.steps.length&&dlg.done===true;
+    n.reflect=typeof previous.reflect==="string"?previous.reflect.slice(0,600):"";
+    out.mods[m.id]=n;
   }
-  return o;
+  const coach=isRecord(o.coach)?o.coach:{};
+  for(const key of ["cap",...MODS.map(m=>"m:"+m.id)]){
+    const c=coach[key];
+    if(!isRecord(c))continue;
+    const turns=Array.isArray(c.turns)?c.turns:[];
+    out.coach[key]={
+      turns:turns.filter(t=>isRecord(t)&&(t.r==="assistant"||t.r==="user")&&typeof t.c==="string")
+        .slice(-14).map(t=>({r:t.r,c:t.c.slice(0,1500)})),
+      done:c.done===true
+    };
+  }
+  return out;
 }
 let state=blank(), sync="local", docRef=null, saveTimer=null, view={name:"home"};
 try{const s=localStorage.getItem(KEY);if(s){const o=JSON.parse(s);if(valid(o))state=normalise(o)}}catch(e){}
@@ -807,10 +863,10 @@ const dlgOk=id=>{const m=state.mods[id];return !!(m&&m.dlg.done)};
 const reflectOk=id=>{const m=state.mods[id];return !!(m&&m.reflect.trim().length>=20)};
 function status(id){
   const m=state.mods[id];
-  const n=[itemsOk(id),dlgOk(id),reflectOk(id)].filter(Boolean).length;
-  if(n===3)return {key:"done",n,text:"Complete"};
+  const n=[m&&m.kase!==null,m&&Object.keys(m.read).length>=MOD[id].reads.length,m&&m.lab.done,itemsOk(id),dlgOk(id),reflectOk(id)].filter(Boolean).length;
+  if(n===6)return {key:"done",n,text:"Complete"};
   const touched=m&&(m.items.attempts>0||m.dlg.step>0||Object.keys(m.read).length>0||m.kase!==null||m.lab.done||m.reflect);
-  if(n>0||touched)return {key:"progress",n,text:`${n} of 3 parts done`};
+  if(n>0||touched)return {key:"progress",n,text:`${n} of 6 parts done`};
   return {key:"new",n,text:"Not started"};
 }
 const dots=id=>{const m=state.mods[id];const last=m?m.items.recent.slice(-6):[];return `<span class="dots" aria-hidden="true">${Array.from({length:6},(_,i)=>{const v=last[i];return `<i class="${v===1?"y":v===0?"n":""}"></i>`}).join("")}</span>`};
@@ -845,7 +901,7 @@ function renderHome(){
   const rows=MODS.map(m=>{const st=status(m.id);return `<li><button class="book" data-go="unit:${m.id}">${glyph(m.glyph,40)}<span><span class="num">Module ${m.n}</span><span class="title">${m.title}</span><span class="gist">${m.gist}</span>${dots(m.id)}</span><span class="state ${st.key==="done"?"done":""}">${st.text}</span></button></li>`}).join("");
   const crow=(go,g,num,title,gist,stText,done)=>`<li><button class="book" data-go="${go}">${glyph(g,40)}<span><span class="num">${num}</span><span class="title">${title}</span><span class="gist">${gist}</span></span><span class="state ${done?"done":""}">${stText}</span></button></li>`;
   const a=checkScore("A"), b=checkScore("B");
-  const capDone=state.cap.rubric.every(Boolean)&&Object.values(state.cap.steps).filter(v=>String(v||"").trim().length>20).length>=6;
+  const capDone=state.cap.rubric.every(Boolean)&&CAPSTONE.steps.every(step=>String(state.cap.steps[step.k]||"").trim().length>20);
   app.innerHTML=`
   <p class="small muted" style="margin:0 0 6px"><a href="../">← All courses</a> · <a href="../../">Benjamin A. Moss</a></p>
   <header class="hero">
