@@ -913,6 +913,7 @@ function applyExaminerVisibility(){
 /* ---------- Home ---------- */
 function checkScore(f){const c=state.check[f];return c&&Array.isArray(c.r)?c.r.reduce((a,b)=>a+b,0):null}
 function baselineScore(){const c=state.check.baselineA||state.check.A;return c&&Array.isArray(c.r)?c.r.reduce((a,b)=>a+b,0):null}
+const capstoneOk=()=>state.cap.rubric.every(Boolean)&&CAPSTONE.steps.every(step=>String(state.cap.steps[step.k]||"").trim().length>20);
 function renderHome(){
   const doneN=MODS.filter(m=>status(m.id).key==="done").length, nxt=nextMod();
   let nextBlock;
@@ -922,7 +923,7 @@ function renderHome(){
   const rows=MODS.map(m=>{const st=status(m.id);return `<li><button class="book" data-go="unit:${m.id}">${glyph(m.glyph,40)}<span><span class="num">Module ${m.n}</span><span class="title">${m.title}</span><span class="gist">${m.gist}</span>${dots(m.id)}</span><span class="state ${st.key==="done"?"done":""}">${st.text}</span></button></li>`}).join("");
   const crow=(go,g,num,title,gist,stText,done)=>`<li><button class="book" data-go="${go}">${glyph(g,40)}<span><span class="num">${num}</span><span class="title">${title}</span><span class="gist">${gist}</span></span><span class="state ${done?"done":""}">${stText}</span></button></li>`;
   const a=baselineScore(), b=checkScore("B");
-  const capDone=state.cap.rubric.every(Boolean)&&CAPSTONE.steps.every(step=>String(state.cap.steps[step.k]||"").trim().length>20);
+  const capDone=capstoneOk();
   app.innerHTML=`
   <p class="small muted" style="margin:0 0 6px"><a href="../">← All courses</a> · <a href="../../">Benjamin A. Moss</a></p>
   <header class="hero">
@@ -943,6 +944,14 @@ function renderHome(){
     </ul>
   </section>
   <section class="sec">
+    <h2>What you will learn</h2>
+    <ul><li>Identify claims, reasons, and hidden assumptions.</li>
+    <li>Verify sources, assess numerical claims, and consider rival explanations.</li>
+    <li>Test for bias and formulate fair objections.</li>
+    <li>Decide what AI can help with while retaining your own judgment.</li></ul>
+    <p class="small muted">For nursing learners: use fictional cases only. Never enter patient information or other protected health information in the course or an AI assistant.</p>
+  </section>
+  <section class="sec">
     <h2>How it works</h2>
     <p>Every module has the same shape, so you always know what comes next. It opens with <b>a case</b> from everyday life, then <b>the idea</b> in plain words with a worked example and the twist that AI adds. You then try <b>a hands-on lab</b> and <b>practice questions</b> that explain each answer. A <b>dialogue</b> pushes back on your choices with questions, and you finish by writing <b>one sentence</b> in your own words.</p>
     <p>Each idea is first taught on a human example, then on an AI one, so the skill stands even if you never use a chatbot.</p>
@@ -954,17 +963,18 @@ function renderHome(){
   </section>
   <section class="sec">
     <h2>Your record</h2>
-    <p class="muted">What you write here is yours. Download it any time as plain text you can open anywhere.</p>
+    <p class="muted">Your progress is saved in this browser. Download it for safekeeping or to move between devices. Resetting progress also replaces any connected account copy with an empty record.</p>
     <div class="row">
       <button class="btn" id="exp-md">Download my record (Markdown)</button>
       <button class="btn ghost" id="exp-json">Download progress (JSON)</button>
       <button class="btn ghost" id="imp">Restore from JSON</button>
+      <button class="btn ghost" id="reset">Reset my progress</button>
     </div>
     <div id="jsonbox" hidden><p class="small muted" id="jsonmsg"></p><textarea class="json" id="json" aria-label="Text of your record"></textarea><div class="row"><button class="btn" id="imp-go">Restore from this text</button></div></div>
     <p class="sync" id="sync" aria-live="polite">${syncText()}</p>
   </section>
   <footer class="foot">
-    <p>Version 0.1, a draft pilot. The examples, statistics, and explanations are awaiting review by a subject expert.</p><p>Made by <a href="../../">Benjamin A. Moss</a>. Your work stays in your own browser; nothing you write here is sent to a server.</p>
+    <p>Version 0.2, an independently developed optional pilot resource. Examples and assessments have not been formally validated.</p><p>Made by <a href="../../">Benjamin A. Moss</a>. On this public site, progress stays in this browser. If you use the optional Claude examiner or account sync in a compatible environment, text or progress may be sent to Claude. Do not include personal or patient information.</p>
     <p><button class="btn quiet" id="themebtn">${themeLabel()}</button></p>
   </footer>`;
   $$("[data-go]").forEach(b=>b.onclick=()=>{const [k,x]=b.dataset.go.split(":");
@@ -976,6 +986,10 @@ function renderHome(){
   $("#imp").onclick=()=>{const box=$("#jsonbox");box.hidden=false;$("#jsonmsg").textContent="Paste the text of a progress file, then restore it.";$("#json").value="";$("#json").focus()};
   $("#imp-go").onclick=importProgress;
   $("#themebtn").onclick=cycleTheme;
+  $("#reset").onclick=()=>{
+    if(!confirm("Reset all progress, reflections, and check results? This cannot be undone. Download a copy first if you want to keep it."))return;
+    state=blank();save();go({name:"home"});
+  };
 }
 async function saveFile(filename,data){
   let dl=null;
@@ -1005,7 +1019,7 @@ function recordMarkdown(){
   L.push(`## Practice`,``);
   MODS.forEach(m=>{const s=state.mods[m.id];const it=s?s.items:{attempts:0,correct:0};L.push(`- Module ${m.n}, ${m.title}: ${it.correct} of ${it.attempts} practice answers correct${itemsOk(m.id)?" (mastery reached)":""}`)});
   L.push(``,`## The check`,``);
-  ["A","B"].forEach(f=>{const c=state.check[f];L.push(c&&Array.isArray(c.r)?`- Form ${f}: ${c.r.reduce((a,b)=>a+b,0)} of 10 (${dateStr(c.date)})`:`- Form ${f}: not taken`)});
+  ["A","B"].forEach(f=>{const c=f==="A"?(state.check.baselineA||state.check.A):state.check.B;L.push(c&&Array.isArray(c.r)?`- Form ${f}${f==="A"?" (original baseline)":""}: ${c.r.reduce((a,b)=>a+b,0)} of 10 (${dateStr(c.date)})`:`- Form ${f}: not taken`)});
   L.push(``,`## Capstone audit`,``,auditBody(),``);
   return L.join("\n");
 }
@@ -1055,7 +1069,7 @@ function mountKase(id){
     el.innerHTML=`<h2>The case</h2>${m.kase.h}<p><b>${m.kase.ask}</b></p>`+
       m.kase.opts.map((o,i)=>`<button class="opt" data-i="${i}" aria-pressed="${s.kase===i}">${o.t}</button>`).join("")+
       (s.kase!==null?`<div class="reply" aria-live="polite"><p>${m.kase.opts[s.kase].r}</p></div>`:`<div aria-live="polite"></div>`);
-    $$(".opt",el).forEach(b=>b.onclick=()=>{s.kase=+b.dataset.i;save();draw();updateParts(id)});
+    $$(".opt",el).forEach(b=>b.onclick=()=>{const i=b.dataset.i;s.kase=+i;save();draw();const choice=$(`[data-i="${i}"]`,el);if(choice)choice.focus({preventScroll:true});updateParts(id)});
   };
   draw();
 }
@@ -1100,7 +1114,7 @@ function mountClassify(el,id){
       html+=`<p class="fb"><b>${hit} of ${total}</b> labelled as expected. Change any answer to see its note again.</p>`;
     }
     el.innerHTML=html;
-    $$(".opt",el).forEach(b=>b.onclick=()=>{s.d.ans[b.dataset.k]=+b.dataset.c;save();draw();if(Object.keys(s.d.ans).length===total)labDone(id)});
+    $$(".opt",el).forEach(b=>b.onclick=()=>{const k=b.dataset.k,c=b.dataset.c;s.d.ans[k]=+c;save();draw();const choice=$(`[data-k="${k}"][data-c="${c}"]`,el);if(choice)choice.focus({preventScroll:true});if(Object.keys(s.d.ans).length===total)labDone(id)});
   };
   draw();
   if(Object.keys(s.d.ans).length===total&&!s.done)labDone(id);
@@ -1130,8 +1144,8 @@ function mountPick(el,id){
     }
     el.innerHTML=html;
     if(!sub){
-      $$(".opt",el).forEach(b=>b.onclick=()=>{const i=+b.dataset.i,k=s.d.sel.indexOf(i);if(k>=0)s.d.sel.splice(k,1);else s.d.sel.push(i);save();draw()});
-      const c=$("#chk",el);if(c)c.onclick=()=>{s.d.sub=true;save();draw();labDone(id)};
+      $$(".opt",el).forEach(b=>b.onclick=()=>{const i=+b.dataset.i,k=s.d.sel.indexOf(i);if(k>=0)s.d.sel.splice(k,1);else s.d.sel.push(i);save();draw();const choice=$(`[data-i="${i}"]`,el);if(choice)choice.focus({preventScroll:true})});
+      const c=$("#chk",el);if(c)c.onclick=()=>{s.d.sub=true;save();draw();const again=$("#again",el);if(again)again.focus({preventScroll:true});labDone(id)};
     }else{$("#again",el).onclick=()=>{s.d.sel=[];s.d.sub=false;save();draw()}}
   };
   draw();
@@ -1260,7 +1274,7 @@ function mountDialogue(id){
     if(!s.done)$$(".opt",el).forEach(b=>b.onclick=()=>{
       s.picks[s.step]=+b.dataset.i;s.step++;
       if(s.step>=m.dlg.steps.length)s.done=true;
-      save();draw();updateParts(id);
+      save();draw();const next=$("[data-i]",el)||$("#redo",el);if(next)next.focus({preventScroll:true});updateParts(id);
     });
     else $("#redo",el).onclick=()=>{s.step=0;s.picks=[];s.done=false;save();draw();updateParts(id);el.scrollIntoView({block:"start"})};
   };
