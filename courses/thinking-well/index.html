@@ -509,7 +509,7 @@ kase:{
   {t:"I can’t. Agreement means I am right.", r:"It feels that way. But agreement is only evidence if it could have been disagreement. If she agrees with everything, her agreement carries almost no information."}
  ]},
 reads:[
- {t:"The idea", h:"<p>Two checks. First: <b>would this source have said the same if I had believed the opposite?</b> If yes, its agreement tells you little. Second: <b>am I collecting only the evidence that suits me?</b></p><p>The second is <b>confirmation bias</b>, a part of <b>motivated reasoning</b>: we tend to notice and remember evidence for what we already believe, treat it kindly, and pick apart evidence against it.</p><p>It happens to everyone, including careful people. Willpower alone does not fix it. Habits do: decide in advance what result would change your mind, deliberately look for the best case against your view, and gather evidence before you decide what it means.</p>"},
+ {t:"The idea", h:"<p>Two checks. First: <b>would this source still agree with me if I held the opposite view?</b> If yes, its agreement tells you little: it follows my preference rather than giving an independent judgment. A source that keeps its assessment steady regardless of my expressed view is more informative, though it can still be mistaken. Second: <b>am I collecting only the evidence that suits me?</b></p><p>The second is <b>confirmation bias</b>, a part of <b>motivated reasoning</b>: we tend to notice and remember evidence for what we already believe, treat it kindly, and pick apart evidence against it.</p><p>It happens to everyone, including careful people. Willpower alone does not fix it. Habits do: decide in advance what result would change your mind, deliberately look for the best case against your view, and gather evidence before you decide what it means.</p>"},
  {t:"A worked example", h:"<div class=\"ex\"><p>You want to believe your new diet works. You count the days it went well and quietly forget the bad days. You search for “why this diet works”. You ask two friends who like you.</p></div><p>Nothing here is dishonest, but every step leans one way. The search gathers one side. The friends are inclined to please. The forgotten days remove the counter-examples.</p><p>A fairer version: before starting, write down what result after four weeks would convince you it is not working. Track every day, not just the good ones. Search for both the case for and the case against.</p>"},
  {t:"The AI twist", h:"<p>Many assistants are trained in part on what people rate highly, and people often like being agreed with. That can push a model toward telling people what they seem to want to hear. This tendency is called <b>sycophancy</b>.</p><p>It does not happen on every question, and it varies between assistants, but it is real enough to test. A simple test: ask the same question twice, in separate fresh chats, once leaning one way and once leaning the other. Compare the <i>substance</i> of the answers, not the tone.</p><p>It applies to flattery of your work too. “This is great, right?” invites a yes.</p>"}
 ],
@@ -695,8 +695,8 @@ B:[
 
 /* ---------- Capstone ---------- */
 const CAPSTONE={
- intro:"The capstone brings every module together. You will audit a conversation with an AI, step by step, and keep a one-page record of what you found. You can use a conversation from your own life or the case provided.",
- privacy:"If you use your own conversation, leave out names and private details of anyone else, and anything you would not want to keep. Describe the situation in general terms.",
+ intro:"The capstone brings every module together. You will audit a conversation with an AI, step by step, and keep a one-page record of what you found. Complete all eight steps to finish. You can use a conversation from your own life or the case provided.",
+ privacy:"If you use your own conversation, leave out names and private details of anyone else, and anything you would not want to keep. Describe the situation in general terms. Never enter real patient information or protected health information.",
  sample:{
   title:"The café sales case (invented)",
   h:"<p>A café owner asks an AI assistant: “My sales are down 20% since March. I think it is because of the road works outside. What should I do?”</p><p>The assistant replies confidently: “The road works are the most likely cause. A 2022 Retail Insights study found that road works cut customer visits by 35%. Rising coffee prices and changing habits may also contribute. The best response is to cut your opening hours to save costs.”</p><p>The owner asks: “So I should cut my hours, right?” The assistant answers: “Yes, that is the right decision.”</p>"
@@ -750,31 +750,95 @@ const themeLabel=()=>"Colours: "+(theme==="auto"?"match my device":theme);
 /* ---------- State and persistence ---------- */
 const KEY="thinking-well-v1";
 const newMod=()=>({kase:null,read:{},lab:{done:false,d:{}},items:{recent:[],attempts:0,correct:0,order:[],ptr:0},dlg:{step:0,picks:[],done:false},reflect:""});
-const blank=()=>({v:1,mods:{},check:{A:null,B:null},cap:{choice:"case",own:"",steps:{},rubric:[false,false,false]},coach:{},updated:0});
-const valid=o=>!!(o&&typeof o==="object"&&o.v===1&&o.mods&&typeof o.mods==="object"&&o.check&&typeof o.check==="object"&&o.cap&&typeof o.cap==="object");
+const blank=()=>({v:1,mods:{},check:{A:null,B:null,baselineA:null},cap:{choice:"case",own:"",steps:{},rubric:[false,false,false]},coach:{},updated:0});
+const isRecord=v=>v!==null&&typeof v==="object"&&!Array.isArray(v);
+const isInt=(v,min,max)=>Number.isSafeInteger(v)&&v>=min&&v<=max;
+const checkResult=v=>v==null||(isRecord(v)&&Array.isArray(v.r)&&v.r.length===10&&v.r.every(n=>n===0||n===1)&&Number.isFinite(v.date)&&v.date>=0);
+const valid=o=>!!(isRecord(o)&&o.v===1&&isRecord(o.mods)&&isRecord(o.check)&&isRecord(o.cap)&&
+  checkResult(o.check.A)&&checkResult(o.check.B)&&checkResult(o.check.baselineA)&&
+  Object.keys(o.mods).every(id=>!!MOD[id]));
+// Imported JSON and remote progress are untrusted: reconstruct only known,
+// validated fields rather than copying arbitrary input into HTML templates.
 function normalise(o){
-  const b=blank();
-  o.coach=o.coach&&typeof o.coach==="object"?o.coach:{};
-  o.check={A:o.check.A||null,B:o.check.B||null};
-  o.cap={...b.cap,...o.cap};
-  o.cap.steps=o.cap.steps&&typeof o.cap.steps==="object"?o.cap.steps:{};
-  o.cap.rubric=[0,1,2].map(i=>Array.isArray(o.cap.rubric)?!!o.cap.rubric[i]:false);
-  if(typeof o.cap.own!=="string")o.cap.own="";
-  for(const id of Object.keys(o.mods)){
-    if(!MOD[id]){delete o.mods[id];continue}
-    const m=o.mods[id],n=newMod();
-    m.read=m.read&&typeof m.read==="object"?m.read:{};
-    m.lab={...n.lab,...(m.lab||{})}; if(!m.lab.d||typeof m.lab.d!=="object")m.lab.d={};
-    m.items={...n.items,...(m.items||{})};
-    if(!Array.isArray(m.items.recent))m.items.recent=[];
-    if(!Array.isArray(m.items.order))m.items.order=[];
-    m.dlg={...n.dlg,...(m.dlg||{})}; if(!Array.isArray(m.dlg.picks))m.dlg.picks=[];
-    if(typeof m.reflect!=="string")m.reflect="";
-    if(m.kase===undefined)m.kase=null;
+  const out=blank();
+  out.updated=Number.isFinite(o.updated)&&o.updated>=0?o.updated:0;
+  const copyCheck=v=>v?{r:v.r.slice(),date:v.date}:null;
+  out.check.A=copyCheck(o.check.A);
+  out.check.B=copyCheck(o.check.B);
+  out.check.baselineA=copyCheck(o.check.baselineA||o.check.A);
+  const cap=isRecord(o.cap)?o.cap:{};
+  out.cap.choice=cap.choice==="own"?"own":"case";
+  out.cap.own=typeof cap.own==="string"?cap.own.slice(0,1200):"";
+  const steps=isRecord(cap.steps)?cap.steps:{};
+  CAPSTONE.steps.forEach(step=>{if(typeof steps[step.k]==="string")out.cap.steps[step.k]=steps[step.k].slice(0,1500)});
+  out.cap.rubric=[0,1,2].map(i=>Array.isArray(cap.rubric)&&cap.rubric[i]===true);
+  for(const m of MODS){
+    const previous=o.mods[m.id];
+    if(!isRecord(previous))continue;
+    const n=newMod();
+    if(isInt(previous.kase,0,m.kase.opts.length-1))n.kase=previous.kase;
+    const read=isRecord(previous.read)?previous.read:{};
+    m.reads.forEach((_,i)=>{if(read[i]===1||read[i]===true)n.read[i]=1});
+    const lab=isRecord(previous.lab)?previous.lab:{};
+    const data=isRecord(lab.d)?lab.d:{};
+    n.lab.done=lab.done===true;
+    if(m.lab.type==="classify"){
+      const ans=isRecord(data.ans)?data.ans:{};
+      const clean={};
+      m.lab.groups.forEach((group,gi)=>group.items.forEach((_,ii)=>{
+        const key=gi+"."+ii;
+        if(isInt(ans[key],0,m.lab.cats.length-1))clean[key]=ans[key];
+      }));
+      n.lab.d.ans=clean;
+    }else if(m.lab.type==="pick"){
+      n.lab.d.sel=Array.isArray(data.sel)?[...new Set(data.sel.filter(i=>isInt(i,0,m.lab.opts.length-1)))]:[];
+      n.lab.d.sub=data.sub===true;
+    }else if(m.lab.type==="asktwice"){
+      n.lab.d.tried=Array.isArray(data.tried)?[...new Set(data.tried.filter(v=>v==="strong"||v==="weak"))]:[];
+    }
+    const items=isRecord(previous.items)?previous.items:{};
+    n.items.recent=Array.isArray(items.recent)?items.recent.filter(v=>v===0||v===1).slice(-12):[];
+    n.items.attempts=isInt(items.attempts,0,1000000)?items.attempts:0;
+    n.items.correct=isInt(items.correct,0,n.items.attempts)?items.correct:0;
+    const order=items.order, len=m.items.length;
+    if(Array.isArray(order)&&order.length===len&&order.every(i=>isInt(i,0,len-1))&&new Set(order).size===len){
+      n.items.order=order.slice();
+      n.items.ptr=isInt(items.ptr,0,len)?items.ptr:0;
+    }
+    const dlg=isRecord(previous.dlg)?previous.dlg:{};
+    const picks=Array.isArray(dlg.picks)?dlg.picks:[];
+    for(let i=0;i<Math.min(picks.length,m.dlg.steps.length);i++){
+      if(!isInt(picks[i],0,m.dlg.steps[i].opts.length-1))break;
+      n.dlg.picks.push(picks[i]);
+    }
+    n.dlg.step=isInt(dlg.step,0,m.dlg.steps.length)?Math.min(dlg.step,n.dlg.picks.length):0;
+    n.dlg.picks=n.dlg.picks.slice(0,n.dlg.step);
+    n.dlg.done=n.dlg.step===m.dlg.steps.length&&dlg.done===true;
+    n.reflect=typeof previous.reflect==="string"?previous.reflect.slice(0,600):"";
+    out.mods[m.id]=n;
   }
-  return o;
+  const coach=isRecord(o.coach)?o.coach:{};
+  for(const key of ["cap",...MODS.map(m=>"m:"+m.id)]){
+    const c=coach[key];
+    if(!isRecord(c))continue;
+    const turns=Array.isArray(c.turns)?c.turns:[];
+    out.coach[key]={
+      turns:turns.filter(t=>isRecord(t)&&(t.r==="assistant"||t.r==="user")&&typeof t.c==="string")
+        .slice(-14).map(t=>({r:t.r,c:t.c.slice(0,1500)})),
+      done:c.done===true
+    };
+  }
+  return out;
 }
-let state=blank(), sync="local", docRef=null, saveTimer=null, view={name:"home"};
+function routeFromHash(){
+  const h=(window.location.hash||"").slice(1);
+  if(h.startsWith("unit-")&&MOD[h.slice(5)])return {name:"unit",id:h.slice(5)};
+  if(h==="check-A"||h==="check-B")return {name:"check",form:h.slice(-1),stage:"intro",i:0,ans:[],order:[]};
+  if(h==="capstone")return {name:"capstone"};
+  return {name:"home"};
+}
+const routeHash=v=>v.name==="unit"?"#unit-"+v.id:v.name==="check"?"#check-"+v.form:v.name==="capstone"?"#capstone":"#home";
+let state=blank(), sync="local", docRef=null, saveTimer=null, view=routeFromHash();
 try{const s=localStorage.getItem(KEY);if(s){const o=JSON.parse(s);if(valid(o))state=normalise(o)}}catch(e){}
 const M=id=>state.mods[id]||(state.mods[id]=newMod());
 function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
@@ -807,10 +871,10 @@ const dlgOk=id=>{const m=state.mods[id];return !!(m&&m.dlg.done)};
 const reflectOk=id=>{const m=state.mods[id];return !!(m&&m.reflect.trim().length>=20)};
 function status(id){
   const m=state.mods[id];
-  const n=[itemsOk(id),dlgOk(id),reflectOk(id)].filter(Boolean).length;
-  if(n===3)return {key:"done",n,text:"Complete"};
+  const n=[m&&m.kase!==null,m&&Object.keys(m.read).length>=MOD[id].reads.length,m&&m.lab.done,itemsOk(id),dlgOk(id),reflectOk(id)].filter(Boolean).length;
+  if(n===6)return {key:"done",n,text:"Complete"};
   const touched=m&&(m.items.attempts>0||m.dlg.step>0||Object.keys(m.read).length>0||m.kase!==null||m.lab.done||m.reflect);
-  if(n>0||touched)return {key:"progress",n,text:`${n} of 3 parts done`};
+  if(n>0||touched)return {key:"progress",n,text:`${n} of 6 parts done`};
   return {key:"new",n,text:"Not started"};
 }
 const dots=id=>{const m=state.mods[id];const last=m?m.items.recent.slice(-6):[];return `<span class="dots" aria-hidden="true">${Array.from({length:6},(_,i)=>{const v=last[i];return `<i class="${v===1?"y":v===0?"n":""}"></i>`}).join("")}</span>`};
@@ -819,7 +883,19 @@ const nextMod=()=>MODS.find(m=>status(m.id).key!=="done");
 
 /* ---------- Router ---------- */
 const app=document.getElementById("app");
-function go(v){view=v;render();window.scrollTo(0,0);try{app.focus({preventScroll:true})}catch(e){}}
+function go(v){
+  view=v;
+  const hash=routeHash(v);
+  if(window.location.hash!==hash)window.history.pushState(null,"",hash);
+  render();window.scrollTo(0,0);
+  try{app.focus({preventScroll:true})}catch(e){}
+}
+function restoreRoute(){
+  view=routeFromHash();render();window.scrollTo(0,0);
+  try{app.focus({preventScroll:true})}catch(e){}
+}
+window.addEventListener("popstate",restoreRoute);
+window.addEventListener("hashchange",restoreRoute);
 function render(){
   if(view.name==="unit")renderUnit(view.id);
   else if(view.name==="check")renderCheck();
@@ -836,6 +912,8 @@ function applyExaminerVisibility(){
 
 /* ---------- Home ---------- */
 function checkScore(f){const c=state.check[f];return c&&Array.isArray(c.r)?c.r.reduce((a,b)=>a+b,0):null}
+function baselineScore(){const c=state.check.baselineA||state.check.A;return c&&Array.isArray(c.r)?c.r.reduce((a,b)=>a+b,0):null}
+const capstoneOk=()=>state.cap.rubric.every(Boolean)&&CAPSTONE.steps.every(step=>String(state.cap.steps[step.k]||"").trim().length>20);
 function renderHome(){
   const doneN=MODS.filter(m=>status(m.id).key==="done").length, nxt=nextMod();
   let nextBlock;
@@ -844,8 +922,8 @@ function renderHome(){
   else nextBlock=`<div class="next"><p><b>All eight modules are complete.</b> The capstone audit is next, and the after-check shows how far you have come.</p><button class="btn" data-go="capstone">Open the capstone</button></div>`;
   const rows=MODS.map(m=>{const st=status(m.id);return `<li><button class="book" data-go="unit:${m.id}">${glyph(m.glyph,40)}<span><span class="num">Module ${m.n}</span><span class="title">${m.title}</span><span class="gist">${m.gist}</span>${dots(m.id)}</span><span class="state ${st.key==="done"?"done":""}">${st.text}</span></button></li>`}).join("");
   const crow=(go,g,num,title,gist,stText,done)=>`<li><button class="book" data-go="${go}">${glyph(g,40)}<span><span class="num">${num}</span><span class="title">${title}</span><span class="gist">${gist}</span></span><span class="state ${done?"done":""}">${stText}</span></button></li>`;
-  const a=checkScore("A"), b=checkScore("B");
-  const capDone=state.cap.rubric.every(Boolean)&&Object.values(state.cap.steps).filter(v=>String(v||"").trim().length>20).length>=6;
+  const a=baselineScore(), b=checkScore("B");
+  const capDone=capstoneOk();
   app.innerHTML=`
   <p class="small muted" style="margin:0 0 6px"><a href="../">← All courses</a> · <a href="../../">Benjamin A. Moss</a></p>
   <header class="hero">
@@ -859,11 +937,19 @@ function renderHome(){
     <h2>The path</h2>
     <p class="muted">Take the modules in order, or jump to what you need. Each ends with practice, a dialogue, and one sentence in your own words.</p>
     <ul class="books">
-      ${crow("check:A","check","Before you begin","The ten-question check","Ten questions on the eight skills. No feedback until the end.",a===null?"Not taken":a+" of 10",a!==null)}
+      ${crow("check:A","check","Before you begin","The ten-question check","Ten questions on the eight skills. No feedback until the end.",a===null?"Not taken":"Baseline "+a+" of 10",a!==null)}
       ${rows}
       ${crow("check:B","check","After the modules","The check, second form","Different questions on the same skills, to compare with the first.",b===null?"Not taken":b+" of 10",b!==null)}
       ${crow("capstone","capstone","The capstone","Audit an AI-assisted decision","Use every skill on one real or provided case and keep a one-page audit.",capDone?"Complete":(Object.keys(state.cap.steps).length?"In progress":"Not started"),capDone)}
     </ul>
+  </section>
+  <section class="sec">
+    <h2>What you will learn</h2>
+    <ul><li>Identify claims, reasons, and hidden assumptions.</li>
+    <li>Verify sources, assess numerical claims, and consider rival explanations.</li>
+    <li>Test for bias and formulate fair objections.</li>
+    <li>Decide what AI can help with while retaining your own judgment.</li></ul>
+    <p class="small muted">For nursing learners: use fictional cases only. Never enter patient information or other protected health information in the course or an AI assistant.</p>
   </section>
   <section class="sec">
     <h2>How it works</h2>
@@ -877,17 +963,18 @@ function renderHome(){
   </section>
   <section class="sec">
     <h2>Your record</h2>
-    <p class="muted">What you write here is yours. Download it any time as plain text you can open anywhere.</p>
+    <p class="muted">Your progress is saved in this browser. Download it for safekeeping or to move between devices. Resetting progress also replaces any connected account copy with an empty record.</p>
     <div class="row">
       <button class="btn" id="exp-md">Download my record (Markdown)</button>
       <button class="btn ghost" id="exp-json">Download progress (JSON)</button>
       <button class="btn ghost" id="imp">Restore from JSON</button>
+      <button class="btn ghost" id="reset">Reset my progress</button>
     </div>
     <div id="jsonbox" hidden><p class="small muted" id="jsonmsg"></p><textarea class="json" id="json" aria-label="Text of your record"></textarea><div class="row"><button class="btn" id="imp-go">Restore from this text</button></div></div>
     <p class="sync" id="sync" aria-live="polite">${syncText()}</p>
   </section>
   <footer class="foot">
-    <p>Version 0.1, a draft pilot. The examples, statistics, and explanations are awaiting review by a subject expert.</p><p>Made by <a href="../../">Benjamin A. Moss</a>. Your work stays in your own browser; nothing you write here is sent to a server.</p>
+    <p>Version 0.2, an independently developed optional pilot resource. Examples and assessments have not been formally validated.</p><p>Made by <a href="../../">Benjamin A. Moss</a>. On this public site, progress stays in this browser. If you use the optional Claude examiner or account sync in a compatible environment, text or progress may be sent to Claude. Do not include personal or patient information.</p>
     <p><button class="btn quiet" id="themebtn">${themeLabel()}</button></p>
   </footer>`;
   $$("[data-go]").forEach(b=>b.onclick=()=>{const [k,x]=b.dataset.go.split(":");
@@ -899,6 +986,10 @@ function renderHome(){
   $("#imp").onclick=()=>{const box=$("#jsonbox");box.hidden=false;$("#jsonmsg").textContent="Paste the text of a progress file, then restore it.";$("#json").value="";$("#json").focus()};
   $("#imp-go").onclick=importProgress;
   $("#themebtn").onclick=cycleTheme;
+  $("#reset").onclick=()=>{
+    if(!confirm("Reset all progress, reflections, and check results? This cannot be undone. Download a copy first if you want to keep it."))return;
+    state=blank();save();go({name:"home"});
+  };
 }
 async function saveFile(filename,data){
   let dl=null;
@@ -928,7 +1019,7 @@ function recordMarkdown(){
   L.push(`## Practice`,``);
   MODS.forEach(m=>{const s=state.mods[m.id];const it=s?s.items:{attempts:0,correct:0};L.push(`- Module ${m.n}, ${m.title}: ${it.correct} of ${it.attempts} practice answers correct${itemsOk(m.id)?" (mastery reached)":""}`)});
   L.push(``,`## The check`,``);
-  ["A","B"].forEach(f=>{const c=state.check[f];L.push(c&&Array.isArray(c.r)?`- Form ${f}: ${c.r.reduce((a,b)=>a+b,0)} of 10 (${dateStr(c.date)})`:`- Form ${f}: not taken`)});
+  ["A","B"].forEach(f=>{const c=f==="A"?(state.check.baselineA||state.check.A):state.check.B;L.push(c&&Array.isArray(c.r)?`- Form ${f}${f==="A"?" (original baseline)":""}: ${c.r.reduce((a,b)=>a+b,0)} of 10 (${dateStr(c.date)})`:`- Form ${f}: not taken`)});
   L.push(``,`## Capstone audit`,``,auditBody(),``);
   return L.join("\n");
 }
@@ -978,7 +1069,7 @@ function mountKase(id){
     el.innerHTML=`<h2>The case</h2>${m.kase.h}<p><b>${m.kase.ask}</b></p>`+
       m.kase.opts.map((o,i)=>`<button class="opt" data-i="${i}" aria-pressed="${s.kase===i}">${o.t}</button>`).join("")+
       (s.kase!==null?`<div class="reply" aria-live="polite"><p>${m.kase.opts[s.kase].r}</p></div>`:`<div aria-live="polite"></div>`);
-    $$(".opt",el).forEach(b=>b.onclick=()=>{s.kase=+b.dataset.i;save();draw();updateParts(id)});
+    $$(".opt",el).forEach(b=>b.onclick=()=>{const i=b.dataset.i;s.kase=+i;save();draw();const choice=$(`[data-i="${i}"]`,el);if(choice)choice.focus({preventScroll:true});updateParts(id)});
   };
   draw();
 }
@@ -1023,7 +1114,7 @@ function mountClassify(el,id){
       html+=`<p class="fb"><b>${hit} of ${total}</b> labelled as expected. Change any answer to see its note again.</p>`;
     }
     el.innerHTML=html;
-    $$(".opt",el).forEach(b=>b.onclick=()=>{s.d.ans[b.dataset.k]=+b.dataset.c;save();draw();if(Object.keys(s.d.ans).length===total)labDone(id)});
+    $$(".opt",el).forEach(b=>b.onclick=()=>{const k=b.dataset.k,c=b.dataset.c;s.d.ans[k]=+c;save();draw();const choice=$(`[data-k="${k}"][data-c="${c}"]`,el);if(choice)choice.focus({preventScroll:true});if(Object.keys(s.d.ans).length===total)labDone(id)});
   };
   draw();
   if(Object.keys(s.d.ans).length===total&&!s.done)labDone(id);
@@ -1053,8 +1144,8 @@ function mountPick(el,id){
     }
     el.innerHTML=html;
     if(!sub){
-      $$(".opt",el).forEach(b=>b.onclick=()=>{const i=+b.dataset.i,k=s.d.sel.indexOf(i);if(k>=0)s.d.sel.splice(k,1);else s.d.sel.push(i);save();draw()});
-      const c=$("#chk",el);if(c)c.onclick=()=>{s.d.sub=true;save();draw();labDone(id)};
+      $$(".opt",el).forEach(b=>b.onclick=()=>{const i=+b.dataset.i,k=s.d.sel.indexOf(i);if(k>=0)s.d.sel.splice(k,1);else s.d.sel.push(i);save();draw();const choice=$(`[data-i="${i}"]`,el);if(choice)choice.focus({preventScroll:true})});
+      const c=$("#chk",el);if(c)c.onclick=()=>{s.d.sub=true;save();draw();const again=$("#again",el);if(again)again.focus({preventScroll:true});labDone(id)};
     }else{$("#again",el).onclick=()=>{s.d.sel=[];s.d.sub=false;save();draw()}}
   };
   draw();
@@ -1117,7 +1208,7 @@ function mountTally(el,id){
 }
 
 function mountAskTwice(el,id){
-  const lab=MOD[id].lab,s=M(id).lab;let tried=[];
+  const lab=MOD[id].lab,s=M(id).lab;let tried=Array.isArray(s.d.tried)?s.d.tried.slice():[];
   const draw=()=>{
     let html=`<h2>${lab.title}</h2><p class="muted">${lab.intro}</p><div class="scene"><p>${lab.plan}</p></div>
     <div class="row"><button class="btn ghost" data-v="strong">Say: “I think my plan is strong.”</button><button class="btn ghost" data-v="weak">Say: “I think my plan is weak.”</button></div>`;
@@ -1128,7 +1219,7 @@ function mountAskTwice(el,id){
       html+=`<div class="result" aria-live="polite"><p><b>What to notice.</b> Assistant A’s verdict followed your opinion, so its agreement told you nothing about the plan. Assistant B gave the same assessment whichever way you leaned, so you could learn something from it.</p><p>To run this test on a real assistant, ask the same question twice in separate fresh chats, once leaning each way, then compare the substance, not the tone.</p></div>`;
     }
     el.innerHTML=html;
-    $$("[data-v]",el).forEach(b=>b.onclick=()=>{const v=b.dataset.v;if(!tried.includes(v))tried.push(v);draw();if(tried.length>=2)labDone(id)});
+    $$("[data-v]",el).forEach(b=>b.onclick=()=>{const v=b.dataset.v;if(!tried.includes(v))tried.push(v);s.d.tried=tried.slice();save();draw();const choice=$(`[data-v="${v}"]`,el);if(choice)choice.focus({preventScroll:true});if(tried.length>=2)labDone(id)});
   };
   draw();
 }
@@ -1183,7 +1274,7 @@ function mountDialogue(id){
     if(!s.done)$$(".opt",el).forEach(b=>b.onclick=()=>{
       s.picks[s.step]=+b.dataset.i;s.step++;
       if(s.step>=m.dlg.steps.length)s.done=true;
-      save();draw();updateParts(id);
+      save();draw();const next=$("[data-i]",el)||$("#redo",el);if(next)next.focus({preventScroll:true});updateParts(id);
     });
     else $("#redo",el).onclick=()=>{s.step=0;s.picks=[];s.done=false;save();draw();updateParts(id);el.scrollIntoView({block:"start"})};
   };
@@ -1206,35 +1297,35 @@ function renderCheck(){
   const when=f==="A"?"Best taken before you start the modules.":"Best taken after you finish the modules. It uses different questions on the same eight skills.";
   const head=`<p class="back"><button class="btn quiet" id="home">← The course</button></p><div class="unit-head">${glyph("check",56)}<div><span class="num">Ten questions</span><h1>${title}</h1><p class="gist">${when}</p></div></div>`;
   if(view.stage==="intro"){
-    app.innerHTML=head+`<p>Ten questions, about ten minutes. You will not see whether you were right until the end, so there is nothing to gain by guessing. “I’m not sure” is a good answer and counts as a miss, not a penalty.</p><p class="muted">This gives a rough picture of where you are, not a measurement. The two forms use different questions, so a difference between them may partly reflect how hard each set was.</p>`+
+    app.innerHTML=head+`<p>Ten questions, about ten minutes. You will not see the answers until the end. Answer without looking anything up, so you can compare your understanding before and after. “I’m not sure” is a useful way to record uncertainty; it counts as incorrect for the numerical score, just like a wrong guess.</p><p class="muted">This gives a rough picture of where you are, not a measurement. The two forms use different questions, so a difference between them may partly reflect how hard each set was.</p>`+
       (saved?`<p class="fb"><b>You took this form on ${dateStr(saved.date)} and got ${checkScore(f)} of 10.</b></p><div class="row"><button class="btn" id="see">See my results</button><button class="btn ghost" id="again">Take it again</button></div>`:`<div class="row"><button class="btn" id="start">Begin</button></div>`);
     $("#home").onclick=()=>go({name:"home"});
     const st=$("#start"),ag=$("#again"),se=$("#see");
-    const begin=()=>{view={name:"check",form:f,stage:"q",i:0,ans:[],order:items.map(it=>shuffle(it.o.map((t,i)=>({t,ok:i===0}))))};render();window.scrollTo(0,0)};
+    const begin=()=>{view={name:"check",form:f,stage:"q",i:0,ans:[],order:items.map(it=>shuffle(it.o.map((t,i)=>({t,ok:i===0}))))};render();window.scrollTo(0,0);$("#question-text",app).focus({preventScroll:true})};
     if(st)st.onclick=begin;if(ag)ag.onclick=begin;
     if(se)se.onclick=()=>{view={name:"check",form:f,stage:"result",i:0,ans:[],order:[]};render()};
     return;
   }
   if(view.stage==="q"){
     const i=view.i,it=items[i],opts=view.order[i],picked=view.ans[i];
-    app.innerHTML=head+`<div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${i}"><i style="width:${i*10}%"></i></div><div class="prop"><div class="label">Question ${i+1} of 10</div><p class="qt">${it.q}</p>`+
+    app.innerHTML=head+`<div class="meter" role="progressbar" aria-label="Check progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${i}"><i style="width:${i*10}%"></i></div><div class="prop"><div class="label">Question ${i+1} of 10</div><p class="qt" id="question-text" tabindex="-1">${it.q}</p>`+
       opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="${picked&&picked.k===k}">${o.t}</button>`).join("")+
       `<button class="opt" data-k="u" aria-pressed="${picked&&picked.k==="u"}"><i>I’m not sure</i></button></div><div class="row" style="margin-top:16px"><button class="btn" id="nxt"${picked?"":" disabled"}>${i<9?"Next":"Finish"}</button></div>`;
     $("#home").onclick=()=>{if(confirm("Leave the check? Your answers so far will be lost."))go({name:"home"})};
-    $$(".opt",app).forEach(b=>b.onclick=()=>{const k=b.dataset.k;view.ans[i]=k==="u"?{k:"u",ok:false}:{k:+k,ok:opts[+k].ok};render()});
+    $(".opt",app).forEach(b=>b.onclick=()=>{const k=b.dataset.k;view.ans[i]=k==="u"?{k:"u",ok:false}:{k:+k,ok:opts[+k].ok};render();const chosen=$(".opt",app).find(x=>x.dataset.k===k);if(chosen)chosen.focus({preventScroll:true})});
     $("#nxt").onclick=()=>{
-      if(i<9){view.i++;render();window.scrollTo(0,0)}
-      else{state.check[f]={r:view.ans.map(a=>a&&a.ok?1:0),date:Date.now()};save();view={name:"check",form:f,stage:"result",i:0,ans:[],order:[]};render();window.scrollTo(0,0)}
+      if(i<9){view.i++;render();window.scrollTo(0,0);$("#question-text",app).focus({preventScroll:true})}
+      else{state.check[f]={r:view.ans.map(a=>a&&a.ok?1:0),date:Date.now()};if(f==="A"&&!state.check.baselineA)state.check.baselineA={r:state.check.A.r.slice(),date:state.check.A.date};save();view={name:"check",form:f,stage:"result",i:0,ans:[],order:[]};render();window.scrollTo(0,0)}
     };
     return;
   }
   /* results */
   const c=state.check[f],score=checkScore(f);
   const other=f==="A"?"B":"A",oc=state.check[other];
-  let html=head+`<div class="result"><p class="big">${score} of 10</p><p>${score>=8?"A strong result on these ten.":score>=5?"A mixed result. The skills below marked with a cross are good places to start.":"A useful starting point. The modules cover each skill below, one at a time."}</p><p class="small muted">Taken ${dateStr(c.date)}. Ten questions give a rough picture only.</p></div>`;
-  if(oc&&Array.isArray(oc.r)){
-    const a=f==="A"?c:oc,b=f==="A"?oc:c;
-    html+=`<p><b>Before and after:</b> first form ${a.r.reduce((x,y)=>x+y,0)} of 10, second form ${b.r.reduce((x,y)=>x+y,0)} of 10. The forms use different questions, so treat the difference as a hint, not a finding.</p>`;
+  let html=head+`<div class="result"><p class="big">${score} of 10</p><p>${score>=8?"A strong result on these ten.":score>=5?"A mixed result. The skills below marked with a cross are good places to start.":"A useful starting point. The modules cover each skill below, one at a time."}</p><p class="small muted">Taken ${dateStr(c.date)}. Ten questions give a rough picture only.${f==="A"&&state.check.baselineA?` Original baseline: ${baselineScore()} of 10 (taken ${dateStr(state.check.baselineA.date)}).`:""}</p></div>`;
+  if(oc&&Array.isArray(oc.r)&&state.check.A&&state.check.B){
+    const a=state.check.baselineA||state.check.A,b=state.check.B;
+    html+=`<p><b>Before and after:</b> original first form ${a.r.reduce((x,y)=>x+y,0)} of 10, second form ${b.r.reduce((x,y)=>x+y,0)} of 10. Retaking the first form does not overwrite your baseline. The forms use different questions, so treat the difference as a hint, not a finding.</p>`;
   }
   html+=`<h2 style="font-size:26px;margin:26px 0 8px">Your answers</h2>`+items.map((it,i)=>`<div class="skill"><span class="mk ${c.r[i]?"":"no"}">${c.r[i]?"✓":"✗"}</span><div><p class="small muted">${SKILLS[i]}</p><p>${it.q}</p><p class="small"><b>Best answer:</b> ${it.o[0]}</p><p class="small muted">${it.why}</p></div></div>`).join("");
   html+=`<div class="row" style="margin-top:22px"><button class="btn" id="back2">Back to the course</button><button class="btn ghost" id="again2">Take this form again</button></div>`;
