@@ -1,0 +1,27 @@
+name: Thinking Well course checks
+
+on:
+  pull_request:
+    paths:
+      - 'courses/thinking-well/**'
+      - '.github/workflows/thinking-well-tests.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'courses/thinking-well/**'
+      - '.github/workflows/thinking-well-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  course-tests:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run course regression tests
+        run: node --test courses/thinking-well/tests/course.test.mjs
