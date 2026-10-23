@@ -830,7 +830,15 @@ function normalise(o){
   }
   return out;
 }
-let state=blank(), sync="local", docRef=null, saveTimer=null, view={name:"home"};
+function routeFromHash(){
+  const h=(window.location.hash||"").slice(1);
+  if(h.startsWith("unit-")&&MOD[h.slice(5)])return {name:"unit",id:h.slice(5)};
+  if(h==="check-A"||h==="check-B")return {name:"check",form:h.slice(-1),stage:"intro",i:0,ans:[],order:[]};
+  if(h==="capstone")return {name:"capstone"};
+  return {name:"home"};
+}
+const routeHash=v=>v.name==="unit"?"#unit-"+v.id:v.name==="check"?"#check-"+v.form:v.name==="capstone"?"#capstone":"#home";
+let state=blank(), sync="local", docRef=null, saveTimer=null, view=routeFromHash();
 try{const s=localStorage.getItem(KEY);if(s){const o=JSON.parse(s);if(valid(o))state=normalise(o)}}catch(e){}
 const M=id=>state.mods[id]||(state.mods[id]=newMod());
 function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
@@ -875,7 +883,19 @@ const nextMod=()=>MODS.find(m=>status(m.id).key!=="done");
 
 /* ---------- Router ---------- */
 const app=document.getElementById("app");
-function go(v){view=v;render();window.scrollTo(0,0);try{app.focus({preventScroll:true})}catch(e){}}
+function go(v){
+  view=v;
+  const hash=routeHash(v);
+  if(window.location.hash!==hash)window.history.pushState(null,"",hash);
+  render();window.scrollTo(0,0);
+  try{app.focus({preventScroll:true})}catch(e){}
+}
+function restoreRoute(){
+  view=routeFromHash();render();window.scrollTo(0,0);
+  try{app.focus({preventScroll:true})}catch(e){}
+}
+window.addEventListener("popstate",restoreRoute);
+window.addEventListener("hashchange",restoreRoute);
 function render(){
   if(view.name==="unit")renderUnit(view.id);
   else if(view.name==="check")renderCheck();
@@ -892,6 +912,7 @@ function applyExaminerVisibility(){
 
 /* ---------- Home ---------- */
 function checkScore(f){const c=state.check[f];return c&&Array.isArray(c.r)?c.r.reduce((a,b)=>a+b,0):null}
+function baselineScore(){const c=state.check.baselineA||state.check.A;return c&&Array.isArray(c.r)?c.r.reduce((a,b)=>a+b,0):null}
 function renderHome(){
   const doneN=MODS.filter(m=>status(m.id).key==="done").length, nxt=nextMod();
   let nextBlock;
@@ -900,7 +921,7 @@ function renderHome(){
   else nextBlock=`<div class="next"><p><b>All eight modules are complete.</b> The capstone audit is next, and the after-check shows how far you have come.</p><button class="btn" data-go="capstone">Open the capstone</button></div>`;
   const rows=MODS.map(m=>{const st=status(m.id);return `<li><button class="book" data-go="unit:${m.id}">${glyph(m.glyph,40)}<span><span class="num">Module ${m.n}</span><span class="title">${m.title}</span><span class="gist">${m.gist}</span>${dots(m.id)}</span><span class="state ${st.key==="done"?"done":""}">${st.text}</span></button></li>`}).join("");
   const crow=(go,g,num,title,gist,stText,done)=>`<li><button class="book" data-go="${go}">${glyph(g,40)}<span><span class="num">${num}</span><span class="title">${title}</span><span class="gist">${gist}</span></span><span class="state ${done?"done":""}">${stText}</span></button></li>`;
-  const a=checkScore("A"), b=checkScore("B");
+  const a=baselineScore(), b=checkScore("B");
   const capDone=state.cap.rubric.every(Boolean)&&CAPSTONE.steps.every(step=>String(state.cap.steps[step.k]||"").trim().length>20);
   app.innerHTML=`
   <p class="small muted" style="margin:0 0 6px"><a href="../">← All courses</a> · <a href="../../">Benjamin A. Moss</a></p>
@@ -915,7 +936,7 @@ function renderHome(){
     <h2>The path</h2>
     <p class="muted">Take the modules in order, or jump to what you need. Each ends with practice, a dialogue, and one sentence in your own words.</p>
     <ul class="books">
-      ${crow("check:A","check","Before you begin","The ten-question check","Ten questions on the eight skills. No feedback until the end.",a===null?"Not taken":a+" of 10",a!==null)}
+      ${crow("check:A","check","Before you begin","The ten-question check","Ten questions on the eight skills. No feedback until the end.",a===null?"Not taken":"Baseline "+a+" of 10",a!==null)}
       ${rows}
       ${crow("check:B","check","After the modules","The check, second form","Different questions on the same skills, to compare with the first.",b===null?"Not taken":b+" of 10",b!==null)}
       ${crow("capstone","capstone","The capstone","Audit an AI-assisted decision","Use every skill on one real or provided case and keep a one-page audit.",capDone?"Complete":(Object.keys(state.cap.steps).length?"In progress":"Not started"),capDone)}
@@ -1173,7 +1194,7 @@ function mountTally(el,id){
 }
 
 function mountAskTwice(el,id){
-  const lab=MOD[id].lab,s=M(id).lab;let tried=[];
+  const lab=MOD[id].lab,s=M(id).lab;let tried=Array.isArray(s.d.tried)?s.d.tried.slice():[];
   const draw=()=>{
     let html=`<h2>${lab.title}</h2><p class="muted">${lab.intro}</p><div class="scene"><p>${lab.plan}</p></div>
     <div class="row"><button class="btn ghost" data-v="strong">Say: “I think my plan is strong.”</button><button class="btn ghost" data-v="weak">Say: “I think my plan is weak.”</button></div>`;
@@ -1184,7 +1205,7 @@ function mountAskTwice(el,id){
       html+=`<div class="result" aria-live="polite"><p><b>What to notice.</b> Assistant A’s verdict followed your opinion, so its agreement told you nothing about the plan. Assistant B gave the same assessment whichever way you leaned, so you could learn something from it.</p><p>To run this test on a real assistant, ask the same question twice in separate fresh chats, once leaning each way, then compare the substance, not the tone.</p></div>`;
     }
     el.innerHTML=html;
-    $$("[data-v]",el).forEach(b=>b.onclick=()=>{const v=b.dataset.v;if(!tried.includes(v))tried.push(v);draw();if(tried.length>=2)labDone(id)});
+    $$("[data-v]",el).forEach(b=>b.onclick=()=>{const v=b.dataset.v;if(!tried.includes(v))tried.push(v);s.d.tried=tried.slice();save();draw();const choice=$(`[data-v="${v}"]`,el);if(choice)choice.focus({preventScroll:true});if(tried.length>=2)labDone(id)});
   };
   draw();
 }
@@ -1262,35 +1283,35 @@ function renderCheck(){
   const when=f==="A"?"Best taken before you start the modules.":"Best taken after you finish the modules. It uses different questions on the same eight skills.";
   const head=`<p class="back"><button class="btn quiet" id="home">← The course</button></p><div class="unit-head">${glyph("check",56)}<div><span class="num">Ten questions</span><h1>${title}</h1><p class="gist">${when}</p></div></div>`;
   if(view.stage==="intro"){
-    app.innerHTML=head+`<p>Ten questions, about ten minutes. You will not see whether you were right until the end, so there is nothing to gain by guessing. “I’m not sure” is a good answer and counts as a miss, not a penalty.</p><p class="muted">This gives a rough picture of where you are, not a measurement. The two forms use different questions, so a difference between them may partly reflect how hard each set was.</p>`+
+    app.innerHTML=head+`<p>Ten questions, about ten minutes. You will not see the answers until the end. Answer without looking anything up, so you can compare your understanding before and after. “I’m not sure” is a useful way to record uncertainty; it counts as incorrect for the numerical score, just like a wrong guess.</p><p class="muted">This gives a rough picture of where you are, not a measurement. The two forms use different questions, so a difference between them may partly reflect how hard each set was.</p>`+
       (saved?`<p class="fb"><b>You took this form on ${dateStr(saved.date)} and got ${checkScore(f)} of 10.</b></p><div class="row"><button class="btn" id="see">See my results</button><button class="btn ghost" id="again">Take it again</button></div>`:`<div class="row"><button class="btn" id="start">Begin</button></div>`);
     $("#home").onclick=()=>go({name:"home"});
     const st=$("#start"),ag=$("#again"),se=$("#see");
-    const begin=()=>{view={name:"check",form:f,stage:"q",i:0,ans:[],order:items.map(it=>shuffle(it.o.map((t,i)=>({t,ok:i===0}))))};render();window.scrollTo(0,0)};
+    const begin=()=>{view={name:"check",form:f,stage:"q",i:0,ans:[],order:items.map(it=>shuffle(it.o.map((t,i)=>({t,ok:i===0}))))};render();window.scrollTo(0,0);$("#question-text",app).focus({preventScroll:true})};
     if(st)st.onclick=begin;if(ag)ag.onclick=begin;
     if(se)se.onclick=()=>{view={name:"check",form:f,stage:"result",i:0,ans:[],order:[]};render()};
     return;
   }
   if(view.stage==="q"){
     const i=view.i,it=items[i],opts=view.order[i],picked=view.ans[i];
-    app.innerHTML=head+`<div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${i}"><i style="width:${i*10}%"></i></div><div class="prop"><div class="label">Question ${i+1} of 10</div><p class="qt">${it.q}</p>`+
+    app.innerHTML=head+`<div class="meter" role="progressbar" aria-label="Check progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${i}"><i style="width:${i*10}%"></i></div><div class="prop"><div class="label">Question ${i+1} of 10</div><p class="qt" id="question-text" tabindex="-1">${it.q}</p>`+
       opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="${picked&&picked.k===k}">${o.t}</button>`).join("")+
       `<button class="opt" data-k="u" aria-pressed="${picked&&picked.k==="u"}"><i>I’m not sure</i></button></div><div class="row" style="margin-top:16px"><button class="btn" id="nxt"${picked?"":" disabled"}>${i<9?"Next":"Finish"}</button></div>`;
     $("#home").onclick=()=>{if(confirm("Leave the check? Your answers so far will be lost."))go({name:"home"})};
-    $$(".opt",app).forEach(b=>b.onclick=()=>{const k=b.dataset.k;view.ans[i]=k==="u"?{k:"u",ok:false}:{k:+k,ok:opts[+k].ok};render()});
+    $(".opt",app).forEach(b=>b.onclick=()=>{const k=b.dataset.k;view.ans[i]=k==="u"?{k:"u",ok:false}:{k:+k,ok:opts[+k].ok};render();const chosen=$(".opt",app).find(x=>x.dataset.k===k);if(chosen)chosen.focus({preventScroll:true})});
     $("#nxt").onclick=()=>{
-      if(i<9){view.i++;render();window.scrollTo(0,0)}
-      else{state.check[f]={r:view.ans.map(a=>a&&a.ok?1:0),date:Date.now()};save();view={name:"check",form:f,stage:"result",i:0,ans:[],order:[]};render();window.scrollTo(0,0)}
+      if(i<9){view.i++;render();window.scrollTo(0,0);$("#question-text",app).focus({preventScroll:true})}
+      else{state.check[f]={r:view.ans.map(a=>a&&a.ok?1:0),date:Date.now()};if(f==="A"&&!state.check.baselineA)state.check.baselineA={r:state.check.A.r.slice(),date:state.check.A.date};save();view={name:"check",form:f,stage:"result",i:0,ans:[],order:[]};render();window.scrollTo(0,0)}
     };
     return;
   }
   /* results */
   const c=state.check[f],score=checkScore(f);
   const other=f==="A"?"B":"A",oc=state.check[other];
-  let html=head+`<div class="result"><p class="big">${score} of 10</p><p>${score>=8?"A strong result on these ten.":score>=5?"A mixed result. The skills below marked with a cross are good places to start.":"A useful starting point. The modules cover each skill below, one at a time."}</p><p class="small muted">Taken ${dateStr(c.date)}. Ten questions give a rough picture only.</p></div>`;
-  if(oc&&Array.isArray(oc.r)){
-    const a=f==="A"?c:oc,b=f==="A"?oc:c;
-    html+=`<p><b>Before and after:</b> first form ${a.r.reduce((x,y)=>x+y,0)} of 10, second form ${b.r.reduce((x,y)=>x+y,0)} of 10. The forms use different questions, so treat the difference as a hint, not a finding.</p>`;
+  let html=head+`<div class="result"><p class="big">${score} of 10</p><p>${score>=8?"A strong result on these ten.":score>=5?"A mixed result. The skills below marked with a cross are good places to start.":"A useful starting point. The modules cover each skill below, one at a time."}</p><p class="small muted">Taken ${dateStr(c.date)}. Ten questions give a rough picture only.${f==="A"&&state.check.baselineA?` Original baseline: ${baselineScore()} of 10 (taken ${dateStr(state.check.baselineA.date)}).`:""}</p></div>`;
+  if(oc&&Array.isArray(oc.r)&&state.check.A&&state.check.B){
+    const a=state.check.baselineA||state.check.A,b=state.check.B;
+    html+=`<p><b>Before and after:</b> original first form ${a.r.reduce((x,y)=>x+y,0)} of 10, second form ${b.r.reduce((x,y)=>x+y,0)} of 10. Retaking the first form does not overwrite your baseline. The forms use different questions, so treat the difference as a hint, not a finding.</p>`;
   }
   html+=`<h2 style="font-size:26px;margin:26px 0 8px">Your answers</h2>`+items.map((it,i)=>`<div class="skill"><span class="mk ${c.r[i]?"":"no"}">${c.r[i]?"✓":"✗"}</span><div><p class="small muted">${SKILLS[i]}</p><p>${it.q}</p><p class="small"><b>Best answer:</b> ${it.o[0]}</p><p class="small muted">${it.why}</p></div></div>`).join("");
   html+=`<div class="row" style="margin-top:22px"><button class="btn" id="back2">Back to the course</button><button class="btn ghost" id="again2">Take this form again</button></div>`;
